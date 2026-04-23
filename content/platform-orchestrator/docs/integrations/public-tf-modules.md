@@ -31,6 +31,7 @@ There are two categories of modules:
 
 | Module | About |
 | --- | --- |
+| [k8s-gateway-kubernetes](https://github.com/humanitec-tf-modules/k8s-gateway-kubernetes) | Module source for Kubernetes Gateway API resources |
 | [k8s-namespace-kubernetes](https://github.com/humanitec-tf-modules/k8s-namespace-kubernetes) | Module source for a Kubernetes namespace |
 | [k8s-role-kubernetes](https://github.com/humanitec-tf-modules/k8s-role-kubernetes) | Module source for a Kubernetes Role |
 | [k8s-service-account-kubernetes](https://github.com/humanitec-tf-modules/k8s-service-account-kubernetes) | Module source for a Kubernetes service account |

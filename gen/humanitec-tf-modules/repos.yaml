@@ -7,6 +7,7 @@ orchestrator-configuration:
   - serverless-ecs-orchestrator-runner
 
 module-source:
+  - k8s-gateway-kubernetes
   - k8s-namespace-kubernetes
   - k8s-role-kubernetes
   - k8s-service-account-kubernetes
