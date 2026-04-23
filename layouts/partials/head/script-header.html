@@ -1,0 +1,22 @@
+{{- if and (.Site.Params.alert) (.Site.Params.alertDismissable) -}}
+{{ $alertInit := resources.Get "js/alert-init.js" | js.Build | minify | fingerprint "sha512" -}}
+<script integrity="{{ $alertInit.Data.Integrity }}">
+  {
+    {
+      $alertInit.Content | safeJS;
+    }
+  }
+</script>
+{{- end -}}
+
+{{ if site.Params.options.darkMode -}}
+  {{ $darkmode := resources.Get "js/darkmode.js" | js.Build -}}
+  {{ $darkmodeSecureJS := $darkmode | resources.Fingerprint "sha512" }}
+  <script src="{{ $darkmodeSecureJS.RelPermalink }}" integrity="{{ $darkmodeSecureJS.Data.Integrity }}" crossorigin="anonymous"></script>
+{{ end -}}
+
+
+<script src="https://kit.fontawesome.com/b3b1e5bd9b.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
+
+<link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css">

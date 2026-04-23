@@ -1,0 +1,64 @@
+.docs-content .doks-nav {
+  margin-bottom: 0;
+  border-bottom: none;
+  transform: translateY(8px);
+}
+
+.docs-content .doks-nav-item {
+  margin-bottom: 0;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.nav .doks-nav-link.nav-link {
+  color: $gray-600;
+  background-color: #e9eefe;
+  border-bottom: 1px solid $link-color-dark;
+
+  [data-dark-mode] & {
+    background-color: #1c243c;
+    border-bottom: 1px solid $link-color-dark;
+    color: $gray-500;
+  }
+
+  &:hover {
+    color: $gray-900;
+    background-color: #e9eefe;
+    border-color: transparent;
+    border-bottom: 1px solid $link-color-dark;
+
+    [data-dark-mode] & {
+      background-color: #1c243c;
+      color: $white;
+    }
+  }
+
+  &.active {
+    color: $primary;
+    background-color: #e9eefe;
+    border-color: $link-color-dark;
+    border-bottom: 1px solid transparent;
+
+    [data-dark-mode] & {
+      background-color: #1c243c;
+      border-bottom: 1px solid transparent;
+      color: $link-color-dark;
+    }
+  }
+}
+
+.tab-content.doks-tab-content {
+  border: 1px solid $link-color-dark;
+  border-radius: 12px;
+  border-top-left-radius: 0;
+  padding: 20px;
+  margin-bottom: 1.5rem;
+}
+
+.tab-content.examples-tab-content {
+  border-top: 1px solid $link-color-dark;
+  padding-top: 20px;
+  margin-bottom: 1.5rem;
+}

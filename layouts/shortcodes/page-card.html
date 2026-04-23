@@ -1,0 +1,16 @@
+{{ $root := . }}
+{{ with .Get "page" }}
+  {{ with site.GetPage . }}
+    <div class="page-card">
+      <h3>{{ $root.Get "card-title" }}</h3>
+      <p>{{ .Params.description }}</p>
+      <a class="page-card-link" href="{{ .RelPermalink }}">
+        {{ with $root.Get "button-text" }}{{ . }}{{ else }}Get started{{ end }}
+      </a>
+    </div>
+  {{ else }}
+    {{ errorf "page '%s' not found: %s" . $root.Position }}
+  {{ end }}
+{{ else }}
+  {{ errorf "missing value for parameter 'page': %s" .Position }}
+{{ end }}

@@ -1,0 +1,15 @@
+<!--
+Create a list of all pages in the a section
+excluding the current page and non-regular pages like index pages
+-->
+{{- $path := .Get 0 | default .Page.File.Path -}}
+{{- $page := site.GetPage $path -}}
+<ul>
+  {{ range $page.CurrentSection.Pages }}
+  {{- if and (ne $.Page.Permalink .Permalink) (.IsPage) }}
+  <li>
+    <a href="{{ .Permalink }}">{{ .Title }}</a>
+  </li>
+  {{- end }}
+  {{ end }}
+</ul>

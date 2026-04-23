@@ -1,0 +1,8 @@
+{{- define "sidebar" -}}
+  {{- $linkTitle := .Scratch.Get "linkTitle" -}}
+  {{- if $linkTitle -}}
+    {{- $title := $linkTitle -}}
+  {{- else -}}
+    {{- $title := .Title -}}
+  {{- end -}}
+{{- end -}}

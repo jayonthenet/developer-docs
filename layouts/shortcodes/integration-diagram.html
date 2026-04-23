@@ -1,0 +1,96 @@
+{{ $highlight := .Get 0 | default "none" }}
+<div class="integration-diagram-container highlight-{{ $highlight }}">
+  <img src="/images/integrations/orchestrator_integrations.svg" alt="Orchestrator integrations big picture"/>
+  <div class="highlight-overlay"></div>
+</div>
+
+<style>
+.integration-diagram-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+.integration-diagram-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.integration-diagram-container .highlight-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(237, 241, 245, 0.85);
+  pointer-events: none;
+  transition: clip-path 0.3s ease;
+}
+
+/* No highlight - hide overlay */
+.integration-diagram-container.highlight-none .highlight-overlay {
+  display: none;
+}
+
+/* TF Modules - top left area */
+/* SVG coords: x: 84-403, y: 442-747 (out of 2240x1520) */
+.integration-diagram-container.highlight-tf-modules .highlight-overlay {
+  clip-path: polygon(
+    evenodd,
+    /* Outer rectangle */
+    0 0, 100% 0, 100% 100%, 0 100%, 0 0,
+    /* Inner rectangle (hole) - counter-clockwise */
+    2.75% 29.08%, 18% 29.08%, 20% 49.24%, 2.75% 49.24%, 2.75% 29.08%
+  );
+}
+
+/* CI/CD - top center area */
+/* SVG coords: x: 548-1091, y: 115-345 (out of 2240x1520) */
+.integration-diagram-container.highlight-cicd .highlight-overlay {
+  clip-path: polygon(
+    evenodd,
+    /* Outer rectangle */
+    0 0, 100% 0, 100% 100%, 0 100%, 0 0,
+    /* Inner rectangle (hole) - counter-clockwise */
+    24.46% 7.57%, 48.71% 7.57%, 48.71% 23.50%, 24.46% 23.50%, 24.46% 7.57%
+  );
+}
+
+/* Artefact Registries - top right area */
+/* SVG coords: x: 1301-2145, y: 115-345 (out of 2240x1520) */
+.integration-diagram-container.highlight-artefact .highlight-overlay {
+  clip-path: polygon(
+    evenodd,
+    /* Outer rectangle */
+    0 0, 100% 0, 100% 100%, 0 100%, 0 0,
+    /* Inner rectangle (hole) - counter-clockwise */
+    58.08% 7.57%, 99.76% 7.57%, 99.76% 23.50%, 58.08% 23.50%, 58.08% 7.57%
+  );
+}
+
+/* Customer Infrastructure - right middle area */
+/* SVG coords: x: 1570-2155, y: 635-1010 (out of 2240x1520) */
+.integration-diagram-container.highlight-infrastructure .highlight-overlay {
+  clip-path: polygon(
+    evenodd,
+    /* Outer rectangle */
+    0 0, 100% 0, 100% 100%, 0 100%, 0 0,
+    /* Inner rectangle (hole) - counter-clockwise */
+    70.09% 41.78%, 97.21% 41.78%, 97.21% 66.45%, 70.09% 66.45%, 70.09% 41.78%
+  );
+}
+
+/* Observability - bottom center */
+/* SVG coords: x: 819-1554, y: 1177-1433 (out of 2240x1520) */
+.integration-diagram-container.highlight-observability .highlight-overlay {
+  clip-path: polygon(
+    evenodd,
+    /* Outer rectangle */
+    0 0, 100% 0, 100% 100%, 0 100%, 0 0,
+    /* Inner rectangle (hole) - counter-clockwise */
+    36.56% 77.43%, 70.38% 77.43%, 70.38% 94.28%, 36.56% 94.28%, 36.56% 77.43%
+  );
+}
+</style>

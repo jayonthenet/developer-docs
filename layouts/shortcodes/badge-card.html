@@ -1,0 +1,5 @@
+<div class="badge-card">
+  {{ with .Get "badge-text" }}<button>{{ . }}</button>{{ end }}
+  {{ with .Get "title" }}<h3>{{ . }}</h3>{{ end }}
+  {{ with .Get "text" }}<p>{{ . }}</p>{{ end }}
+</div>

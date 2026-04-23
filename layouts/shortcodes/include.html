@@ -1,0 +1,11 @@
+{{- $file := .Get 0 | readFile | replaceRE "^---[\\s\\S]+?---" "" -}}
+{{- if not $file -}}
+  {{- print "Include file not found: " (.Get 0) | errorf  -}}
+{{- end -}}
+{{- $param1 := .Get 1 | default "" -}}
+{{- $param2 := .Get 2 | default "" -}}
+{{- $param3 := .Get 3 | default "" -}}
+{{- $file = replace $file "__INCLUDE_PARAM1__" $param1 -}}
+{{- $file = replace $file "__INCLUDE_PARAM2__" $param2 -}}
+{{- $file = replace $file "__INCLUDE_PARAM3__" $param3 -}}
+{{ print $file | markdownify }}

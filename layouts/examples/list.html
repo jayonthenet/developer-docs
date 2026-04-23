@@ -1,0 +1,82 @@
+{{ define "main" }}
+	{{ if hasSuffix .Params.url "/examples" }}
+		{{ partial "content/examples/examples-index" . }}
+	{{ else }}
+		{{ $section := split .RelPermalink "/" }}
+		{{ $folder := print (index $section 1) "/" (index $section 2) "/" (index $section 3)}}
+		{{ $labels := slice }}
+		{{ range where site.Params.exampleTypeLabels "name" (index $section 3) }}
+			{{ $labels = .labels }}
+		{{ end }}
+		{{ $labels = apply $labels "anchorize" "." }}
+		{{ $labels = apply $labels "strings.Replace" "." "-" "" }}
+
+		{{ $metadata := site.Data.examplesMeta }}
+
+		<div 
+			id="examples-container" 
+			class="d-flex container-fluid" 
+			data-folder="{{ $folder }}"
+		>
+			{{ partial "content/examples/filters" (dict
+				"context" .
+			) }}
+			<div class="examples-content examples-page mt-4 docs-content">
+				{{ .Content }}
+				{{ range .Pages }}
+					{{ $title := .Title }}
+					<div 
+						class="examples-list-item" 
+						id="{{ .Title | urlize }}"
+						{{ if .Params.parent }}
+							data-{{ index $labels 1 }}="{{ .Title | urlize }}"
+							data-{{ index $labels 0 }}="{{ .Params.parent | urlize }}"							
+						{{ else }}
+							data-{{ index $labels 0 }}="{{ .Title | urlize }}"
+						{{ end }}
+						{{ if .Params.flavor }}
+							data-{{ index $labels 2 }}="{{ .Params.flavor | urlize }}"	
+						{{ end }}
+						{{ if .Params.features }}
+							data-features="{{ apply .Params.features "strings.Replace" "." " " "-" }}"
+						{{ end }}
+						{{ if .Params.types }}
+							data-types="{{ apply .Params.types "strings.Replace" "." " " "-" }}"
+						{{ end }}
+					>
+						<div class="examples-list-title">
+							<h2>
+								<a href="{{ .RelPermalink }}">
+									{{ .Title }}
+								</a>
+							</h2>
+							{{ if .Params.parent }}
+								<span class="examples-parent-badge">{{ .Params.parent }}</span>
+							{{ end }}
+							{{ if .Params.flavor }}
+								<span class="examples-parent-badge">{{ .Params.flavor }}</span>
+							{{ end }}
+							{{ if .Params.features }}
+								{{ range .Params.features }}
+									<span class="examples-parent-badge">{{ . | humanize }}</span>
+								{{ end }}
+							{{ end }}
+							{{ if .Params.types }}
+								{{ range .Params.types }}
+									<span class="examples-parent-badge">{{ . | humanize }}</span>
+								{{ end }}
+							{{ end }}
+						</div>
+						{{ $excerpt := replaceRE `\[(?P<label>[^]]+)\]\(([^h]|h[^t]|ht[^t]|htt[^p])[^\)]*\)` "${label}" .Params.excerpt }}
+						<div>
+							{{ $excerpt | markdownify }}
+							{{ if .Params.hasMore }}
+								<span>(...)</span>
+							{{ end }}
+						</div>
+					</div>
+				{{ end }}
+			</div>
+		</div>
+	{{ end }}
+{{ end }}

@@ -1,0 +1,7 @@
+<!--
+Renders the Description of a page
+It accepts the relative path to a page (from the content directory) as an argument
+If nothing is passed in, uses the current page
+-->
+{{- $path := .Get 0 | default .Page.File.Path -}}
+{{- with .Site.GetPage $path -}}{{ .Description | markdownify }}{{- else }}{{- fmt.Errorf "Page %s not found when rendering description shortcode" (.Get 0)}}{{ end -}}

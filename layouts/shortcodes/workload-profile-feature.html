@@ -1,0 +1,68 @@
+<!--
+Working around the restriction that Hugo does not render markdown in shortcodes
+which is enclosed in HTML tags. We therefore generate the HTML parts using "printf".
+-->
+{{ $exampleLibrarySourcePath := site.Params.exampleLibrarySourcePath }}
+{{ $scoreFile := .Get "score-file" }}
+{{ $scoreExampleFile := .Get "score-example-file" }}
+{{ $scoreExtensionFile := .Get "score-extension-file" }}
+{{ $scoreExtensionExampleFile := .Get "score-extension-example-file" }}
+
+### Configuration and examples
+
+{{ printf "<table><thead><tr><th>Definition</th><th>Usage in Score</th></tr></thead>" | safeHTML }}
+{{ printf "<tbody><tr><td>" | safeHTML }}
+Workload Profile definition:
+
+```json
+{{ .Get "wp-definition" | safeHTML }}
+```
+{{ printf "</td><td>" | safeHTML }}
+Score file:
+
+{{- if $scoreExampleFile }}
+  {{- partial "content/code-block" ( dict "currentPage" $.Page "file" (print $exampleLibrarySourcePath $scoreExampleFile ) ) }}
+{{- else if $scoreFile }}
+
+```yaml
+{{ $scoreFile | safeHTML }}
+```
+
+{{- else }}
+
+```yaml
+# Not required for this feature
+```
+
+{{- end}}
+
+Score extension file:
+
+{{- if $scoreExtensionExampleFile }}
+  {{- partial "content/code-block" ( dict "currentPage" $.Page "file" (print $exampleLibrarySourcePath $scoreExtensionExampleFile ) ) }}
+{{- else if $scoreExtensionFile }}
+
+```yaml
+{{ $scoreExtensionFile | safeHTML }}
+```
+
+{{- else }}
+```yaml
+# Not required for this feature
+```
+
+{{- end}}
+
+
+<!--
+  ```yaml
+  {{ .Get "score-extension-file" | safeHTML }}
+  ``` 
+-->
+{{ printf "</td></tr></tbody></table>" | safeHTML }}
+
+Resulting Deployment Set snippet:
+
+```json
+{{ .Get "resulting-deployment-set" | safeHTML }}
+```

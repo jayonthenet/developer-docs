@@ -1,0 +1,11 @@
+<!--
+  This shortcode renders the raw content of a file from a public GitHub repository
+  Parameters:
+    - filename: relative filename underneath the GitHub base URL as specified by the config param GitHubRawBaseUrl
+    - lang: (optional) language to use for highlighting, e.g. "yaml". If not set, the extension of the file is used
+-->
+
+{{- $GitHubRawBaseUrl := $.Page.Site.Params.GitHubRawBaseUrl }}
+{{ $url := print $GitHubRawBaseUrl (.Get "filename") }}
+
+{{- partial "content/code-block" ( dict "currentPage" $.Page "gitHubUrl" $url ) -}}

@@ -1,0 +1,136 @@
+# Note: append "/" to relative links to precent "Mixed content" warnings in Chromium-based browsers
+# This file contains the landing cards for both products. Use the "product" attribute to assign a card
+- title: 🛍️ Product
+  column: 1
+  weight: 1
+  content:
+    - type: link
+      title: Platform Orchestrator overview
+      url: /platform-orchestrator/docs/what-is-the-platform-orchestrator/overview/
+    - type: link
+      title: Use cases
+      url: /platform-orchestrator/docs/what-is-the-platform-orchestrator/use-cases/
+    - type: link
+      title: Core concepts
+      url: /platform-orchestrator/docs/what-is-the-platform-orchestrator/core-concepts/
+    - type: divider
+    - type: link
+      title: CLI
+      url: /platform-orchestrator/docs/integrations/cli/
+    - type: link
+      title: CLI cheat sheet
+      url: /platform-orchestrator/docs/reference/cli-cheat-sheet/
+    - type: divider
+    - type: link
+      title: Platform Orchestrator API
+      url: /platform-orchestrator/docs/reference/api-specification/
+- title: 🎉 Use cases
+  column: 1
+  weight: 3
+  content:
+    - type: link
+      title: AWS Lambda function deployment
+      url: /platform-orchestrator/docs/use-cases/aws-lambda-function-deployment/
+    - type: link
+      title: Rollback
+      url: /platform-orchestrator/docs/use-cases/rollback/
+    - type: link
+      title: Infrastructure drift detection
+      url: /platform-orchestrator/docs/use-cases/infrastructure-drift-detection/
+    - type: link
+      title: Impact analysis
+      url: /platform-orchestrator/docs/use-cases/impact-analysis/
+    - type: link
+      title: Progressive rollouts
+      url: /platform-orchestrator/docs/use-cases/progressive-rollouts/
+    - type: link
+      title: Rightsizing for cost control
+      url: /platform-orchestrator/docs/use-cases/rightsizing-for-cost-control/
+- title: ➡️ Getting started
+  column: 2
+  weight: 1
+  content:
+    - type: link
+      title: Get started
+      url: /platform-orchestrator/docs/tutorial/get-started/
+    - type: link
+      title: First deployment
+      url: /platform-orchestrator/docs/tutorial/first-deployment/
+- title: ⚙️ Configure
+  column: 2
+  weight: 2
+  content:
+    - type: link
+      title: Projects
+      url: /platform-orchestrator/docs/configure/projects/
+    - type: link
+      title: Environments
+      url: /platform-orchestrator/docs/configure/environments/
+    - type: link
+      title: Resource types
+      url: /platform-orchestrator/docs/configure/resource-types/
+    - type: divider
+    - type: link
+      title: Modules
+      url: /platform-orchestrator/docs/configure/modules/
+    - type: link
+      title: Providers
+      url: /platform-orchestrator/docs/configure/providers/
+    - type: link
+      title: Runners
+      url: /platform-orchestrator/docs/configure/runners/overview/
+- title: 🪄 Deploy
+  column: 2
+  weight: 3
+  content:
+    - type: link
+      title: Manifests
+      url: /platform-orchestrator/docs/deploy/manifests/
+    - type: link
+      title: Deployments
+      url: /platform-orchestrator/docs/deploy/deployments/
+    - type: link
+      title: Rollbacks
+      url: /platform-orchestrator/docs/deploy/rollbacks/
+- title: 🪡 Integrations
+  column: 3
+  weight: 1
+  content:
+    - type: link
+      title: CLI
+      url: /platform-orchestrator/docs/integrations/cli/
+    - type: link
+      title: Terraform/OpenTofu provider
+      url: /platform-orchestrator/docs/integrations/terraform/opentofu-provider/
+    - type: link
+      title: Public TF modules
+      url: /platform-orchestrator/docs/integrations/public-tf-modules/
+    - type: link
+      title: MCP knowledge server
+      url: /platform-orchestrator/docs/integrations/mcp-knowledge-server/
+- title: 🔐 Security
+  column: 3
+  weight: 2
+  content:
+    - type: link
+      title: Connectivity
+      url: /platform-orchestrator/docs/security/connectivity/
+    - type: link
+      title: Members
+      url: /platform-orchestrator/docs/security/members/
+    - type: link
+      title: RBAC
+      url: /platform-orchestrator/docs/security/rbac/
+- title: 📇 Reference
+  column: 3
+  weight: 3
+  content:
+    - type: link
+      title: API specification
+      url: /platform-orchestrator/docs/reference/api-specification/
+    - type: link
+      title: CLI cheat sheet
+      url: /platform-orchestrator/docs/reference/cli-cheat-sheet/
+    - type: link
+      title: Placeholder expressions
+      url: /platform-orchestrator/docs/reference/placeholder-expressions/

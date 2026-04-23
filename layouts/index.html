@@ -1,0 +1,57 @@
+{{ define "main" }}
+  <style>
+    .card-body {
+      border-radius: 25px;
+      text-align: center;
+      margin: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      transition: transform 0.3s ease-in-out;
+    }
+    .card-body:hover {
+      transform: translateY(-10px);
+    }
+  </style>
+{{ end }}
+{{ define "sidebar-prefooter" }}
+  <div class="row flex-xl-nowrap landing-sidebar-wrapper">
+    <div class="landing-sidebar d-none d-lg-block">
+      <nav id="landing-sidebar" class="docs-links" aria-label="Main navigation">
+        {{ partial "sidebar/docs-menu.html" (site.GetPage "/platform-orchestrator/docs/what-is-the-platform-orchestrator") }}
+			</nav>
+      {{ with site.Data.hotcontent }}
+        <nav class="sidebar-hot-content">
+          {{ range . }}
+            <a href="{{ .url }}" class="sidebar-hot-content-link">{{ .title }}</a>
+          {{ end }}
+        </nav>
+      {{ end }}
+		</div>
+    <main class="landing-content">
+      <div class="cards-section mb-5">
+        {{ with site.Data.landingcards }}
+          <div class="card-column">
+            {{ range sort (where . "column" 1) "weight" }}
+              {{ partial "home/landing-card" . }}
+            {{ end }}
+          </div>
+          <div class="card-column">
+            {{ range sort (where . "column" 2) "weight" }}
+              {{ partial "home/landing-card" . }}
+            {{ end }}
+          </div>
+          <div class="card-column">
+            {{ range sort (where . "column" 3) "weight" }}
+              {{ partial "home/landing-card" . }}
+            {{ end }}
+          </div>
+        {{ end }}
+      </div>
+      <section class="section section-sm container-fluid">
+        <div class="row justify-content-center text-center">
+          <div class="col-lg-9">{{- .Content -}}</div>
+        </div>
+      </section>
+    </main>
+  </div>
+{{ end }}

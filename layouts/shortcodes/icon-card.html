@@ -1,0 +1,7 @@
+<div class="page-card">
+  <p><img src="{{ .Get "iconLink" }}" style="height:36px" /></p>
+  <p>{{ .Get "text" | markdownify }}</p>
+  <a class="page-card-link" href="{{ .Get "url" }}">
+    {{ .Get "linkLabel" }}
+  </a>
+</div>

@@ -1,0 +1,19 @@
+{{ $ctx := "info" }}
+{{ with .Get "context" }}
+  {{ $ctx = . }}
+{{ end }}
+
+<div class="alert alert-{{ $ctx }} d-flex" role="alert">
+  <div class="flex-shrink-1 alert-icon">
+    <img src="/images/svg/alert/{{ $ctx }}.svg" alt="{{ $ctx }}">
+  </div>
+  {{ with .Get "text"}}
+    <div class="w-100">{{ . | safeHTML }} </div>
+  {{ else }}
+    {{ with .Inner}}
+      <div class="w-100"> {{ . | markdownify}}</div>
+    {{ else }}
+      {{ errorf "No valid text variable or Inner content given"}}
+    {{ end }}
+  {{ end}}
+</div>

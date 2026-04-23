@@ -1,0 +1,75 @@
+.notfound-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  background-image: url("/images/svg/home/maze.svg");
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transform: translateY(3rem);
+
+  @media (max-width: 768px) {
+    background-image: none;
+  }
+
+  [data-dark-mode] & {
+    background-image: url("/images/svg/home/maze_dark.svg");
+
+    @media (max-width: 768px) {
+      background-image: none;
+    }
+  }
+}
+
+.notfound-number {
+  font-size: 194px;
+  font-weight: 500;
+  color: $link-color-dark;
+
+  @media (max-width: 768px) {
+    font-size: 164px;
+  }
+}
+
+.notfound-heading {
+  color: #000311;
+  font-size: 22px;
+  font-weight: 500;
+
+  [data-dark-mode] & {
+    color: $white;
+  }
+}
+
+.notfound-text {
+  color: #000311;
+  opacity: 0.65;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Akkurat";
+  letter-spacing: 0.8px;
+
+  [data-dark-mode] & {
+    color: $white;
+  }
+}
+
+.notfound-button {
+  border-radius: 6px;
+  padding: 10px 16px;
+  color: $white;
+  font-family: Lazzer;
+  font-size: 15px;
+  border: none;
+  background: $link-color;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $white;
+    background: $link-color;
+  }
+
+  [data-dark-mode] & {
+    color: $white;
+  }
+}

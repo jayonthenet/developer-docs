@@ -1,0 +1,159 @@
+{{ $indexTemplate := resources.Get "js/index.js" -}}
+{{ $index := $indexTemplate | resources.ExecuteAsTemplate "index.js" . -}}
+
+{{ $bs := resources.Get "js/bootstrap.js" -}}
+{{ $bs := $bs | js.Build -}}
+
+{{ $highlight := resources.Get "js/highlight.js" -}}
+{{ $highlight := $highlight | js.Build -}}
+
+{{ $katex := resources.Get "js/vendor/katex/dist/katex.js" -}}
+{{ $katexAutoRender := resources.Get "js/vendor/katex/dist/contrib/auto-render.js" -}}
+
+{{ $app := resources.Get "js/app.js" -}}
+
+{{ $slice := slice $app -}}
+
+{{ if .Site.Params.options.lazySizes -}}
+  {{ $lazySizes := resources.Get "js/lazysizes.js" -}}
+  {{ $lazySizes := $lazySizes | js.Build -}}
+  {{ $slice = $slice | append $lazySizes -}}
+{{ end -}}
+
+{{ if .Site.Params.options.clipBoard -}}
+  {{ $clipBoard := resources.Get "js/clipboard.js" -}}
+  {{ $clipBoard := $clipBoard | js.Build -}}
+  {{ $slice = $slice | append $clipBoard -}}
+{{ end -}}
+
+{{ if .Site.Params.options.instantPage -}}
+  {{ $instantPage := resources.Get "js/instant.page.js" -}}
+  {{ $instantPage := $instantPage | js.Build -}}
+  {{ $slice = $slice | append $instantPage -}}
+{{ end -}}
+
+{{ $showFlexSearch := .Site.Params.options.flexSearch }}
+
+{{ if $showFlexSearch -}}
+  {{ $flexSearch := resources.Get "js/vendor/flexsearch/dist/flexsearch.bundle.js" -}}
+  {{ $slice = $slice | append $flexSearch -}}
+  {{ if and (isset .Site.Params.options "searchsectionsshow") (not (eq .Site.Params.options.searchSectionsShow "ALL")) -}}
+  {{ $showFlexSearch = or (eq (len .Site.Params.options.searchSectionsShow) 0) (in .Site.Params.options.searchSectionsShow .Section) (and .IsHome (in .Site.Params.options.searchSectionsShow "HomePage")) -}}
+  {{ end -}}
+{{ end -}}
+
+{{ if and (.Site.Params.alert) (.Site.Params.alertDismissable) -}}
+  {{ $alert := resources.Get "js/alert.js" -}}
+  {{ $alert := $alert | js.Build -}}
+  {{ $slice = $slice | append $alert -}}
+{{ end -}}
+
+{{ if .Site.Params.options.kaTex -}}
+  {{ $katexConfig := resources.Get "js/katex.js" -}}
+  {{ $katexConfig := $katexConfig | js.Build -}}
+  {{ $slice = $slice | append $katexConfig -}}
+{{ end -}}
+
+{{ $scrollLock := resources.Get "js/scroll-lock.js" | js.Build -}}
+{{ $slice = $slice | append $scrollLock -}}
+
+{{ $sideMenu := resources.Get "js/side-menu-mobile.js" | js.Build -}}
+{{ $slice = $slice | append $sideMenu -}}
+
+
+
+{{ if .Site.Params.options.toTopButton -}}
+  {{ $toTopButton := resources.Get "js/to-top.js" -}}
+  {{ $toTopButton := $toTopButton | js.Build -}}
+  {{ $slice = $slice | append $toTopButton -}}
+{{ end -}}
+
+{{ $js := $slice | resources.Concat "main.js" -}}
+
+{{ if eq (hugo.Environment) "development" -}}
+  {{ if .Site.Params.options.bootStrapJs -}}
+    <script src="{{ $bs.RelPermalink }}" defer></script>
+  {{ end -}}
+  {{ if .Site.Params.options.highLight -}}
+    <script src="{{ $highlight.RelPermalink }}" defer></script>
+  {{ end -}}
+  {{ if .Site.Params.options.kaTex -}}
+    <script src="{{ $katex.RelPermalink }}" defer></script>
+    <script src="{{ $katexAutoRender.RelPermalink }}" onload="renderMathInElement(document.body);" defer></script>
+  {{ end -}}
+  <script src="{{ $js.RelPermalink }}" defer></script>
+  {{ if $showFlexSearch -}}
+    <script src="{{ $index.RelPermalink }}" defer></script>
+  {{ end -}}
+{{ else -}}
+  {{ $js := $js | minify | fingerprint "sha512" -}}
+  {{ $index := $index | minify | fingerprint "sha512" -}}
+  {{ $bs := $bs | minify | fingerprint "sha512" -}}
+  {{ $highlight := $highlight | minify | fingerprint "sha512" -}}
+  {{ $katex := $katex | minify | fingerprint "sha512" -}}
+  {{ $katexAutoRender := $katexAutoRender | minify | fingerprint "sha512" -}}
+  {{ if .Site.Params.options.bootStrapJs -}}
+    <script src="{{ $bs.RelPermalink }}" integrity="{{ $bs.Data.Integrity }}" crossorigin="anonymous" defer></script>
+  {{ end -}}
+  {{ if .Site.Params.options.highLight -}}
+    <script src="{{ $highlight.RelPermalink }}" integrity="{{ $highlight.Data.Integrity }}" crossorigin="anonymous" defer></script>
+  {{ end -}}
+  {{ if .Site.Params.options.kaTex -}}
+    <script src="{{ $katex.RelPermalink }}" integrity="{{ $katex.Data.Integrity }}" crossorigin="anonymous" defer></script>
+    <script src="{{ $katexAutoRender.RelPermalink }}" integrity="{{ $katexAutoRender.Data.Integrity }}" crossorigin="anonymous" defer></script>
+  {{ end -}}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" crossorigin="anonymous" defer></script>
+  {{ if $showFlexSearch -}}
+    <script src="{{ $index.Permalink }}" integrity="{{ $index.Data.Integrity }}" crossorigin="anonymous" defer></script>
+  {{ end -}}
+{{ end -}}
+
+{{ if .Site.Params.options.algolia_docsearch }}
+  <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
+  <script>
+    docsearch({
+      container: "#docsearch",
+      appId: "{{ .Site.Params.docsearch.appId }}",
+      indexName: "{{ .Site.Params.docsearch.indexName }}",
+      apiKey: "{{ .Site.Params.docsearch.apiKey }}",
+    });
+    const docSearchButton = document.getElementsByClassName("DocSearch-Button");
+    const offcanvas = document.getElementById("offcanvasDoks");
+    docSearchButton[0].addEventListener("click", function () {
+      if (offcanvas.classList.contains("show")) {
+        offcanvas.classList.remove("show");
+        offcanvas.removeAttribute("aria-modal");
+        offcanvas.removeAttribute("role");
+        window.scrollTo(0,0);
+      }
+    });
+  </script>
+{{ end }}
+
+<!-- Scroll navigation all the way to the bottom to maximize the chance
+ that the current page's nav item is visible -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementsByClassName('docs-links')[0].scrollTop = 5000
+});
+</script>
+
+{{ $tables := resources.Get "js/tables.js" -}}
+{{ $tablesSecureJS := $tables | resources.Fingerprint "sha512" }}
+<script src="{{ $tablesSecureJS.RelPermalink }}" integrity="{{ $tablesSecureJS.Data.Integrity }}"></script>
+
+{{ $multifilter := resources.Get "js/multifilter.js" | js.Build -}}
+{{ $multifilterSecureJS := $multifilter | resources.Fingerprint "sha512" }}
+<script src="{{ $multifilterSecureJS.RelPermalink }}" integrity="{{ $multifilterSecureJS.Data.Integrity }}"></script>
+
+{{ $mermaid := resources.Get "js/mermaid.js" | js.Build -}}
+{{ $mermaidSecureJs := $mermaid | fingerprint "sha512" -}}
+<script src="{{ $mermaidSecureJs.RelPermalink }}" integrity="{{ $mermaidSecureJs.Data.Integrity }}" crossorigin="anonymous"></script>
+
+{{ $sidebarScroll := resources.Get "js/sidebar-scroll.js" | js.Build -}}
+{{ $sidebarScrollSecureJS := $sidebarScroll | resources.Fingerprint "sha512" }}
+<script src="{{ $sidebarScrollSecureJS.RelPermalink }}" integrity="{{ $sidebarScrollSecureJS.Data.Integrity }}"></script>
+
+{{ $tabs := resources.Get "js/tabs.js" | js.Build -}}
+{{ $tabsSecureJS := $tabs | resources.Fingerprint "sha512" }}
+<script src="{{ $tabsSecureJS.RelPermalink }}" integrity="{{ $tabsSecureJS.Data.Integrity }}" crossorigin="anonymous"></script>

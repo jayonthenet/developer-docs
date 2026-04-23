@@ -1,0 +1,12 @@
+<div class="card-body">
+  <h4 class="card-title">{{ .title }}</h4>
+  <div class="card-links">
+    {{ range .content }}
+      {{ if eq .type "link" }}
+        <a href="{{ .url }}" class="card-link">{{ .title }}</a>
+      {{ else if eq .type "divider" }}
+        <div class="card-divider"></div>
+      {{ end }}
+    {{ end }}
+  </div>
+</div>

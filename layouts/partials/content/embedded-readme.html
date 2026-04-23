@@ -1,0 +1,49 @@
+<!--
+  Renders a markdown file which is supposed to be an external README embedded into another page.
+
+  It performs these modifications on the content to make them work on the rendered page:
+  - Squashes all markdown headings contained in the file to a unified level so that the resulting page's TOC still works.
+  - Removes all non-externals links, i.e. all links whose target does not begin with "http". They only work within the source repo.
+  - Adds a link to the external (GitHub) source file
+
+  Parameter: a "dict" containing these elements:
+  - file: fully qualified file name of the file to render
+  - headingLevel: target heading level for all headings contained in the file
+  - gitHubUrl: (optional) URL of the source reference on GitHub
+-->
+
+{{- if fileExists .file }}
+  <!-- Prepare unified heading level -->
+  {{- $unifiedHeading := print (strings.Repeat .headingLevel "#") " " }}
+
+  {{- if .gitHubUrl }}
+    {{- print "[(View README on GitHub)](" .gitHubUrl ")" }}
+  {{ end }}
+  
+  <!-- Read file content and apply unified heading modification -->
+  {{- $fileContent := .file | readFile | replaceRE `#+ ` $unifiedHeading -}}
+
+  <!-- Remove all non-external links. -->
+  {{ $matches := findRE `\[(?P<label>[^]]+)\]\((?P<url>[^)]+)\)` $fileContent }}
+  {{ range $matches }}
+    {{ $labels := findRE `\[(.*?)\]` . 1 }}
+    {{ $label := "" }}
+    {{ range $labels }}
+      {{ $label = index (split (index (split . "[") 1) "]") 0 }}
+    {{ end }}
+    {{ $urls := findRE `\((.*?)\)` .  1 }}
+    {{ $url := "" }}
+    {{ range $urls }}
+      {{ $url = index (split (index (split . "(") 1) ")") 0 }}
+    {{ end }}
+    {{- if not (or (hasPrefix $url "https://") (hasPrefix $url "http://")) }}
+      {{ $fileContent = replace $fileContent . (print "`" $label "`") 1 }}
+    {{- end }}
+  {{ end }}
+
+  <!-- Print the modified content -->
+  {{- print "\n" $fileContent "\n" | safeHTML }}
+
+{{- else }}
+  {{ errorf "File %s does not exist." .file }}
+{{- end }}

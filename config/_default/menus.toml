@@ -1,0 +1,42 @@
+[[main]]
+identifier = "platform-orchestrator_docs"
+name = "Documentation"
+weight = 1
+url = "/platform-orchestrator/docs/what-is-the-platform-orchestrator/overview"
+
+## Excluding the v2 "Guides" menu until there is any content
+## [[main]]
+## identifier = "platform-orchestrator_guides"
+## name = "Guides"
+## weight = 2
+## url = "/platform-orchestrator/guides"
+
+[[main]]
+identifier = "platform-orchestrator_api"
+name = "API"
+weight = 3
+url = "/platform-orchestrator/docs/reference/api-specification"
+
+[[social]]
+name = "LinkedIn"
+url = "https://www.linkedin.com/company/bechtle"
+weight = 1
+pre = "<i class='fab fa-linkedin'></i>"
+
+[[social]]
+name = "Xing"
+url = "https://www.xing.com/companies/bechtleag"
+weight = 2
+pre = "<i class='fab fa-xing'></i>"
+
+[[social]]
+name = "Instagram"
+url = "https://www.instagram.com/bechtleag"
+weight = 3
+pre = "<i class='fab fa-instagram'></i>"
+
+[[social]]
+name = "YouTube"
+url = "https://www.youtube.com/user/BechtleAG"
+weight = 4
+pre = "<i class='fab fa-youtube'></i>"

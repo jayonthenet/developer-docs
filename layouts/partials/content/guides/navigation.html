@@ -1,0 +1,13 @@
+{{ $urlLastItem := index (split .RelPermalink "/") 3 }}
+{{ $guidesPage := site.GetPage ( print .Section "/" "guides") }}
+<div class="guides-navigation">
+  {{ range $guidesPage.Pages }}
+    {{ if not .IsPage }}
+      {{ $url := index (split .RelPermalink "/") 3 }}
+      {{ $title := .Title }}
+      {{ with .GetPage "overview" }}
+        <a href="{{ .RelPermalink }}" class="guides-navigation-item {{ if eq $url $urlLastItem }}active{{ end }}">{{ $title }}</a>
+      {{ end }}
+    {{ end }}
+  {{ end }}
+</div>

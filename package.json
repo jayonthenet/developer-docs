@@ -1,0 +1,90 @@
+{
+  "name": "@hyas/doks",
+  "description": "Doks theme",
+  "version": "0.5.0",
+  "engines": {
+    "node": ">=16.16.0"
+  },
+  "browserslist": [
+    "defaults"
+  ],
+  "repository": "https://github.com/h-enk/doks",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "init": "shx rm -rf .git && git init -b main",
+    "create": "exec-bin node_modules/.bin/hugo/hugo new",
+    "prestart": "npm run clean",
+    "start": "exec-bin node_modules/.bin/hugo/hugo server --bind=0.0.0.0 --disableFastRender",
+    "prebuild": "npm run clean",
+    "build": "exec-bin node_modules/.bin/hugo/hugo --gc --minify",
+    "build:preview": "exec-bin node_modules/.bin/hugo/hugo --gc --minify -D -F",
+    "clean": "shx rm -rf public resources",
+    "clean:install": "shx rm -rf package-lock.json node_modules ",
+    "lint": "npm run -s lint:scripts && npm run -s lint:styles && npm run -s lint:markdown",
+    "lint:scripts": "eslint assets/js config",
+    "lint:styles": "stylelint \"assets/scss/**/*.{css,sass,scss,sss,less}\"",
+    "lint:markdown": "markdownlint-cli2 \"*.md\" \"content/**/*.md\"",
+    "lint:markdown-fix": "markdownlint-cli2 --fix \"*.md\" \"content/**/*.md\"",
+    "format": "dprint fmt",
+    "server": "exec-bin node_modules/.bin/hugo/hugo server",
+    "stage": "exec-bin node_modules/.bin/hugo/hugo --environment staging server -b http://localhost --disableFastRender --ignoreCache",
+    "test": "npm run -s lint",
+    "env": "env",
+    "gen-all": "yarn gen-hctl-version && yarn gen-humanitec-runner-version && yarn gen-use-cases && yarn gen-tf-modules-page",
+    "gen-hctl-version": "node ./gen/hctl-version/index.js $(gh release list -R humanitec/hctl --exclude-drafts --exclude-pre-releases -L 1 --json tagName  | jq -r '.[0].tagName')",
+    "gen-humanitec-runner-version": "node ./gen/humanitec-runner-version/index.js $(gh api /orgs/humanitec/packages/container/humanitec-runner/versions | jq -r .[0].metadata.container.tags[0])",
+    "gen-use-cases": "find ./content/platform-orchestrator/docs/use-cases ! -name '_index.md' -type f -exec rm -f {} + && rm -rf ./gen/use-cases/platform-orchestrator-use-cases && git clone --depth 1 https://github.com/humanitec/platform-orchestrator-use-cases.git ./gen/use-cases/platform-orchestrator-use-cases && node ./gen/use-cases/index.js && rm -rf ./gen/use-cases/platform-orchestrator-use-cases",
+    "gen-tf-modules-page": "node gen/humanitec-tf-modules/gen-tf-modules-page.js",
+    "precheck": "npm version",
+    "check": "exec-bin node_modules/.bin/hugo/hugo version",
+    "copy:katex-fonts": "shx cp ./node_modules/katex/dist/fonts/* ./static/fonts/",
+    "postinstall": "hugo-installer --version otherDependencies.hugo --extended --destination node_modules/.bin/hugo",
+    "version": "auto-changelog -p && git add CHANGELOG.md"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.18",
+    "@babel/core": "^7.18",
+    "@babel/preset-env": "^7.18",
+    "@fullhuman/postcss-purgecss": "^8.0",
+    "@hyas/images": "^3.2.0",
+    "auto-changelog": "^2.4",
+    "autoprefixer": "^10.4",
+    "bootstrap": "^5.2.0-beta1",
+    "clipboard": "^2.0",
+    "dprint": "^0.53.1",
+    "eslint": "^10.0",
+    "exec-bin": "^1.0.0",
+    "flexsearch": "^0.8.147",
+    "highlight.js": "^11.5",
+    "hugo-installer": ">=4.0.1",
+    "instant.page": "^5.1",
+    "katex": "^0.16",
+    "lazysizes": "^5.3",
+    "markdownlint-cli2": "^0.22.0",
+    "mermaid": "^11.4.1",
+    "netlify-plugin-submit-sitemap": "^0.4.0",
+    "node-fetch": "^3.2",
+    "postcss": "^8.4",
+    "postcss-cli": "^11.0",
+    "purgecss-whitelister": "^2.4",
+    "shx": "^0.4.0",
+    "stylelint": "^17.0",
+    "stylelint-config-standard-scss": "^17.0",
+    "yaml": "^2.6.0"
+  },
+  "otherDependencies": {
+    "hugo": "0.142.0"
+  },
+  "dependencies": {
+    "@docsearch/js": "^4.0.1",
+    "gray-matter": "^4.0.3",
+    "hcl2-parser": "^1.0.3",
+    "toml": "^3.0.0"
+  },
+  "overrides": {
+    "semver": "^7.6.3"
+  }
+}

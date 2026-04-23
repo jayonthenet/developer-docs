@@ -1,0 +1,8 @@
+public
+/resources
+.netlify
+.hugo_build.lock
+node_modules
+yarn.lock
+.prettierignore
+.DS_Store

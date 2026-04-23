@@ -1,0 +1,50 @@
+.guides-navigation {
+  display: flex;
+  width: 100%;
+  background-color: $white;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 1.25rem 0.5rem;
+  border-bottom: 1px solid lighten($link-color, 30%);
+  border-top: 1px solid lighten($link-color, 30%);
+
+  [data-dark-mode] & {
+    background-color: $bg-nav-dark;
+    border-bottom: 1px solid darken($link-color, 30%);
+    border-top: 1px solid darken($link-color, 30%);
+  }
+}
+
+.guides-navigation a {
+  font-family: 'Lazzer';
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  color: $gray-500;
+
+  [data-dark-mode] & {
+    color: $gray-500;
+  }
+
+  &:hover {
+    color: $link-color;
+    text-decoration: none;
+  }
+
+  &:focus {
+    color: $link-color;
+    text-decoration: none;
+  }
+
+  &.active {
+    color: #000311;
+    border-bottom: 3px solid $electric-blue;
+    padding-bottom: 0.25rem;
+
+    [data-dark-mode] & {
+      color: $white;
+    }
+
+    text-decoration: none;
+  }
+}

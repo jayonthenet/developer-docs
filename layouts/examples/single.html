@@ -1,0 +1,19 @@
+{{ define "main" }}
+	{{ $section := split .RelPermalink "/" }}
+	{{ $folder := print (index $section 1) "/" (index $section 2) "/" (index $section 3) }}
+	<div 
+		id="examples-container" 
+		class="d-flex container-fluid" 
+		data-folder="{{ $folder }}"
+	>
+		{{ partial "content/examples/filters" (dict
+			"context" .
+		) }}
+		<div class="examples-page examples-content mt-4 docs-content">
+			<div class="examples-single-title">
+				<h1>{{ .Title }}</h1>
+				{{ .Content }}
+			</div>
+		</div>
+	</div>
+{{ end }}

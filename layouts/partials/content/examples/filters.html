@@ -1,0 +1,145 @@
+{{ $exampleLibrarySourcePath :=  site.Params.exampleLibrarySourcePath }}
+{{ $metadata := site.Data.examplesMeta }}
+
+{{ $examplesSection := print (index (split .context.Path "/") 1) "/" (index (split .context.Path "/") 2) }}
+{{ $sectionWithoutBase := index (split .context.Path "/") 3 }}
+{{ $folder := print $exampleLibrarySourcePath "/" $sectionWithoutBase }}
+
+{{ $labels := slice }}
+{{ range where site.Params.exampleTypeLabels "name" $sectionWithoutBase }}
+  {{ $labels = .labels }}
+{{ end }}
+
+<div class="examples-sidebar">
+  <h3>{{ print $sectionWithoutBase | humanize | strings.Title }}</h3>
+
+  {{ if len .context.Pages }}
+    <div class="mt-4">
+      <span id="pagecount" class="examples-pagecount">{{ len .context.Pages }}</span> 
+      examples found
+    </div>
+  {{ end }}
+  <div class="mt-4">
+    {{ with site.GetPage (print $examplesSection "/" $sectionWithoutBase) }}
+      <div>
+        <h3>{{ index $labels 0 }}</h3>
+        {{ $names := slice }}
+        {{ $dataDirectory := ( replace (index $labels 0 | urlize) "-" "" ) }}
+        {{ range readDir $folder }}
+          {{ if not (eq (upper .Name) "README.MD" ) }}
+            {{ $names = $names | append (.Name | humanize) }}
+          {{ end }}
+        {{ end }}
+        {{ range sort ($names | uniq) }}
+          <div class="form-check">
+            <input 
+              class="form-check-input" 
+              type="checkbox" 
+              id="check-{{ $dataDirectory }}-{{ . | urlize }}" 
+              value="{{ . | urlize }}" 
+              data-directory="{{ $dataDirectory }}"
+            />
+            <label class="form-check-label" for="check-{{ $dataDirectory }}-{{ . | urlize }}">
+              {{ . }}
+            </label>
+          </div>
+        {{ end }}
+      </div>
+      <div class="mt-4">
+        <h3>{{ index $labels 1 }}</h3>
+        {{ $names = slice }}
+        {{ $dataDirectory = ( replace (index $labels 1 | urlize) "-" "" ) }}
+        {{ range readDir $folder }}
+          {{ if and (.IsDir) (not (eq (upper .Name) "README.MD" )) }}
+            {{ $subfolder := print $folder "/" .Name }}
+            {{ range readDir $subfolder }}
+              {{ if .IsDir }}
+                {{ $names = $names | append (.Name | humanize) }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+        {{ range sort ($names | uniq) }}
+          <div class="form-check">
+            <input 
+              class="form-check-input" 
+              type="checkbox"
+              id="check-{{ $dataDirectory }}-{{ . | urlize }}" 
+              value="{{ . | urlize }}" 
+              data-directory="{{ $dataDirectory }}"
+            />
+            <label class="form-check-label" for="check-{{ $dataDirectory }}-{{ . | urlize }}">
+              {{ . }}
+            </label>
+          </div>
+        {{ end }}
+      </div>
+      <div class="mt-4">
+        <h3>{{ index $labels 2 }}</h3>
+        {{ $names = slice }}
+        {{ $dataDirectory = ( replace (index $labels 2 | urlize) "-" "" ) }}
+        {{ range readDir $folder }}
+          {{ if and (.IsDir) (not (eq (upper .Name) "README.MD" )) }}
+          {{ $subfolder := print $folder "/" .Name }}
+            {{ range readDir $subfolder }}
+              {{ if and (.IsDir) (not (eq (upper .Name) "README.MD" )) }}
+                {{ $subsubfolder := print $subfolder "/" .Name }}
+                {{ range readDir $subsubfolder }}
+                  {{ if .IsDir }}
+                    {{ $names = $names | append (.Name | humanize) }}
+                  {{ end }}
+                {{ end }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+        {{ range sort ($names | uniq) }}
+          <div class="form-check">
+            <input 
+              class="form-check-input" 
+              type="checkbox" 
+              id="check-{{ $dataDirectory }}-{{ . | urlize }}" 
+              value="{{ . | urlize }}" 
+              data-directory="{{ $dataDirectory }}"
+            />
+            <label class="form-check-label" for="check-{{ $dataDirectory }}-{{ . | urlize }}">
+              {{ . }}
+            </label>
+          </div>
+        {{ end }}
+      </div>
+      {{ range $i, $v := $metadata }}
+        {{ if eq $i $sectionWithoutBase }}
+          {{ range $i2, $v2 := $v }}
+            <div class="mt-4">
+              {{ if eq $i2 "types" }}
+              <h3>Resource Type</h3>
+              {{ else }}
+              <h3>{{ $i2 | humanize | singularize }}</h3>
+              {{ end }}
+              {{ $names = slice }}
+              {{ $dataDirectory = $i2 }}
+              {{ range $v2 }}
+                {{ $names = $names | append (. | humanize) }}
+              {{ end }}
+              {{ range sort ($names | uniq) }}
+                <div class="form-check">
+                  <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    id="check-{{ $dataDirectory }}-{{ . | urlize }}" 
+                    value="{{ . | urlize }}" 
+                    data-directory="{{ $dataDirectory }}"
+                  />
+                  <label class="form-check-label" for="check-{{ $dataDirectory }}-{{ . | urlize }}">
+                    {{ . }}
+                  </label>
+                </div>
+              {{ end }}
+            </div>
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  </div>
+</div>

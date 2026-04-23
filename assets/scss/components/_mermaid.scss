@@ -1,0 +1,23 @@
+.mermaid {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+}
+
+.mermaid svg {
+  height: auto;
+}
+
+// ER diagrams
+.attributeBoxOdd {
+  fill: #ebf0fd !important;
+}
+
+// Custom styles that you can apply in Mermaid diagrams
+.highlight > rect, .highlight > polygon, .highlight > circle, .highlight > g > path {
+  stroke: #2156f6 !important;
+  stroke-width: 4px !important;
+}
+
+.nested > rect {
+  fill: #ffffff !important;
+}

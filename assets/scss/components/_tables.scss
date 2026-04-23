@@ -1,0 +1,37 @@
+table {
+  @extend .table;
+
+  margin: 1rem 0;
+
+  th {
+    background-color: $bg-light;
+    padding: 0.75rem;
+    color: $dark;
+    font-family: Lazzer;
+    font-size: 18px;
+
+    [data-dark-mode] & {
+      background-color: $bg-card-dark;
+      color: $white;
+    }
+  }
+
+  td {
+    padding: 0.75rem;
+
+    font-size: 16px;
+    line-height: 22px;
+
+    [data-dark-mode] & {
+      background-color: transparent;
+    }
+  }
+
+  tr {
+    border-bottom: 1px solid $gray-200;
+
+    [data-dark-mode] & {
+      border-bottom: 1px solid $gray-700;
+    }
+  }
+}

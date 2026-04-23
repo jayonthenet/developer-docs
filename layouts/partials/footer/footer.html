@@ -1,0 +1,64 @@
+<footer class="footer text-muted">
+  <div
+    class="container-{{ if .Site.Params.options.fullWidth }}fluid{{ else }}xxl{{ end }}"
+  >
+    <div class="row">
+      <div class="col-lg-8 order-last order-lg-first d-flex align-items-center">
+        <ul class="list-inline d-flex footer-back-to">
+          <li class="list-inline-item">{{ .Site.Params.footer | safeHTML }}</li>
+          <a href="https://bechtle.com" class="footer-logo">
+            <img
+              src="/logo_bechtle.svg"
+              alt="Bechtle Logo"
+              class="nav-logo"
+            />
+            <img
+              src="/logo_bechtle.svg"
+              alt="Bechtle Logo"
+              class="nav-logo-dark"
+            />
+          </a>
+        </ul>
+      </div>
+      {{ if .Site.Menus.footer }}
+      <div class="col-lg-8 order-first order-lg-last text-lg-end">
+        <ul class="list-inline">
+          {{ range .Site.Menus.footer -}}
+          <li class="list-inline-item">
+            <a href="{{ .URL | relURL }}">{{ .Name }}</a>
+          </li>
+          {{ end -}}
+        </ul>
+      </div>
+      {{ end }}
+      <div class="col-lg-8 order-first order-lg-last text-lg-end">
+        <div class="footer-links">
+          <ul class="nav flex-row">
+            {{ range .Site.Menus.social -}}
+            <li class="nav-item">
+              <a class="nav-link social-link" href="{{ .URL | relURL }}" target="_blank"
+                >{{ .Pre | safeHTML }}</a
+              >
+            </li>
+            {{ end -}}
+            {{/*  {{ if .Site.Params.options.darkMode -}}
+            <button
+              class="mode btn btn-link mode-button"
+              type="button"
+              aria-label="Toggle user interface mode"
+            >
+              <span class="toggle-dark">
+                <i class="fas fa-moon"></i>
+              </span>
+              <span class="toggle-light">
+                <i class="fas fa-sun"></i>
+              </span>
+            </button>
+            {{ end -}}  */}}
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,16 @@
+{{ with .Parent -}} 
+{{ partial "main/breadcrumb.html" . -}}
+{{ if .IsHome }}
+  <li class="breadcrumb-item">
+    <a href="/">
+      Home
+    </a>
+  </li>
+  {{ else }}
+    {{ if ne .Title "Developer Docs" }}
+      <li class="breadcrumb-item">
+        {{ .Title }}
+      </li>
+    {{ end }}
+  {{ end }}
+{{ end -}}

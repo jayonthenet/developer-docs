@@ -1,0 +1,97 @@
+<!--
+  This shortcode is intended to render the contents of a part, i.e. subdir, of the example library.
+  It expects a starting directory as its only parameter.
+  Rendering is limited to two directory levels underneath that.
+-->
+
+{{- $headingReplacePattern := "[-_]" }}
+{{- $exampleLibrarySourcePath :=  $.Page.Site.Params.exampleLibrarySourcePath }}
+{{- $exampleLibraryGitHubBaseUrl := $.Page.Site.Params.exampleLibraryGitHubBaseUrl }}
+{{- $lvl0 := print $exampleLibrarySourcePath (.Get 0) }}
+
+{{- /* Find and print README file first */ -}}
+{{- $readmeFile := print $lvl0 "/README.md" }}
+{{- if fileExists $readmeFile }}
+  {{- partial "content/embedded-readme" ( dict "file" $readmeFile "headingLevel" 2 ) -}}
+{{ end }}
+
+{{- /* Render all contained files which are not a README */ -}}
+{{- range readDir $lvl0 }}
+  {{- if and (not .IsDir) (not (eq (upper .Name) "README.MD" )) }}
+    {{- $fileName := print $lvl0 "/" .Name }}
+    {{- partial "content/code-block" ( dict "currentPage" $.Page "file" $fileName "gitHubUrl" (print $exampleLibraryGitHubBaseUrl ( strings.TrimPrefix $exampleLibrarySourcePath $fileName ) ) ) -}}
+  {{- end }}
+{{ end }}
+
+{{- /* Traverse all subdirectories */ -}}
+{{- range readDir $lvl0 }}
+  {{- if .IsDir }}
+    {{- $lvl1 := print $lvl0 "/" .Name }}
+    {{- print "\n" "## " (replaceRE $headingReplacePattern " " .Name  | strings.FirstUpper) }}
+
+    {{- /* Find and print README file first */ -}}
+    {{ $readmeFile := print $lvl0 "/" .Name "/README.md" }}
+    {{- if fileExists $readmeFile }}
+      {{- partial "content/embedded-readme" ( dict "file" $readmeFile "headingLevel" 3 ) -}}
+    {{- end }}
+
+    {{- /* Render all contained files which are not a README */ -}}
+    {{- range readDir $lvl1 }}
+      {{- if and (not .IsDir) (not (eq (upper .Name) "README.MD" )) }}
+        {{- $fileName := print $lvl1 "/" .Name }}
+        {{- partial "content/code-block" ( dict "currentPage" $.Page "file" $fileName "gitHubUrl" (print $exampleLibraryGitHubBaseUrl ( strings.TrimPrefix $exampleLibrarySourcePath $fileName ) ) ) -}}
+      {{- end }}
+    {{ end }}
+
+    {{- /* Traverse all subdirectories */ -}}
+    {{- range readDir $lvl1 }}
+      {{- if .IsDir }}
+        {{- $lvl2 := print $lvl1 "/" .Name }}
+        {{- print "\n" "### " (replaceRE $headingReplacePattern " " .Name  | strings.FirstUpper) }}
+
+        {{- /* Find and print README file first */ -}}
+        {{ $readmeFile := print $lvl1 "/" .Name "/README.md" }}
+        {{- if fileExists $readmeFile }}
+          {{- partial "content/embedded-readme" ( dict "file" $readmeFile "headingLevel" 4 ) -}}
+        {{- end }}
+
+        {{- /* Render all contained files which are not a README */ -}}
+        {{- range readDir $lvl2 }}
+          {{- if and (not .IsDir) (not (eq (upper .Name) "README.MD" )) }}
+            {{- $fileName := print $lvl2 "/" .Name }}
+            {{- partial "content/code-block" ( dict "currentPage" $.Page "file" $fileName "gitHubUrl" (print $exampleLibraryGitHubBaseUrl ( strings.TrimPrefix $exampleLibrarySourcePath $fileName ) ) ) -}}
+          {{- end }}
+        {{- end }}
+       
+        {{- /* Traverse all subdirectories */ -}}
+        {{- range readDir $lvl2 }}
+          {{- if .IsDir }}
+            {{- $lvl3 := print $lvl2 "/" .Name }}
+            {{- print "\n" "### " (replaceRE $headingReplacePattern " " .Name  | strings.FirstUpper) }}
+
+
+            {{- /* Find and print README file first */ -}}
+            {{ $readmeFile := print $lvl2 "/" .Name "/README.md" }}
+            {{- if fileExists $readmeFile }}
+              {{- partial "content/embedded-readme" ( dict "file" $readmeFile "headingLevel" 4 ) -}}
+            {{- end }}
+
+            {{- /* Render all contained files which are not a README */ -}}
+            {{- range readDir $lvl3 }}
+            {{- if and (not .IsDir) (not (eq (upper .Name) "README.MD" )) }}
+              {{- $fileName := print $lvl3 "/" .Name }}
+              {{- partial "content/code-block" ( dict "currentPage" $.Page "file" $fileName "gitHubUrl" (print $exampleLibraryGitHubBaseUrl ( strings.TrimPrefix $exampleLibrarySourcePath $fileName ) ) ) -}}
+            {{- end }}
+          {{- end }}
+
+
+          {{- end }}
+        {{- end }}
+        
+
+      {{- end }}
+    {{- end }}
+
+  {{- end }}
+
+{{ end }}
