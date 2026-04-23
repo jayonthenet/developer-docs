@@ -8,6 +8,14 @@ It uses the [Doks Theme](https://themes.gohugo.io/themes/doks/) for easy layouti
 
 Please mind these items when taking over the developer docs.
 
+### Building and hosting
+
+To quickly build and run the site locally, refer to [Get started](#1-get-started).
+
+For the actual hosting, build and run the container image following the instructions in [Docker](#docker).
+
+If you wish to use the basic auth protected `staging` [environment](#environments) for preview/staging environments, define a new username/password combination and store it in the `nginx/staging/.htpasswd` file with the password encrypted. You can use the `htpasswd` shell utility or this online [htpasswd-generator](https://codeshack.io/htpasswd-generator/) for password encryption.
+
 ### Font awesome
 
 The docs use icons from a [Font awesome](https://fontawesome.com/) icon kit. It is included in `layouts/partials/head/script-header.html` as `<script src="https://kit.fontawesome.com/<kit-name>.js"></script>`.
@@ -77,7 +85,6 @@ When hosting this repo on any other service, you will need to find equivalents t
 
 - Adjust the link target for the "Login" button in `layouts/partials/header/header.html` from the current value `https://console.humanitec.dev/auth/login`
 - Adjust the `domainTLD` in `config/staging/params.toml` and `config/production/params.toml`
-- If you wish to use the basic auth protected `staging` [environment](#environments) for preview/staging environments, define a new username/password combination and store it in the `nginx/staging/.htpasswd` file with the password encrypted. You can use the `htpasswd` shell utility or this online [htpasswd-generator](https://codeshack.io/htpasswd-generator/) for encryption
 - Adjust all GitHub links pointing to Humanitec sources. Search for "`github.com/humanitec`" to find all occurrences
 - Adjust the links to the Terraform/OpenTofu providers in `content/platform-orchestrator/docs/integrations/terraform-opentofu-providers.md`
 - Consider pruning the "Change log" content in `content/platform-orchestrator/docs/updates/change-log.md`
@@ -245,6 +252,8 @@ Run the container:
 ```bash
 docker run -p 8080:80 --name developer-docs -e DOCS_ENV=staging developer-docs:latest
 ```
+
+Set the `DOCS_ENV` variable to `staging` (-> with basic auth based on `nginx/staging/.htpasswd`) or `production (no auth).
 
 Then open http://localhost:8080/
 
