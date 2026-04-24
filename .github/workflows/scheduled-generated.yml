@@ -1,7 +1,8 @@
 name: Update generated content
 on:
-  schedule:
-    - cron: "0 10 * * 1-5"
+  # uncomment to activate scheduled runs
+  # schedule:
+  #  - cron: "0 10 * * 1-5"
   workflow_dispatch:
   # push: # uncomment to test this workflow
 jobs:
