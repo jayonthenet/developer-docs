@@ -25,7 +25,7 @@ Duration: about 45min
 
 ## What is the Platform Orchestrator?
 
-The Platform Orchestrator unifies infrastructure management for humans and AI agents, streamlining operations, enforcing standards, and boosting developer productivity in complex environments.
+Humanitec’s Platform Orchestrator unifies infrastructure management for humans and AI agents, streamlining operations, enforcing standards, and boosting developer productivity in complex environments.
 
 ## Prerequisites
 
@@ -515,14 +515,14 @@ resource "platform-orchestrator_module" "k8s_workload_get_started" {
   id            = "k8s-workload-get-started"
   description   = "Simple Kubernetes Deployment in default namespace"
   resource_type = platform-orchestrator_resource_type.k8s_workload_get_started.id
-  module_source = "git::https://github.com/humanitec-tutorials/get-started//modules/workload/kubernetes"
+  module_source = "git::https://github.com/humanitec-tf-modules/k8s-workload-kubernetes?ref=v1.0.0"
 
   module_params = {
     image = {
       type        = "string"
       description = "The image to use for the container"
     }
-    variables = {
+    env_vars = {
       type        = "map"
       is_optional = true
       description = "Container environment variables"
@@ -531,6 +531,9 @@ resource "platform-orchestrator_module" "k8s_workload_get_started" {
   module_inputs = jsonencode({
     name      = "get-started"
     namespace = "default"
+    labels = {
+      app = "get-started"
+    }
   })
 }
 
@@ -543,7 +546,7 @@ resource "platform-orchestrator_module_rule" "k8s_workload_get_started" {
 
 {{% include "/platform-orchestrator/docs/tutorial/include-get-started-perform-tf-apply.md" %}}
 
-To inspect the TF module code referenced by the module, go to the [GitHub source](https://github.com/humanitec-tutorials/get-started/tree/main/modules/workload/kubernetes).
+To inspect the TF module code referenced by the module, go to the [GitHub source](https://github.com/humanitec-tf-modules/k8s-workload-kubernetes).
 
 The Orchestrator is now configured to deploy resources of the new type `k8s-workload-get-started`. Verify it by querying the available resource types for the target project environment:
 
@@ -862,7 +865,7 @@ workloads:
         # The resource parameters. They are mapped to the module_params of the module
         params:
           image: ghcr.io/astromechza/demo-app:latest
-          variables:
+          env_vars:
             # NEW: This environment variable is used by the demo image to create a connection to a postgres database
             OVERRIDE_POSTGRES: postgres://${resources.db.outputs.username}:${resources.db.outputs.password}@${resources.db.outputs.host}:${resources.db.outputs.port}/${resources.db.outputs.database}
       # NEW: The name of the database resource in the context of the manifest
