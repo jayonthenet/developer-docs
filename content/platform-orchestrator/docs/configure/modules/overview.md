@@ -307,7 +307,7 @@ output "value" {
   value = random_id.example.hex
 }
 
-output "humanitec_metadata" {
+output "platform_orchestrator_metadata" {
   value = {
     "Example-Key" = "example value"
   }
@@ -333,7 +333,7 @@ module_source_code: |
       value = random_id.example.hex
     }
 
-    output "humanitec_metadata" {
+    output "platform_orchestrator_metadata" {
       value = {
         "Example-Key" = "example value"
       }
@@ -628,10 +628,10 @@ You may pass outputs from the current or from other resources to co-provisioned 
 
 A module may optionally expose _metadata_ for the resources provisioned via the module. Metadata are selected attributes of the real-world resource which you consider useful for your platform engineers, developers, or connected systems to see.
 
-You define metadata by using the reserved TF output name `humanitec_metadata` in the TF code of your module, referring to other TF values as needed:
+You define metadata by using the reserved TF output name `platform_orchestrator_metadata` in the TF code of your module, referring to other TF values as needed:
 
 ```hcl
-output "humanitec_metadata" {
+output "platform_orchestrator_metadata" {
   value = merge(
     {
       "Kubernetes-Namespace" = var.namespace
@@ -652,5 +652,5 @@ The output of the CLI command `hctl get active-resource-nodes` also returns the 
 {{< alert context="caution" >}}
 Avoid exposing confidential or sensitive information as metadata. It will be accessible to anyone with read access to the environment.
 
-You cannot use TF data marked as `sensitive` in the metadata. Declaring the `humanitec_metadata` itself as `sensitive` will make deployments fail by design.
+You cannot use TF data marked as `sensitive` in the metadata. Declaring the `platform_orchestrator_metadata` itself as `sensitive` will make deployments fail by design.
 {{< /alert >}}

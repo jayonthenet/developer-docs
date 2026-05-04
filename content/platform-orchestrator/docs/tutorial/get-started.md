@@ -631,7 +631,7 @@ You will see a "Successful" status and a graph containing two nodes. This is the
 
 ![Resource graph with workload](/images/get-started-tutorial/resource-graph-workload.png "Resource graph with workload")
 
-Click on the resources to explore their details. In particular, inspect the "Metadata" section of the `demo-workload` resource. By convention, the Orchestrator will display the content of a regular output named `humanitec_metadata` of the TF module being used for a resource. This is useful for conveying insights about the real-life object that has been provisioned via the Orchestrator.
+Click on the resources to explore their details. In particular, inspect the "Metadata" section of the `demo-workload` resource. By convention, the Orchestrator will display the content of a regular output named `platform_orchestrator_metadata` of the TF module being used for a resource. This is useful for conveying insights about the real-life object that has been provisioned via the Orchestrator.
 
 {{% details "Defining metadata output in the module source" %}}
 {{% github-file filename="/humanitec-tutorials/get-started/refs/heads/main/modules/workload/kubernetes/outputs.tf" %}}

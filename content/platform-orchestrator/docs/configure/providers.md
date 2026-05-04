@@ -538,7 +538,7 @@ resource "platform-orchestrator_module" "module_a" {
 data "aws_region" "current" {}
 
 # Proving that it works: expose the region as resource metadata
-output "humanitec_metadata" {
+output "platform_orchestrator_metadata" {
   value = {
     "Region" = data.aws_region.current.region
   }
