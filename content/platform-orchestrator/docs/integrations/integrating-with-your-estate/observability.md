@@ -28,7 +28,7 @@ Dashboard-like observability tools may retrieve data from the Platform Orchestra
 
 Portal-like tools may additionally modify objects in the Orchestrator on behalf of users, such as the creation of new projects or environments.
 
-The [Orchestrator API]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}) provides the endpoint for all integrations. A number of examples are shown below. The exact approach for creating an integration depends on your tooling of choice. We therefore use the universal `curl` command to illustrate the usage of API endpoints with the API token set as an environment variable `HUMANITEC_TOKEN`.
+The [Orchestrator API]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}) provides the endpoint for all integrations. A number of examples are shown below. The exact approach for creating an integration depends on your tooling of choice. We therefore use the universal `curl` command to illustrate the usage of API endpoints with the API token set as an environment variable `PLATFORM_ORCHESTRATOR_TOKEN`.
 
 ## Provide an API token
 
@@ -43,7 +43,7 @@ The following examples illustrate the querying of Orchestrator data. Consult the
 ```bash
 curl https://api.humanitec.dev/orgs/{org_id}/projects/{project_id}/envs \
   -X GET \
-  -H "Authorization: Bearer ${HUMANITEC_TOKEN}"
+  -H "Authorization: Bearer ${PLATFORM_ORCHESTRATOR_TOKEN}"
 ```
 
 {{% /details %}}
@@ -53,7 +53,7 @@ curl https://api.humanitec.dev/orgs/{org_id}/projects/{project_id}/envs \
 ```bash
 curl "https://api.humanitec.dev/orgs/{org_id}/active-resources?project_id={project_id}&env_id={env_id}" \
   -X GET \
-  -H "Authorization: Bearer ${HUMANITEC_TOKEN}"
+  -H "Authorization: Bearer ${PLATFORM_ORCHESTRATOR_TOKEN}"
 ```
 
 {{% /details %}}
@@ -63,7 +63,7 @@ curl "https://api.humanitec.dev/orgs/{org_id}/active-resources?project_id={proje
 ```bash
 curl "https://api.humanitec.dev/orgs/{orgId}/projects/{projectId}/envs/{envId}/available-resource-types" \
   -X GET \
-  -H "Authorization: Bearer ${HUMANITEC_TOKEN}"
+  -H "Authorization: Bearer ${PLATFORM_ORCHESTRATOR_TOKEN}"
 ```
 
 {{% /details %}}
@@ -73,7 +73,7 @@ curl "https://api.humanitec.dev/orgs/{orgId}/projects/{projectId}/envs/{envId}/a
 ```bash
 curl "https://api.humanitec.dev/orgs/{orgId}/last-deployments" \
   -X GET \
-  -H "Authorization: Bearer ${HUMANITEC_TOKEN}"
+  -H "Authorization: Bearer ${PLATFORM_ORCHESTRATOR_TOKEN}"
 ```
 
 {{% /details %}}
@@ -87,7 +87,7 @@ The following examples illustrate the modification of Orchestrator objects via t
 ```bash
 curl "https://api.humanitec.dev/orgs/{orgId}/projects" \
   -X POST \
-  -H "Authorization: Bearer ${HUMANITEC_TOKEN}" \
+  -H "Authorization: Bearer ${PLATFORM_ORCHESTRATOR_TOKEN}" \
   -H "Content-Type: application/json" \
   -d '
 {
@@ -105,7 +105,7 @@ Refer to the [Orchestrator API]({{< relref "/platform-orchestrator/docs/referenc
 ```bash
 curl "https://api.humanitec.dev/orgs/{orgId}/deployments" \
   -X POST \
-  -H "Authorization: Bearer ${HUMANITEC_TOKEN}" \
+  -H "Authorization: Bearer ${PLATFORM_ORCHESTRATOR_TOKEN}" \
   -H "Content-Type: application/json" \
   -d '
 {

@@ -20,7 +20,7 @@ All requests to the API must be authenticated using an API token placed in the `
 
 ```bash
 curl https://api.humanitec.dev/orgs/{org_id}/projects \
-  -H "Authorization: Bearer ${HUMANITEC_TOKEN}"
+  -H "Authorization: Bearer ${PLATFORM_ORCHESTRATOR_TOKEN}"
 ```
 
 An API token can be issued via [service user]({{< relref "/platform-orchestrator/docs/security/service-users" >}}) (recommended for all automation use cases) or via a [CLI authentication]({{< relref "/platform-orchestrator/docs/security/authentication#authentication-in-the-cli" >}}).
