@@ -2693,7 +2693,14 @@
       "Organization": {
         "type": "object",
         "description": "The internal state of an organization known by the control plane.",
-        "required": ["id", "uuid", "created_at", "created_by", "plan"],
+        "required": [
+          "id",
+          "uuid",
+          "created_at",
+          "created_by",
+          "plan",
+          "status"
+        ],
         "properties": {
           "id": {
             "description": "The unique identifier of the org",
@@ -2717,6 +2724,18 @@
             "example": "00000000-0000-0000-0000-000000000000",
             "type": "string",
             "format": "uuid"
+          },
+          "updated_at": {
+            "description": "The date and time when the org was last updated.",
+            "example": "2023-01-01T00:00:00Z",
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "description": "The current status of the org.",
+            "type": "string",
+            "enum": ["active", "deleting", "delete_failed", "deleted"],
+            "example": "active"
           },
           "plan": {
             "description": "The plan of the org.",
@@ -3558,7 +3577,7 @@
       "StateStorageType": {
         "description": "Type of the Terraform Backend used by the runner.",
         "type": "string",
-        "enum": ["kubernetes", "s3"]
+        "enum": ["kubernetes", "s3", "gcs", "azurerm"]
       },
       "ModuleVersionSummaryCoreFields": {
         "type": "object",
@@ -4348,13 +4367,21 @@
           },
           {
             "$ref": "#/components/schemas/S3StorageConfiguration"
+          },
+          {
+            "$ref": "#/components/schemas/GCSStorageConfiguration"
+          },
+          {
+            "$ref": "#/components/schemas/AzureRMStorageConfiguration"
           }
         ],
         "discriminator": {
           "propertyName": "type",
           "mapping": {
             "kubernetes": "#/components/schemas/K8sStorageConfiguration",
-            "s3": "#/components/schemas/S3StorageConfiguration"
+            "s3": "#/components/schemas/S3StorageConfiguration",
+            "gcs": "#/components/schemas/GCSStorageConfiguration",
+            "azurerm": "#/components/schemas/AzureRMStorageConfiguration"
           }
         }
       },
@@ -4404,6 +4431,62 @@
           }
         },
         "required": ["type", "bucket"]
+      },
+      "GCSStorageConfiguration": {
+        "description": "Configuration to use a Google Cloud Storage (GCS) bucket as state storage backend of this runner. Authentication and other settings\ncan be set via environment variables and defaults. See <https://developer.hashicorp.com/terraform/language/backend/gcs#state-storage>\nfor more details.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/StateStorageType"
+          },
+          "bucket": {
+            "type": "string",
+            "description": "Name of the GCS Bucket.",
+            "pattern": "^[a-z0-9][a-z0-9\\-]*[a-z0-9]$",
+            "x-pattern-error": "state storage bucket is not a valid GCS Bucket name.",
+            "example": "example-bucket"
+          },
+          "path_prefix": {
+            "type": "string",
+            "description": "A prefix path for the state file. The environment uuid will be used as a unique key within this.",
+            "pattern": "^[a-zA-Z0-9._-]+(?:\\/[a-zA-Z0-9._-]+)*\\/?$",
+            "x-pattern-error": "state storage path_prefix is not a valid GCS prefix path.",
+            "example": "path/to/state/directory"
+          }
+        },
+        "required": ["type", "bucket"]
+      },
+      "AzureRMStorageConfiguration": {
+        "description": "Configuration to use an AzureRM Storage Account as state storage backend of this runner. Authentication and other settings\ncan be set via environment variables and defaults. See <https://developer.hashicorp.com/terraform/language/backend/azurerm#state-storage>\nfor more details.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/StateStorageType"
+          },
+          "resource_group_name": {
+            "type": "string",
+            "description": "Name of the Azure Resource Group.",
+            "example": "rg-terraform-state"
+          },
+          "storage_account_name": {
+            "type": "string",
+            "description": "Name of the Azure Storage Account.",
+            "example": "sttfstatepro001"
+          },
+          "container_name": {
+            "type": "string",
+            "description": "Name of the Azure Storage Container.",
+            "example": "tfstates"
+          },
+          "path_prefix": {
+            "type": "string",
+            "description": "A prefix path for the state file. The environment uuid will be used as a unique key within this.",
+            "pattern": "^[a-zA-Z0-9._-]+(?:\\/[a-zA-Z0-9._-]+)*\\/?$",
+            "x-pattern-error": "state storage path_prefix is not a valid AzureRM path.",
+            "example": "path/to/state/directory"
+          }
+        },
+        "required": ["type", "storage_account_name", "container_name"]
       },
       "RunnerCreateBody": {
         "type": "object",
@@ -4586,7 +4669,7 @@
             "type": "string",
             "pattern": "^[a-zA-Z0-9._:/-]+(?:@[a-z0-9]+:[a-fA-F0-9]+)?$",
             "x-pattern-error": "image must be a valid container image",
-            "example": "humanitec/humanitec-runner:latest",
+            "example": "platform-orchestrator/platform-orchestrator-runner:latest",
             "maxLength": 255
           },
           "task_role_arn": {

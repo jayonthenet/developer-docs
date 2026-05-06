@@ -25,6 +25,12 @@
           },
           {
             "$ref": "#/components/parameters/pageTokenQueryParam"
+          },
+          {
+            "$ref": "#/components/parameters/byModeQueryParam"
+          },
+          {
+            "$ref": "#/components/parameters/byStatusQueryParam"
           }
         ],
         "responses": {
@@ -552,6 +558,37 @@
         }
       }
     },
+    "/orgs/{orgId}/deployments/{deploymentId}/resources": {
+      "get": {
+        "operationId": "listDeploymentResourceNodes",
+        "tags": ["Deployment"],
+        "summary": "List resource nodes for a deployment",
+        "description": "Returns the resource graph calculated for this deployment. Works for all\ndeployment types including plan-only and historical deployments. Unlike\nactive-resources, this endpoint returns graph nodes without runtime metadata.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/orgIdPathParam"
+          },
+          {
+            "$ref": "#/components/parameters/deploymentIdPathParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource nodes retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceNodesPage"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404NotFound"
+          }
+        }
+      }
+    },
     "/orgs/{orgId}/active-resources": {
       "get": {
         "operationId": "listActiveResourceNodes",
@@ -734,6 +771,9 @@
           "400": {
             "$ref": "#/components/responses/400BadRequest"
           },
+          "409": {
+            "$ref": "#/components/responses/409Conflict"
+          },
           "404": {
             "$ref": "#/components/responses/404NotFound"
           }
@@ -891,6 +931,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/404NotFound"
           }
         }
       }
@@ -910,6 +953,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/404NotFound"
           }
         }
       }
@@ -1027,6 +1073,38 @@
         "example": "AAAAAAAAAA==",
         "schema": {
           "type": "string"
+        }
+      },
+      "byModeQueryParam": {
+        "name": "by_mode",
+        "in": "query",
+        "description": "Filter deployments by mode",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "plan_only",
+              "deploy",
+              "rollback",
+              "rollback_plan",
+              "destroy"
+            ]
+          }
+        }
+      },
+      "byStatusQueryParam": {
+        "name": "by_status",
+        "in": "query",
+        "description": "Filter deployments by status",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["executing", "failed", "succeeded"]
+          }
         }
       }
     },
@@ -1409,7 +1487,7 @@
         "required": ["mode", "project_id", "env_id"],
         "properties": {
           "mode": {
-            "description": "The mode of the deployment. Defaults to 'deploy'. Can be set to 'rollback' to rollback to the graph used in \nthe deployment specified by `rollback_to_deployment_id`. For backwards compatibility, this can be set to \n'plan_only' which is equivalent to 'deploy' mode with plan_only set to true.\n",
+            "description": "The mode of the deployment. Defaults to 'deploy'. Can be set to 'rollback' to rollback to the graph used in\nthe deployment specified by `rollback_to_deployment_id`. For backwards compatibility, this can be set to\n'plan_only' which is equivalent to 'deploy' mode with plan_only set to true.\n",
             "type": "string",
             "enum": ["plan_only", "deploy", "rollback"],
             "example": "deploy"
@@ -1769,6 +1847,19 @@
           "items": {
             "type": "array",
             "description": "The list of active resource nodes.",
+            "items": {
+              "$ref": "#/components/schemas/ActiveResourceNode"
+            }
+          }
+        }
+      },
+      "ResourceNodesPage": {
+        "type": "object",
+        "required": ["items"],
+        "properties": {
+          "items": {
+            "type": "array",
+            "description": "The list of resource nodes for this deployment.",
             "items": {
               "$ref": "#/components/schemas/ActiveResourceNode"
             }

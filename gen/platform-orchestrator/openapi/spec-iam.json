@@ -212,6 +212,13 @@
             }
           },
           {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "$ref": "#/components/parameters/xClientRegionHeaderParam"
           },
           {
@@ -515,6 +522,46 @@
           },
           "404": {
             "$ref": "#/components/responses/404NotFound"
+          }
+        }
+      }
+    },
+    "/orgs/{orgId}/members": {
+      "get": {
+        "tags": ["Membership"],
+        "operationId": "listMembers",
+        "summary": "List the members of an org with their identity provider information",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/orgIdPathParam"
+          },
+          {
+            "$ref": "#/components/parameters/perPageQueryParam"
+          },
+          {
+            "$ref": "#/components/parameters/pageTokenQueryParam"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "Filter members by user ID.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully listed organization members",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberPage"
+                }
+              }
+            }
           }
         }
       }
@@ -1951,6 +1998,78 @@
           }
         }
       },
+      "Member": {
+        "description": "A user who is a member of an org, with their identity provider information",
+        "required": [
+          "id",
+          "created_at",
+          "user_id",
+          "user_display_name",
+          "subject_type",
+          "subject",
+          "identity_providers"
+        ],
+        "properties": {
+          "id": {
+            "description": "The membership id",
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          },
+          "created_at": {
+            "description": "The time the membership was created",
+            "type": "string",
+            "format": "date-time"
+          },
+          "user_id": {
+            "description": "The user id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "user_display_name": {
+            "description": "The display name of the user membership",
+            "type": "string",
+            "example": "User Name"
+          },
+          "user_primary_email_address": {
+            "description": "The primary email address of the user membership if available",
+            "type": "string",
+            "example": "user@example.com"
+          },
+          "subject_type": {
+            "description": "The membership subject type.",
+            "$ref": "#/components/schemas/SubjectType"
+          },
+          "subject": {
+            "description": "The membership subject identity.",
+            "type": "string"
+          },
+          "identity_providers": {
+            "description": "List of identity providers the user has registered with",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": ["google", "microsoft"]
+          }
+        }
+      },
+      "MemberPage": {
+        "description": "A page of members",
+        "required": ["items"],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Member"
+            }
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": "The page token to use to request the next page of items"
+          }
+        }
+      },
       "InternalMembershipCreateBody": {
         "description": "The payload to manually add a user to an org with a particular membership",
         "required": ["user_id", "subject_type", "subject"],
@@ -2032,12 +2151,14 @@
           "resource": {
             "description": "The resource to check permissions on.",
             "type": "string",
-            "pattern": "^(organization:.*|project:.*|env:.*)$",
-            "x-pattern-error": "resource must be organization:<org id>, project:<project uuid>, or env:<env uuid>"
+            "pattern": "^(organization|project|env):[a-zA-Z0-9/_|\\-=+]+$",
+            "x-pattern-error": "resource must be organization:<id>, project:<id>, or env:<id> where id matches regex pattern: ^[a-zA-Z0-9/_|\\-=+]+$"
           },
           "permission": {
             "description": "The permission string.",
-            "type": "string"
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]{1,62}[a-z0-9]$",
+            "x-pattern-error": "permission must match regex pattern: ^[a-z][a-z0-9_]{1,62}[a-z0-9]$"
           }
         }
       },

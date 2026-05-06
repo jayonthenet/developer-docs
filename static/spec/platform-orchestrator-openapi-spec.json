@@ -2071,6 +2071,12 @@
           },
           {
             "$ref": "#/components/parameters/pageTokenQueryParam"
+          },
+          {
+            "$ref": "#/components/parameters/byModeQueryParam"
+          },
+          {
+            "$ref": "#/components/parameters/byStatusQueryParam"
           }
         ],
         "responses": {
@@ -2586,6 +2592,39 @@
         }
       }
     },
+    "/orgs/{orgId}/deployments/{deploymentId}/resources": {
+      "get": {
+        "operationId": "listDeploymentResourceNodes",
+        "tags": [
+          "Deployment"
+        ],
+        "summary": "List resource nodes for a deployment",
+        "description": "Returns the resource graph calculated for this deployment. Works for all\ndeployment types including plan-only and historical deployments. Unlike\nactive-resources, this endpoint returns graph nodes without runtime metadata.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/orgIdPathParam"
+          },
+          {
+            "$ref": "#/components/parameters/deploymentIdPathParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource nodes retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceNodesPage"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404NotFound"
+          }
+        }
+      }
+    },
     "/orgs/{orgId}/active-resources": {
       "get": {
         "operationId": "listActiveResourceNodes",
@@ -2695,6 +2734,9 @@
           },
           "400": {
             "$ref": "#/components/responses/400BadRequest"
+          },
+          "409": {
+            "$ref": "#/components/responses/409Conflict"
           },
           "404": {
             "$ref": "#/components/responses/404NotFound"
@@ -3035,6 +3077,48 @@
           },
           "404": {
             "$ref": "#/components/responses/404NotFound"
+          }
+        }
+      }
+    },
+    "/orgs/{orgId}/members": {
+      "get": {
+        "tags": [
+          "Membership"
+        ],
+        "operationId": "listMembers",
+        "summary": "List the members of an org with their identity provider information",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/orgIdPathParam"
+          },
+          {
+            "$ref": "#/components/parameters/perPageQueryParam"
+          },
+          {
+            "$ref": "#/components/parameters/pageTokenQueryParam"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "Filter members by user ID.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully listed organization members",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberPage"
+                }
+              }
+            }
           }
         }
       }
@@ -4014,6 +4098,42 @@
           "type": "string"
         }
       },
+      "byModeQueryParam": {
+        "name": "by_mode",
+        "in": "query",
+        "description": "Filter deployments by mode",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "plan_only",
+              "deploy",
+              "rollback",
+              "rollback_plan",
+              "destroy"
+            ]
+          }
+        }
+      },
+      "byStatusQueryParam": {
+        "name": "by_status",
+        "in": "query",
+        "description": "Filter deployments by status",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "executing",
+              "failed",
+              "succeeded"
+            ]
+          }
+        }
+      },
       "userIdPathParam": {
         "name": "userId",
         "in": "path",
@@ -4176,7 +4296,8 @@
           "uuid",
           "created_at",
           "created_by",
-          "plan"
+          "plan",
+          "status"
         ],
         "properties": {
           "id": {
@@ -4201,6 +4322,23 @@
             "example": "00000000-0000-0000-0000-000000000000",
             "type": "string",
             "format": "uuid"
+          },
+          "updated_at": {
+            "description": "The date and time when the org was last updated.",
+            "example": "2023-01-01T00:00:00Z",
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "description": "The current status of the org.",
+            "type": "string",
+            "enum": [
+              "active",
+              "deleting",
+              "delete_failed",
+              "deleted"
+            ],
+            "example": "active"
           },
           "plan": {
             "description": "The plan of the org.",
@@ -5114,7 +5252,9 @@
         "type": "string",
         "enum": [
           "kubernetes",
-          "s3"
+          "s3",
+          "gcs",
+          "azurerm"
         ]
       },
       "ModuleVersionSummaryCoreFields": {
@@ -5966,13 +6106,21 @@
           },
           {
             "$ref": "#/components/schemas/S3StorageConfiguration"
+          },
+          {
+            "$ref": "#/components/schemas/GCSStorageConfiguration"
+          },
+          {
+            "$ref": "#/components/schemas/AzureRMStorageConfiguration"
           }
         ],
         "discriminator": {
           "propertyName": "type",
           "mapping": {
             "kubernetes": "#/components/schemas/K8sStorageConfiguration",
-            "s3": "#/components/schemas/S3StorageConfiguration"
+            "s3": "#/components/schemas/S3StorageConfiguration",
+            "gcs": "#/components/schemas/GCSStorageConfiguration",
+            "azurerm": "#/components/schemas/AzureRMStorageConfiguration"
           }
         }
       },
@@ -6029,6 +6177,69 @@
         "required": [
           "type",
           "bucket"
+        ]
+      },
+      "GCSStorageConfiguration": {
+        "description": "Configuration to use a Google Cloud Storage (GCS) bucket as state storage backend of this runner. Authentication and other settings\ncan be set via environment variables and defaults. See <https://developer.hashicorp.com/terraform/language/backend/gcs#state-storage>\nfor more details.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/StateStorageType"
+          },
+          "bucket": {
+            "type": "string",
+            "description": "Name of the GCS Bucket.",
+            "pattern": "^[a-z0-9][a-z0-9\\-]*[a-z0-9]$",
+            "x-pattern-error": "state storage bucket is not a valid GCS Bucket name.",
+            "example": "example-bucket"
+          },
+          "path_prefix": {
+            "type": "string",
+            "description": "A prefix path for the state file. The environment uuid will be used as a unique key within this.",
+            "pattern": "^[a-zA-Z0-9._-]+(?:\\/[a-zA-Z0-9._-]+)*\\/?$",
+            "x-pattern-error": "state storage path_prefix is not a valid GCS prefix path.",
+            "example": "path/to/state/directory"
+          }
+        },
+        "required": [
+          "type",
+          "bucket"
+        ]
+      },
+      "AzureRMStorageConfiguration": {
+        "description": "Configuration to use an AzureRM Storage Account as state storage backend of this runner. Authentication and other settings\ncan be set via environment variables and defaults. See <https://developer.hashicorp.com/terraform/language/backend/azurerm#state-storage>\nfor more details.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/StateStorageType"
+          },
+          "resource_group_name": {
+            "type": "string",
+            "description": "Name of the Azure Resource Group.",
+            "example": "rg-terraform-state"
+          },
+          "storage_account_name": {
+            "type": "string",
+            "description": "Name of the Azure Storage Account.",
+            "example": "sttfstatepro001"
+          },
+          "container_name": {
+            "type": "string",
+            "description": "Name of the Azure Storage Container.",
+            "example": "tfstates"
+          },
+          "path_prefix": {
+            "type": "string",
+            "description": "A prefix path for the state file. The environment uuid will be used as a unique key within this.",
+            "pattern": "^[a-zA-Z0-9._-]+(?:\\/[a-zA-Z0-9._-]+)*\\/?$",
+            "x-pattern-error": "state storage path_prefix is not a valid AzureRM path.",
+            "example": "path/to/state/directory"
+          }
+        },
+        "required": [
+          "type",
+          "storage_account_name",
+          "container_name"
         ]
       },
       "RunnerCreateBody": {
@@ -6239,7 +6450,7 @@
             "type": "string",
             "pattern": "^[a-zA-Z0-9._:/-]+(?:@[a-z0-9]+:[a-fA-F0-9]+)?$",
             "x-pattern-error": "image must be a valid container image",
-            "example": "humanitec/humanitec-runner:latest",
+            "example": "platform-orchestrator/platform-orchestrator-runner:latest",
             "maxLength": 255
           },
           "task_role_arn": {
@@ -7177,7 +7388,7 @@
         ],
         "properties": {
           "mode": {
-            "description": "The mode of the deployment. Defaults to 'deploy'. Can be set to 'rollback' to rollback to the graph used in \nthe deployment specified by `rollback_to_deployment_id`. For backwards compatibility, this can be set to \n'plan_only' which is equivalent to 'deploy' mode with plan_only set to true.\n",
+            "description": "The mode of the deployment. Defaults to 'deploy'. Can be set to 'rollback' to rollback to the graph used in\nthe deployment specified by `rollback_to_deployment_id`. For backwards compatibility, this can be set to\n'plan_only' which is equivalent to 'deploy' mode with plan_only set to true.\n",
             "type": "string",
             "enum": [
               "plan_only",
@@ -7583,6 +7794,21 @@
           "items": {
             "type": "array",
             "description": "The list of active resource nodes.",
+            "items": {
+              "$ref": "#/components/schemas/ActiveResourceNode"
+            }
+          }
+        }
+      },
+      "ResourceNodesPage": {
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "description": "The list of resource nodes for this deployment.",
             "items": {
               "$ref": "#/components/schemas/ActiveResourceNode"
             }
@@ -8095,6 +8321,83 @@
           }
         }
       },
+      "Member": {
+        "description": "A user who is a member of an org, with their identity provider information",
+        "required": [
+          "id",
+          "created_at",
+          "user_id",
+          "user_display_name",
+          "subject_type",
+          "subject",
+          "identity_providers"
+        ],
+        "properties": {
+          "id": {
+            "description": "The membership id",
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          },
+          "created_at": {
+            "description": "The time the membership was created",
+            "type": "string",
+            "format": "date-time"
+          },
+          "user_id": {
+            "description": "The user id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "user_display_name": {
+            "description": "The display name of the user membership",
+            "type": "string",
+            "example": "User Name"
+          },
+          "user_primary_email_address": {
+            "description": "The primary email address of the user membership if available",
+            "type": "string",
+            "example": "user@example.com"
+          },
+          "subject_type": {
+            "description": "The membership subject type.",
+            "$ref": "#/components/schemas/SubjectType"
+          },
+          "subject": {
+            "description": "The membership subject identity.",
+            "type": "string"
+          },
+          "identity_providers": {
+            "description": "List of identity providers the user has registered with",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "google",
+              "microsoft"
+            ]
+          }
+        }
+      },
+      "MemberPage": {
+        "description": "A page of members",
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Member"
+            }
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": "The page token to use to request the next page of items"
+          }
+        }
+      },
       "InternalMembershipCreateBody": {
         "description": "The payload to manually add a user to an org with a particular membership",
         "required": [
@@ -8191,12 +8494,14 @@
           "resource": {
             "description": "The resource to check permissions on.",
             "type": "string",
-            "pattern": "^(organization:.*|project:.*|env:.*)$",
-            "x-pattern-error": "resource must be organization:<org id>, project:<project uuid>, or env:<env uuid>"
+            "pattern": "^(organization|project|env):[a-zA-Z0-9/_|\\-=+]+$",
+            "x-pattern-error": "resource must be organization:<id>, project:<id>, or env:<id> where id matches regex pattern: ^[a-zA-Z0-9/_|\\-=+]+$"
           },
           "permission": {
             "description": "The permission string.",
-            "type": "string"
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]{1,62}[a-z0-9]$",
+            "x-pattern-error": "permission must match regex pattern: ^[a-z][a-z0-9_]{1,62}[a-z0-9]$"
           }
         }
       },
