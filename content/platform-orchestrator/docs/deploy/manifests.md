@@ -24,7 +24,7 @@ The manifest makes no limitation as to the kind of resources it describes. They 
 Use a manifest file as an input to a [CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) `deploy` command:
 
 ```bash
-hctl deploy my-project my-environment manifest.yaml
+octl deploy my-project my-environment manifest.yaml
 ```
 
 ## Configuration
@@ -155,7 +155,7 @@ Resource `params` in the `workloads` section may also access outputs from [share
 
 Workload `outputs` expose deployment values for use by surrounding processes.
 
-E.g. given the manifest on the left, the command `hctl deploy my-project my-environment manifest.yaml --result outputs.yaml` will create a file `outputs.yaml` like shown on the right:
+E.g. given the manifest on the left, the command `octl deploy my-project my-environment manifest.yaml --result outputs.yaml` will create a file `outputs.yaml` like shown on the right:
 
 {{< grid columns="2">}}
 
@@ -261,13 +261,13 @@ workloads:
 sed -i "s/EXAMPLE_APP_BUILD_VERSION/${KNOWN_VERSION}/g" manifest.yaml
 ```
 
-3. Perform a `hctl deploy` using the altered `manifest.yaml` normally.
+3. Perform a `octl deploy` using the altered `manifest.yaml` normally.
 
 ## Maintaining a single manifest
 
 We recommend having a single manifest file to describe the desired state of a project and maintaining it like any other source code, i.e. using a VCS like git and requiring CI/CD steps and pull requests adhering to your own standards. This way you will have repeatable, auditable deployments, and a deterministic rollback capability.
 
-There is also the option to have multiple manifests and combine them using the `hctl deploy --merge` flag. This option is useful for experimentation, patching, and hotfix situations, but is not recommended for standard use due to these risks:
+There is also the option to have multiple manifests and combine them using the `octl deploy --merge` flag. This option is useful for experimentation, patching, and hotfix situations, but is not recommended for standard use due to these risks:
 
 - Deployments may be conflicting with each other or run in different directions
 - Rollbacks will not be deterministic

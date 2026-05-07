@@ -24,7 +24,7 @@ You need to supply a Lambda deployment package and place it in an S3 bucket to r
 ## Prerequisites
 
 - A Platform Orchestrator organization
-- The [`hctl` CLI](https://developer.humanitec.com/platform-orchestrator/docs/integrations/cli/) installed locally and authenticated (`hctl login`)
+- The [`octl` CLI](https://developer.humanitec.com/platform-orchestrator/docs/integrations/cli/) installed locally and authenticated (`octl login`)
 - An AWS account with appropriate permissions to set up the objects named above
 - AWS credentials configured for the [AWS provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration)
   - E.g. Having the `aws` CLI installed locally and authenticated
@@ -291,7 +291,7 @@ workloads:
 Deploy the manifest into the project environment created by the use case:
 
 ```bash
-hctl deploy $PROJECT_ID development manifest.yaml
+octl deploy $PROJECT_ID development manifest.yaml
 ```
 
 ### 5. Validate the result

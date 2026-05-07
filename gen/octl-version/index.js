@@ -1,4 +1,4 @@
-// Script to update the humctl version in the config.toml file
+// Script to update the octl version in the config.toml file
 const fs = require('node:fs/promises')
 
 const main = async () => {
@@ -14,7 +14,7 @@ const main = async () => {
 
   const config =  await fs.readFile('./config/_default/config.toml', 'utf8');
 
-  const newConfig = config.replace(/hctlVersion = ".*"/, `hctlVersion = "${version}"`);
+  const newConfig = config.replace(/octlVersion = ".*"/, `octlVersion = "${version}"`);
   await fs.writeFile('./config/_default/config.toml', newConfig);
 
   return version;

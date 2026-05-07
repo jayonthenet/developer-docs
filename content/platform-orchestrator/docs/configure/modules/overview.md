@@ -41,7 +41,7 @@ resource "platform-orchestrator_module" "my-namespace-module" {
 {{% tab name="CLI" %}}
 
 ```
-hctl create module my-namespace-module \
+octl create module my-namespace-module \
   --set resource_type=k8s-namespace \
   --set module_source=git::https://github.com/acme-org/module-library//my-namespace-module
 ```
@@ -647,7 +647,7 @@ The Orchestrator console displays resource metadata when selecting an active res
 
 ![Resource graph metadata](/images/resource-graph-metadata.png "Resource graph metadata")
 
-The output of the CLI command `hctl get active-resource-nodes` also returns the metadata when adding the `-o json` or `-o yaml` flag.
+The output of the CLI command `octl get active-resource-nodes` also returns the metadata when adding the `-o json` or `-o yaml` flag.
 
 {{< alert context="caution" >}}
 Avoid exposing confidential or sensitive information as metadata. It will be accessible to anyone with read access to the environment.

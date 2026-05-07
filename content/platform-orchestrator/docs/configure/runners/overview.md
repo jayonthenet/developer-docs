@@ -96,10 +96,10 @@ Create a runner using this configuration:
 
 ```bash
 # Create the runner
-hctl create runner my-gke-runner --set-yaml=@gke-runner-config.yaml
+octl create runner my-gke-runner --set-yaml=@gke-runner-config.yaml
 
 # Create an empty runner rule that will always match
-hctl create runner-rule --set=runner_id=my-gke-runner
+octl create runner-rule --set=runner_id=my-gke-runner
 ```
 
 {{% /tab %}}
@@ -123,7 +123,7 @@ Refer to the resource schema of each individual `*-runner` resource in the [Terr
 {{% /tab %}}
 {{% tab name="CLI" %}}
 
-`hctl create runner my-gke-runner --set-yaml=@runner-config.yaml`
+`octl create runner my-gke-runner --set-yaml=@runner-config.yaml`
 
 where `runner-config.yaml` is:
 
@@ -175,14 +175,14 @@ Not all runner types can technically use every state storage type. The compatibi
 
 ## Manage runners
 
-Manage runners using the `hctl` CLI:
+Manage runners using the `octl` CLI:
 
 ```bash
-hctl create runner my-runner --set-yaml=@my-runner-config.yaml   # Create a new runner
-hctl get runner my-runner                                        # Get details on a runner
-hctl get runners                                                 # List all runners of your organization
-hctl update runner my-runner --set-yaml=@gke-runner-config.yaml  # Update a runner with a runner config
-hctl delete runner my-runner                                     # Delete a runner
+octl create runner my-runner --set-yaml=@my-runner-config.yaml   # Create a new runner
+octl get runner my-runner                                        # Get details on a runner
+octl get runners                                                 # List all runners of your organization
+octl update runner my-runner --set-yaml=@gke-runner-config.yaml  # Update a runner with a runner config
+octl delete runner my-runner                                     # Delete a runner
 ```
 
 ## Runners and environments

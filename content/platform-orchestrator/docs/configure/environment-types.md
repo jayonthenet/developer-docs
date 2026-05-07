@@ -20,7 +20,7 @@ There are however different requirements with each organization and you could al
 
 There are no strict rules and you can create as many environment types as you need to fulfill your requirements.
 
-You can create and manage environment types using the [hctl CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}), [Terraform provider](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/environment_type), [OpenTofu provider](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/environment_type), or [API]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}).
+You can create and manage environment types using the [octl CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}), [Terraform provider](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/environment_type), [OpenTofu provider](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/environment_type), or [API]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}).
 
 ## Basic Example
 
@@ -33,7 +33,7 @@ You can create and manage environment types using the [hctl CLI]({{< relref "/pl
 {{% tab name="CLI" %}}
 
 ```sh
-hctl create environment-type development --set-yaml=- <<"EOF"
+octl create environment-type development --set-yaml=- <<"EOF"
 display_name: Development Environment
 EOF
 ```

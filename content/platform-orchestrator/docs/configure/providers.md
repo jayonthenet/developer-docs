@@ -63,7 +63,7 @@ resource "platform-orchestrator_provider" "aws-us-east-1" {
 {{% tab name="CLI" %}}
 
 ```bash
-hctl create provider kubernetes aws-us-east-1 --set-yaml=@provider.yaml
+octl create provider kubernetes aws-us-east-1 --set-yaml=@provider.yaml
 ```
 
 where `provider.yaml` is:
@@ -97,7 +97,7 @@ resource "platform-orchestrator_module" "some_aws_resource" {
 {{% tab name="CLI" %}}
 
 ```bash
-hctl create module some-aws-resource --set-yaml=- <<"EOF"
+octl create module some-aws-resource --set-yaml=- <<"EOF"
 # ...
 provider_mapping:
   aws: aws.aws-us-east-1
@@ -244,7 +244,7 @@ You can make provider configuration more flexible by using placeholders as shown
 This section describes an advanced topic you do not usually need to dive into to use providers. Refer to it for debugging purposes and validating your provider setup in detail.
 {{< /alert >}}
 
-To execute a [deployment]({{< relref "/platform-orchestrator/docs/deploy/deployments#what-happens-during-a-deployment" >}}), the Orchestrator generates a TF file made up of a root module plus child modules for all [modules]({{< relref "/platform-orchestrator/docs/configure/modules/overview" >}}) which are part of the deployment. You can view the generated TF file via the `hctl get tf <deployment-id>`.
+To execute a [deployment]({{< relref "/platform-orchestrator/docs/deploy/deployments#what-happens-during-a-deployment" >}}), the Orchestrator generates a TF file made up of a root module plus child modules for all [modules]({{< relref "/platform-orchestrator/docs/configure/modules/overview" >}}) which are part of the deployment. You can view the generated TF file via the `octl get tf <deployment-id>`.
 
 Providers are handled in this TF file as follows:
 
@@ -402,7 +402,7 @@ configuration:
 
 ## Lifecycle
 
-You can create and manage providers using the [hctl CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}), [Terraform provider](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/provider), [OpenTofu provider](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/provider), or [API]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}).
+You can create and manage providers using the [octl CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}), [Terraform provider](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/provider), [OpenTofu provider](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/provider), or [API]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}).
 
 {{% include "/platform-orchestrator/docs/configure/include-providers-lifecycle.md" %}}
 
@@ -641,7 +641,7 @@ resource "platform-orchestrator_provider" "aws-eu-north-1" {
 {{% tab name="CLI" %}}
 
 ```bash
-hctl create provider aws aws-eu-north-1 --set-yaml=- <<"EOF"
+octl create provider aws aws-eu-north-1 --set-yaml=- <<"EOF"
 # ...
 configuration:
   region: eu-north-1
@@ -772,7 +772,7 @@ resource "platform-orchestrator_kubernetes_runner" "example_runner" {
 {{% tab name="CLI" %}}
 
 ```yaml
-hctl create runner example-runner --set-yaml=- <<"EOF"
+octl create runner example-runner --set-yaml=- <<"EOF"
 runner_configuration:
   # Use the type for your kind of Kubernetes-based runner
   type: kubernetes
@@ -819,10 +819,10 @@ resource "platform-orchestrator_provider" "google" {
 {{% /tab %}}
 {{% tab name="CLI" %}}
 
-Use this configuration snippet in the hctl CLI commands for managing the provider:
+Use this configuration snippet in the octl CLI commands for managing the provider:
 
 ```yaml
-hctl create provider google example-provider --set-yaml=- <<"EOF"
+octl create provider google example-provider --set-yaml=- <<"EOF"
 # ...
 configuration:
   credentials: /mnt/gcp-creds/credentials.json
@@ -956,7 +956,7 @@ resource "platform-orchestrator_provider" "dev-k8s-cluster" {
 {{% tab name="CLI" %}}
 
 ```sh
-hctl create provider kubernetes dev-k8s-cluster --set-yaml=- <<"EOF"
+octl create provider kubernetes dev-k8s-cluster --set-yaml=- <<"EOF"
 description: Deploy Kubernetes resources to the common dev cluster
 source: hashicorp/kubernetes
 version_constraint: ~> 2.38.0

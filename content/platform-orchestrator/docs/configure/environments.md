@@ -29,7 +29,7 @@ An environment with a succesful deployment contains a [resource graph]({{< relre
 {{% tab name="CLI" %}}
 
 ```bash
-hctl create environment my-project my-environment --set-yaml=@environment-config.yaml
+octl create environment my-project my-environment --set-yaml=@environment-config.yaml
 ```
 
 where `environment-config.yaml` is:
@@ -38,7 +38,7 @@ where `environment-config.yaml` is:
 env_type_id: development
 display_name: Development Environment
 ```
-Note: the parent project `id` and the environment `id` are part of the CLI command, e.g. `humctl create environment my-project my-environment`, and therefore not shown as part of the configuration.
+Note: the parent project `id` and the environment `id` are part of the CLI command, e.g. `octl create environment my-project my-environment`, and therefore not shown as part of the configuration.
 
 {{% /tab %}}
 {{< /tabs >}}
@@ -96,7 +96,7 @@ See [destroying environments]({{< relref "/platform-orchestrator/docs/deploy/dep
 You may query the [resource types]({{< relref "/platform-orchestrator/docs/configure/resource-types" >}}) which are effectively available for deployments into a project environment using the CLI:
 
 ```bash
-hctl get available-resource-types my-project my-environment
+octl get available-resource-types my-project my-environment
 ```
 
 The list shows the resource types of any [modules]({{< relref "/platform-orchestrator/docs/configure/modules/overview" >}}) which can be matched to that environment via [module rules]({{< relref "/platform-orchestrator/docs/configure/modules/module-rules" >}}).
@@ -112,5 +112,5 @@ Use this command to promote a deployment:
 ```bash
 # Promote the last stateful deployment in the "staging" environment into the "production" environment
 # in the project "my-project"
-hctl deploy my-project production environment://staging
+octl deploy my-project production environment://staging
 ```

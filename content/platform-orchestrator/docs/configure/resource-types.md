@@ -18,7 +18,7 @@ Developers order resources of a certain type and can expect the defined outputs 
 
 Resource types allow for a clear separation of concerns and responsibilities that is facilitated by the Orchestrator.
 
-You can create and manage resource types using the [hctl CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}), [Terraform provider](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/resource_type), [OpenTofu provider](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/resource_type), or [API]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}).
+You can create and manage resource types using the [octl CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}), [Terraform provider](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/resource_type), [OpenTofu provider](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/resource_type), or [API]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}).
 
 ## Basic Example
 
@@ -65,7 +65,7 @@ resource "platform-orchestrator_resource_type" "postgres" {
 {{% tab name="CLI" %}}
 
 ```sh
-hctl create resource-type postgres --set-yaml=@resource-type-postgres.yaml
+octl create resource-type postgres --set-yaml=@resource-type-postgres.yaml
 ```
 
 where `resource-type-postgres.yaml`:

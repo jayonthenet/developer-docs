@@ -79,29 +79,29 @@ If you already have an organization, you're good. Otherwise, [register](https://
 
 Once done, you will have access to the Orchestrator console at [https://console.humanitec.dev](https://console.humanitec.dev).
 
-## Install the hctl CLI
+## Install the octl CLI
 
-Follow the instructions on the [CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) page to install the `hctl` CLI if it is not already present on your system.
+Follow the instructions on the [CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) page to install the `octl` CLI if it is not already present on your system.
 
 Ensure you are logged in. Execute this command and follow the instructions:
 
 ```bash
-hctl login
+octl login
 ```
 
 Ensure that the CLI is configured to use your Orchestrator organization:
 
 ```bash
-hctl config show
+octl config show
 ```
 
 If the `default_org_id` is empty, set the organization to your value like this:
 
 ```bash
-hctl config set-org your-org-id
+octl config set-org your-org-id
 ```
 
-All subsequent `hctl` commands will now be targeted at your organization.
+All subsequent `octl` commands will now be targeted at your organization.
 
 ## Setup demo infrastructure
 
@@ -229,7 +229,7 @@ terraform {
 }
 ```
 
-You don't need to explicitly configure the Orchestrator TF provider with the organization ID and token as the provider falls back to the `$HOME/.config/hctl` file set by running `hctl login`.
+You don't need to explicitly configure the Orchestrator TF provider with the organization ID and token as the provider falls back to the `$HOME/.config/octl` file set by running `octl login`.
 
 You now have:
 
@@ -551,7 +551,7 @@ To inspect the TF module code referenced by the module, go to the [GitHub source
 The Orchestrator is now configured to deploy resources of the new type `k8s-workload-get-started`. Verify it by querying the available resource types for the target project environment:
 
 ```bash
-hctl get available-resource-types get-started development
+octl get available-resource-types get-started development
 ```
 
 You now have:
@@ -589,7 +589,7 @@ workloads:
 
 The manifest is a high-level abtraction of the `demo-app` made up of a resource of type `k8s-workload-get-started`.
 
-Manifests are generally owned and maintained by application developers as a part of their code base, and used to self-serve all kinds of resources. You do not install them into the Orchestrator using `hctl` or TF like the previous configuration objects.
+Manifests are generally owned and maintained by application developers as a part of their code base, and used to self-serve all kinds of resources. You do not install them into the Orchestrator using `octl` or TF like the previous configuration objects.
 
 You now have:
 
@@ -602,23 +602,23 @@ Verify that the demo infrastructure provisioning which may be running in another
 Perform a deployment of the manifest into the `development` environment of the `get-started` project:
 
 ```bash
-hctl deploy get-started development manifest-1.yaml
+octl deploy get-started development manifest-1.yaml
 ```
 
 Confirm the deployment and wait for the execution to finish. It should take less than a minute.
 
-Upon completion, the CLI outputs a `hctl logs` command to access the deployment logs. Use it to see the execution details.
+Upon completion, the CLI outputs a `octl logs` command to access the deployment logs. Use it to see the execution details.
 
 Run this command to see all prior deployments:
 
 ```bash
-hctl get deployments
+octl get deployments
 ```
 
 Copy the ID from the top of list and inspect the details by using the ID in this command:
 
 ```bash
-hctl get deployment the-id-you-copied
+octl get deployment the-id-you-copied
 ```
 
 Inspect the result in the Orchestrator console:
@@ -833,7 +833,7 @@ resource "platform-orchestrator_module_rule" "postgres_get_started" {
 Verify that the new resource type `postgres-get-started` is available:
 
 ```bash
-hctl get available-resource-types get-started development
+octl get available-resource-types get-started development
 ```
 
 You now have:
@@ -886,7 +886,7 @@ You now have:
 Perform another deployment into the same `development` environment of the `get-started` project using the new manifest file:
 
 ```bash
-hctl deploy get-started development manifest-2.yaml
+octl deploy get-started development manifest-2.yaml
 ```
 
 This new deployment will take a few minutes as it now creates a managed PostgreSQL instance. Use that time to inspect the TF code behind the database module. Expand the section below to see it.

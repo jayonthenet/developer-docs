@@ -61,17 +61,17 @@ Perform these modifications to deploy your resources via the Platform Orchestrat
 2. Add a [manifest]({{< relref "/platform-orchestrator/docs/deploy/manifests" >}}) file to the repository running the pipeline, specifying all the required resources that make up a deployment
 3. Modify the "Deploy" step(s) of the pipline to deploy via the Plaform Orchestrator
 
-Doing so involves changing some or all deployment steps to execute a single `deploy` command using the [`hctl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}). This is a sample implementation as a GitHub workflow:
+Doing so involves changing some or all deployment steps to execute a single `deploy` command using the [`octl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}). This is a sample implementation as a GitHub workflow:
 
 {{< include "content/platform-orchestrator/docs/integrations/include-sample-gh-workflow.md" >}}
 
-Find more options for the `hctl deploy` command [here]({{< relref "/platform-orchestrator/docs/reference/cli-cheat-sheet/#deployments" >}}).
+Find more options for the `octl deploy` command [here]({{< relref "/platform-orchestrator/docs/reference/cli-cheat-sheet/#deployments" >}}).
 
 The manifest may contain dynamic elements for greater flexibility in your workflow. Refer to [placeholders support]({{< relref "/platform-orchestrator/docs/deploy/manifests#placeholders-support-in-manifests" >}}) and [dynamic replacement]({{< relref "/platform-orchestrator/docs/deploy/manifests#dynamic-replacement-of-manifest-content" >}}) to see how.
 
 ## Receiving outputs
 
-If your manifest defines [outputs]({{< relref "/platform-orchestrator/docs/deploy/manifests#outputs" >}}), add the `--result` flag to the `hctl deploy` command in your pipeline to capture them. Then use the outputs in subsequent pipeline steps like this (using GitHub workflows as an example):
+If your manifest defines [outputs]({{< relref "/platform-orchestrator/docs/deploy/manifests#outputs" >}}), add the `--result` flag to the `octl deploy` command in your pipeline to capture them. Then use the outputs in subsequent pipeline steps like this (using GitHub workflows as an example):
 
 ```yaml
 jobs:
@@ -79,7 +79,7 @@ jobs:
     # ...
     steps:
     - name: Deploy a manifest and capture outputs
-      run: hctl deploy my-project my-environment ./manifest.yaml --result outputs.yaml
+      run: octl deploy my-project my-environment ./manifest.yaml --result outputs.yaml
     - name: Use outputs
       run: |
         # Use outputs.yaml to perform any post-deployment steps
@@ -87,11 +87,11 @@ jobs:
 
 ## Obtaining deployment logs
 
-Your pipeline steps may need to access the log output of a `hctl deploy` command. See [returning deployment logs securely]({{< relref "/platform-orchestrator/docs/deploy/deployments#returning-runner-logs-securely" >}}) for instructions to embed in your pipeline.
+Your pipeline steps may need to access the log output of a `octl deploy` command. See [returning deployment logs securely]({{< relref "/platform-orchestrator/docs/deploy/deployments#returning-runner-logs-securely" >}}) for instructions to embed in your pipeline.
 
 ## Viewing the generated TF code
 
-Your pipeline steps may need to access the TF code that was generated for a deployment. Use the `hctl get tf` command following a deployment step like this (using GitHub workflows as an example):
+Your pipeline steps may need to access the TF code that was generated for a deployment. Use the `octl get tf` command following a deployment step like this (using GitHub workflows as an example):
 
 ```yaml
 jobs:
@@ -99,11 +99,11 @@ jobs:
     # ...
     steps:
     - name: Deploy
-      run: hctl deploy my-project my-environment manifest.yaml
+      run: octl deploy my-project my-environment manifest.yaml
     - name: View TF code
       run: |
-        export LATEST_DEPLOY_ID=$(hctl get deployments my-project my-environment -o yaml | yq -r '.[0].id')
-        hctl get tf $LATEST_DEPLOY_ID > tf-output.tf
+        export LATEST_DEPLOY_ID=$(octl get deployments my-project my-environment -o yaml | yq -r '.[0].id')
+        octl get tf $LATEST_DEPLOY_ID > tf-output.tf
 ```
 
 See [viewing the generated TF code]({{< relref "/platform-orchestrator/docs/deploy/deployments#viewing-the-generated-tf-code" >}}) for more details on this operation.
@@ -112,7 +112,7 @@ See [viewing the generated TF code]({{< relref "/platform-orchestrator/docs/depl
 
 A common CI/CD use case often executed by pipelines is promoting the deployment state from one environmnent to the next, e.g. from `development` to `staging`.
 
-With the Orchestrator, build your pipeline to obtain the `hctl` CLI as shown above and have it then execute this single command (using GitHub workflows as an example):
+With the Orchestrator, build your pipeline to obtain the `octl` CLI as shown above and have it then execute this single command (using GitHub workflows as an example):
 
 ```yaml
 jobs:
@@ -120,10 +120,10 @@ jobs:
     # ...
     steps:
     - name: Promote from development to staging
-      run: hctl deploy my-project staging environment://development
+      run: octl deploy my-project staging environment://development
 ```
 
-Find more variations for environment promotion using the `hctl deploy` command [here]({{< relref "/platform-orchestrator/docs/reference/cli-cheat-sheet/#deployments" >}}).
+Find more variations for environment promotion using the `octl deploy` command [here]({{< relref "/platform-orchestrator/docs/reference/cli-cheat-sheet/#deployments" >}}).
 
 ## Approvals
 
@@ -135,6 +135,6 @@ For example, your pipeline may perform a `--plan-only` deployment, [produce depl
 flowchart LR
   subgraph cdPipeline[CD pipeline]
     direction LR
-    planOnly(("hctl deploy<br/>--plan-only")) -->|Deployment logs<br/>TF code| approve((fa:fa-user<br/>Approve)) -->|Approved| deploy(("hctl deploy"))
+    planOnly(("octl deploy<br/>--plan-only")) -->|Deployment logs<br/>TF code| approve((fa:fa-user<br/>Approve)) -->|Approved| deploy(("octl deploy"))
   end
 ```

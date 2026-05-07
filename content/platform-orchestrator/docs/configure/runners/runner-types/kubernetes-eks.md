@@ -46,7 +46,7 @@ resource "platform-orchestrator_kubernetes_eks_runner" "my_runner" {
 {{% tab name="CLI" %}}
 
 ```bash
-hctl create runner my-runner --set-yaml=@runner-config.yaml
+octl create runner my-runner --set-yaml=@runner-config.yaml
 ```
 
 where `runner-config.yaml` is:
@@ -141,7 +141,7 @@ You will need the following resources and permissions:
 - The [`aws` CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) installed and authenticated with a principal having permission to manage IAM roles and policies in the AWS account of the target EKS cluster
 - An EKS cluster with a publicly available API server endpoint
 - The [`kubectl` CLI](https://kubernetes.io/docs/tasks/tools/#kubectl) installed and the current context set to target the EKS cluster using a principal with permission to create namespaces, service accounts, Roles, and RoleBindings
-- The [`hctl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
+- The [`octl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
 - A [project]({{< relref "/platform-orchestrator/docs/configure/projects" >}}) in your Orchestrator organization
 
 ## Prepare the cloud environment

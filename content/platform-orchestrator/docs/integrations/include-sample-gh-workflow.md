@@ -12,11 +12,11 @@ jobs:
       HUMANITEC_ORG: ${{ vars.HUMANITEC_ORG }}
       HUMANITEC_AUTH_TOKEN: ${{ secrets.HUMANITEC_AUTH_TOKEN }}
     steps:
-    - name: Setup hctl
-      uses: humanitec/setup-hctl@v1
+    - name: Setup octl
+      uses: humanitec/setup-octl@v1
       with:
         version: "1"
         token: ${{ secrets.GITHUB_TOKEN }}
     - name: Deploy a manifest
-      run: hctl deploy my-project my-environment ./manifest.yaml
+      run: octl deploy my-project my-environment ./manifest.yaml
 ```

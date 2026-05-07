@@ -18,17 +18,17 @@ Apart from using the resource graph and manifest from a previous deployment, a r
 
 ## Basic Examples
 
-You can rollback an environment using the `rollback` command of the `hctl` CLI. This will produce a diff of any manifest changes, prompt for acceptance, and return results and logs just like a normal deployment.
+You can rollback an environment using the `rollback` command of the `octl` CLI. This will produce a diff of any manifest changes, prompt for acceptance, and return results and logs just like a normal deployment.
 
 ```shell
-hctl rollback my-project my-environment 01234567-89ab-cdef-0123-456789abcdef
+octl rollback my-project my-environment 01234567-89ab-cdef-0123-456789abcdef
 ```
 
 If you are unsure about the effects or configuration of a rollback, you can execute it with `--dry-run` or `--plan-only`.
 
 ```shell
-hctl rollback my-project my-environment 01234567-89ab-cdef-0123-456789abcdef --dry-run
-hctl rollback my-project my-environment 01234567-89ab-cdef-0123-456789abcdef --plan-only
+octl rollback my-project my-environment 01234567-89ab-cdef-0123-456789abcdef --dry-run
+octl rollback my-project my-environment 01234567-89ab-cdef-0123-456789abcdef --plan-only
 ```
 
-See the help output from `hctl rollback` for details of other supported flags and options to adjust the deployment behavior.
+See the help output from `octl rollback` for details of other supported flags and options to adjust the deployment behavior.

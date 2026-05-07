@@ -8,15 +8,15 @@ weight: 60
 toc: true
 ---
 
-`hctl` is the CLI for the Platform Orchestrator.
+`octl` is the CLI for the Platform Orchestrator.
 
 {{< alert context="info" >}}
-Current CLI version: `{{< param hctlVersion >}}`
+Current CLI version: `{{< param octlVersion >}}`
 {{< /alert >}}
 
 ## Installation
 
-### Install hctl on Linux
+### Install octl on Linux
 
 1. Download the latest release with the command
 
@@ -24,53 +24,53 @@ Current CLI version: `{{< param hctlVersion >}}`
    {{% tab name="x64-86" %}}
 
    ```shell
-   curl -fLO https://github.com/humanitec/hctl/releases/download/v{{< param hctlVersion >}}/hctl_{{< param hctlVersion >}}_linux_amd64.tar.gz
-   tar xvzf hctl_{{< param hctlVersion >}}_linux_amd64.tar.gz
-   rm hctl_{{< param hctlVersion >}}_linux_amd64.tar.gz README.md
+   curl -fLO https://github.com/humanitec/octl/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_linux_amd64.tar.gz
+   tar xvzf octl_{{< param octlVersion >}}_linux_amd64.tar.gz
+   rm octl_{{< param octlVersion >}}_linux_amd64.tar.gz README.md
    ```
 
    {{< /tab >}}
    {{% tab name="ARM64" %}}
 
    ```shell
-   curl -fLO https://github.com/humanitec/hctl/releases/download/v{{< param hctlVersion >}}/hctl_{{< param hctlVersion >}}_linux_arm64.tar.gz
-   tar xvzf hctl_{{< param hctlVersion >}}_linux_arm64.tar.gz
-   rm hctl_{{< param hctlVersion >}}_linux_arm64.tar.gz README.md
+   curl -fLO https://github.com/humanitec/octl/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_linux_arm64.tar.gz
+   tar xvzf octl_{{< param octlVersion >}}_linux_arm64.tar.gz
+   rm octl_{{< param octlVersion >}}_linux_arm64.tar.gz README.md
    ```
 
    {{< /tab >}}
    {{< /tabs >}}
 
-2. Install hctl
+2. Install octl
 
    ```shell
-   sudo install -o root -g root -m 0755 hctl /usr/local/bin/hctl
+   sudo install -o root -g root -m 0755 octl /usr/local/bin/octl
    ```
 
    {{< alert context="info" >}}
    **Note**
 
-   If you do not have root access on the target system, you can still install hctl to the `~/.local/bin` directory:
+   If you do not have root access on the target system, you can still install octl to the `~/.local/bin` directory:
 
    ```shell
-   chmod +x hctl
+   chmod +x octl
    mkdir -p ~/.local/bin
-   mv ./hctl ~/.local/bin/hctl
+   mv ./octl ~/.local/bin/octl
    # and then append (or prepend) ~/.local/bin to $PATH
    ```
 
    {{< /alert >}}
 
-### Install hctl on macOS
+### Install octl on macOS
 
 #### Homebrew
 
-If you are on macOS and using the [Homebrew](https://brew.sh/) package manager, you can install hctl with Homebrew.
+If you are on macOS and using the [Homebrew](https://brew.sh/) package manager, you can install octl with Homebrew.
 
 1. Run the installation command:
 
    ```shell
-   brew install humanitec/tap/hctl
+   brew install humanitec/tap/octl
    ```
 
 #### Manually
@@ -81,57 +81,57 @@ If you are on macOS and using the [Homebrew](https://brew.sh/) package manager, 
    {{% tab name="Intel" %}}
 
    ```shell
-   curl -fLO https://github.com/humanitec/hctl/releases/download/v{{< param hctlVersion >}}/hctl_{{< param hctlVersion >}}_darwin_amd64.tar.gz
-   tar xvzf hctl_{{< param hctlVersion >}}_darwin_amd64.tar.gz
-   rm hctl_{{< param hctlVersion >}}_darwin_amd64.tar.gz README.md
+   curl -fLO https://github.com/humanitec/octl/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_darwin_amd64.tar.gz
+   tar xvzf octl_{{< param octlVersion >}}_darwin_amd64.tar.gz
+   rm octl_{{< param octlVersion >}}_darwin_amd64.tar.gz README.md
    ```
 
    {{< /tab >}}
    {{% tab name="Apple Silicon" %}}
 
    ```shell
-   curl -fLO https://github.com/humanitec/hctl/releases/download/v{{< param hctlVersion >}}/hctl_{{< param hctlVersion >}}_darwin_arm64.tar.gz
-   tar xvzf hctl_{{< param hctlVersion >}}_darwin_arm64.tar.gz
-   rm hctl_{{< param hctlVersion >}}_darwin_arm64.tar.gz README.md
+   curl -fLO https://github.com/humanitec/octl/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_darwin_arm64.tar.gz
+   tar xvzf octl_{{< param octlVersion >}}_darwin_arm64.tar.gz
+   rm octl_{{< param octlVersion >}}_darwin_arm64.tar.gz README.md
    ```
 
    {{< /tab >}}
    {{< /tabs >}}
 
-2. Install hctl
+2. Install octl
 
    ```shell
-   chmod +x ./hctl
-   sudo mv ./hctl /usr/local/bin/hctl
-   sudo chown root: /usr/local/bin/hctl
+   chmod +x ./octl
+   sudo mv ./octl /usr/local/bin/octl
+   sudo chown root: /usr/local/bin/octl
    ```
 
-### Install hctl on Windows
+### Install octl on Windows
 
 #### Scoop
 
-If you are on Windows and using the [Scoop](https://scoop.sh/) package manager, you can install hctl with Scoop.
+If you are on Windows and using the [Scoop](https://scoop.sh/) package manager, you can install octl with Scoop.
 
 1. Run the installation command:
 
    ```pwsh
    scoop bucket add humanitec https://github.com/humanitec/scoop-bucket
-   scoop install humanitec/hctl
+   scoop install humanitec/octl
    ```
 
 #### Manually
 
-1. Download the [latest release](https://github.com/humanitec/hctl/releases/download/v{{< param hctlVersion >}}/hctl_{{< param hctlVersion >}}_windows_amd64.zip).
+1. Download the [latest release](https://github.com/humanitec/octl/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_windows_amd64.zip).
 
 2. Decompress the zip file, and move the binary to your PATH.
 
 ### Available as Docker Image
 
-hctl is also published as [Docker Image](https://github.com/humanitec/hctl/pkgs/container/hctl), which can be used like `docker run --rm -it ghcr.io/humanitec/hctl:{{< param hctlVersion >}}`.
+octl is also published as [Docker Image](https://github.com/humanitec/octl/pkgs/container/octl), which can be used like `docker run --rm -it ghcr.io/humanitec/octl:{{< param octlVersion >}}`.
 
-## Install hctl in GitHub Actions
+## Install octl in GitHub Actions
 
-A GitHub action is available in the [GitHub Marketplace](https://github.com/marketplace/actions/set-up-hctl-platform-orchestrator-cli) to install the hctl binary and add it to the `$PATH`.
+A GitHub action is available in the [GitHub Marketplace](https://github.com/marketplace/actions/set-up-octl-platform-orchestrator-cli) to install the octl binary and add it to the `$PATH`.
 
 {{< include "content/platform-orchestrator/docs/integrations/include-sample-gh-workflow.md" >}}
 
@@ -139,8 +139,8 @@ The `version` field can be an exact version such as "1.36.7" or a range such as 
 
 ## Validate your installation
 
-Run `hctl --version` to ensure `hctl` is in your path. Expected output, matching your installed version:
-`hctl version github.com/humanitec/hctl <version XX.YY.ZZ> <commit-hash> <commit-date>`
+Run `octl --version` to ensure `octl` is in your path. Expected output, matching your installed version:
+`octl version github.com/humanitec/octl <version XX.YY.ZZ> <commit-hash> <commit-date>`
 
 ## CLI cheat sheet
 
@@ -152,30 +152,30 @@ An overview of common and useful CLI commands is available in the [CLI cheat she
 
 ## Configuration
 
-`hctl` will maintain a local configuration in a config file located at `~/.config/hctl/config.yaml`. Use the command `hctl config` or the list below to see available configuration items.
+`octl` will maintain a local configuration in a config file located at `~/.config/octl/config.yaml`. Use the command `octl config` or the list below to see available configuration items.
 
 Each configuration item can be overridden using an Environment Variable.
 
-The command `hctl config show` displays the _effective_ configuration, taking any override into account.
+The command `octl config show` displays the _effective_ configuration, taking any override into account.
 
 | Config item      | Environment variable   | CLI command             | Description                                                                                                                                                                      | Default | Mandatory |
 | ---------------- | ---------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --------- |
-| `default_org_id` | `HUMANITEC_ORG`        | `hctl config set-org`   | The id of the Organization in which to run commands                                                                                                                              | ""      | Yes       |
-| `api_url`        | `HUMANITEC_API_URL`    | `hctl config set-url`   | The base URL of the Orchestrator API. Set to your internal endpoint when [self-hosting]({{< relref "/platform-orchestrator/docs/architecture/self-hosting" >}}) the Orchestrator | ""      | Yes       |
-| `token`          | `HUMANITEC_AUTH_TOKEN` | `hctl config set-token` | An authentication token. The session token obtained via `hctl login` will be written into this property                                                                          | ""      | Yes       |
+| `default_org_id` | `HUMANITEC_ORG`        | `octl config set-org`   | The id of the Organization in which to run commands                                                                                                                              | ""      | Yes       |
+| `api_url`        | `HUMANITEC_API_URL`    | `octl config set-url`   | The base URL of the Orchestrator API. Set to your internal endpoint when [self-hosting]({{< relref "/platform-orchestrator/docs/architecture/self-hosting" >}}) the Orchestrator | ""      | Yes       |
+| `token`          | `HUMANITEC_AUTH_TOKEN` | `octl config set-token` | An authentication token. The session token obtained via `octl login` will be written into this property                                                                          | ""      | Yes       |
 
 ## Commands
 
-`hctl` follows a hierarchical command structure generally adhering to this pattern:
+`octl` follows a hierarchical command structure generally adhering to this pattern:
 
-`hctl <verb> <object> [additional classification]`
+`octl <verb> <object> [additional classification]`
 
 E.g. to see the details of a particular Provider, use this command:
 
-`hctl get provider <type> <id>`
+`octl get provider <type> <id>`
 
 {{< alert context="info" >}}
 All available commands are listed and explained in the CLI online help. Use the `-h` or `--help` flag to see usage details on any command level, e.g.:
 
-`hctl get provider -h`
+`octl get provider -h`
 {{< /alert >}}

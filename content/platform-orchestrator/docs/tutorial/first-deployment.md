@@ -27,7 +27,7 @@ This tutorial focuses on Google Cloud, Amazon Web Services and Microsoft Azure a
 
 To get started with this tutorial, you’ll need:
 
-- The [hctl]({{< relref "/platform-orchestrator/docs/integrations/cli#installation" >}}) CLI installed locally
+- The [octl]({{< relref "/platform-orchestrator/docs/integrations/cli#installation" >}}) CLI installed locally
 - Either the [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) or the [OpenTofu CLI](https://opentofu.org/docs/intro/install/) installed locally
 - [Git](https://git-scm.com/downloads) installed locally
 - A Platform Orchestrator organization. To create one, please go [here](https://console.humanitec.dev/auth/register) and follow the instructions
@@ -180,30 +180,30 @@ Note: For simplicity, the Terraform/OpenTofu code uses a local backend by defaul
 
 ## Identify the new Orchestrator project
 
-The Terraform run will output the configured organization and created project after a successful run. In case you want to locate that information using the `hctl` CLI, please follow along.
+The Terraform run will output the configured organization and created project after a successful run. In case you want to locate that information using the `octl` CLI, please follow along.
 
 Ensure you are logged in:
 
 ```bash
-hctl login
+octl login
 ```
 
 Ensure that the CLI is set to use your Orchestrator organization:
 
 ```bash
-hctl config show
+octl config show
 ```
 
 If the `default_org_id` is empty, set the organization to your value like this:
 
 ```bash
-hctl config set-org your-org-id
+octl config set-org your-org-id
 ```
 
 Now list all projects in your organization. You should see one named `<random-string>-tutorial` that was created just now:
 
 ```bash
-hctl get projects --out table
+octl get projects --out table
 ```
 
 Set a variable to the project id you see in the list:
@@ -231,7 +231,7 @@ The [deployment manifest]({{< relref "/platform-orchestrator/docs/deploy/manifes
 Perform a deployment into the `dev` environment of the newly created project:
 
 ```bash
-hctl deploy ${PROJECT_ID} dev ./manifest.yaml
+octl deploy ${PROJECT_ID} dev ./manifest.yaml
 ```
 
 To see the outcome, return to the Orchestrator console at [https://console.humanitec.dev/](https://console.humanitec.dev/) in your browser and open the **Projects** view. Select the `*-tutorial` project and open the `dev` environment.
@@ -263,7 +263,7 @@ The workload also defines a variable `OVERRIDE_POSTGRES` which dynamically const
 Perform a deployment using this manifest into the same project and environment as before:
 
 ```shell
-hctl deploy ${PROJECT_ID} dev ./manifest2.yaml
+octl deploy ${PROJECT_ID} dev ./manifest2.yaml
 ```
 
 The deployment command will prompt you to confirm the changes which are being applied to the target environment. Accepting this will deploy the application to the cluster and connect the workload to the database which is deployed into the cluster as well.
@@ -289,7 +289,7 @@ You can create a `score.yaml` file with the following contents (or locate it in 
 and deploy it like this
 
 ```shell
-hctl score deploy ${PROJECT_ID} score ./score.yaml
+octl score deploy ${PROJECT_ID} score ./score.yaml
 ```
 
 After the deployment is complete (which can take around 5 minutes) you should now be able to observe three new VMs in your cloud project which are behind a loadbalancer. Calling to this loadbalancer should immediately show you the application.

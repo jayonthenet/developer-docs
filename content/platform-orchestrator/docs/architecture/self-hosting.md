@@ -150,7 +150,7 @@ The `test/` directory contains a smoke test that provisions a minimal Platform O
 ### Prerequisites
 
 - [`terraform`](https://developer.hashicorp.com/terraform/install) installed
-- [`hctl`](https://docs.humanitec.com/getting-started/cli) installed and authenticated
+- [`octl`](https://docs.humanitec.com/getting-started/cli) installed and authenticated
 - `kubectl` configured and pointing at the target cluster (used to pull cluster credentials)
 - Platform Orchestrator deployed and accessible
 
@@ -176,7 +176,7 @@ cd test/
 bash run-test.sh
 ```
 
-This deploys `manifest.yaml` using `hctl`, which triggers the runner to execute the test module and verify the pipeline is working end-to-end.
+This deploys `manifest.yaml` using `octl`, which triggers the runner to execute the test module and verify the pipeline is working end-to-end.
 
 ### Teardown
 

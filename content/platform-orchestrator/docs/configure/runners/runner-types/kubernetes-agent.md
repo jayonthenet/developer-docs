@@ -26,7 +26,7 @@ Follow the steps below to configure a runner of type `kubernetes-agent`.
 {{% tab name="CLI" %}}
 
 ```bash
-hctl create runner my-runner --set-yaml=@runner-config.yaml
+octl create runner my-runner --set-yaml=@runner-config.yaml
 ```
 
 where `runner-config.yaml` is:
@@ -213,10 +213,10 @@ To have the `kubernetes-agent` runner in your Kubernetes cluster, you need:
 
 - An existing [Kubernetes cluster](https://kubernetes.io/docs)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) installed locally and the current context set to the target cluster
-- The [`hctl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
+- The [`octl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
 - Depending on your choice of tooling:
   - TF: Either the [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) or the [OpenTofu CLI](https://opentofu.org/docs/intro/install/) installed
-  - `hctl` CLI: [helm](https://helm.sh/docs/intro/install/) installed locally
+  - `octl` CLI: [helm](https://helm.sh/docs/intro/install/) installed locally
 
 {{< tabs >}}
 {{% tab name="TF" %}}
@@ -276,7 +276,7 @@ Use TF variables of your module instead of placing the raw values in the `locals
 3. Configure providers:
 
 ```json
-# Platform Orchestrator provider. Authentication taken from local "hctl" CLI
+# Platform Orchestrator provider. Authentication taken from local "octl" CLI
 provider "platform-orchestrator" {
   org_id = local.humanitec_org
 }
@@ -422,7 +422,7 @@ kubectl create namespace ${CLUSTER_RUNNER_JOB_NAMESPACE}
 6. Register the `kubernetes-agent` runner with the Orchestrator:
 
 ```bash
-hctl create runner ${RUNNER_ID} \
+octl create runner ${RUNNER_ID} \
   --set=runner_configuration="$(jq -nc --arg key "$(cat runner_public_key.pem)" '{"type": "kubernetes-agent","key":$key,"job":{"namespace":"'${CLUSTER_RUNNER_JOB_NAMESPACE}'","service_account":"'${CLUSTER_RUNNER_JOB_SERVICEACCOUNT}'"}}')" \
   --set=state_storage_configuration='{"type":"kubernetes","namespace":"'${CLUSTER_RUNNER_JOB_NAMESPACE}'"}'
 ```
@@ -459,11 +459,11 @@ To have the `kubernetes-agent` runner in your EKS cluster, you need:
 
 - An existing [AWS EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html)
 - The [`aws` CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) installed and authenticated with a principal having permission to manage IAM roles and policies in the AWS account of the EKS cluster
-- The [`hctl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
+- The [`octl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) installed locally and the current context set to the target cluster
 - Depending on your choice of tooling:
   - TF: Either the [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) or the [OpenTofu CLI](https://opentofu.org/docs/intro/install/) installed
-  - `hctl` CLI: [helm](https://helm.sh/docs/intro/install/) installed locally
+  - `octl` CLI: [helm](https://helm.sh/docs/intro/install/) installed locally
 
 The setup utilizes [IAM roles for service accounts (IRSA)](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) for the EKS cluster to provide credentials to the runner for TF execution.
 
@@ -559,7 +559,7 @@ provider "aws" {
   region = local.aws_region
 }
 
-# Platform Orchestrator provider. Authentication taken from local "hctl" CLI
+# Platform Orchestrator provider. Authentication taken from local "octl" CLI
 provider "platform-orchestrator" {
   org_id = local.humanitec_org
 }
@@ -840,7 +840,7 @@ The value `serviceAccount.annotations.eks...` annotates the Kubernetes service a
 10. Register the `kubernetes-agent` runner with the Orchestrator:
 
 ```bash
-hctl create runner ${RUNNER_ID} \
+octl create runner ${RUNNER_ID} \
   --set=runner_configuration="$(jq -nc --arg key "$(cat runner_public_key.pem)" '{"type": "kubernetes-agent","key":$key,"job":{"namespace":"'${CLUSTER_RUNNER_JOB_NAMESPACE}'","service_account":"'${CLUSTER_RUNNER_JOB_SERVICEACCOUNT}'"}}')" \
   --set=state_storage_configuration='{"type":"kubernetes","namespace":"'${CLUSTER_RUNNER_JOB_NAMESPACE}'"}'
 ```
@@ -868,10 +868,10 @@ To have the `kubernetes-agent` runner in your GKE cluster, you need:
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) installed locally and the current context set to the target cluster
 - The [`gcloud` CLI](https://cloud.google.com/sdk/docs/install) installed and authenticated with a principal having permission to manage IAM roles and policies in the GCP project of the GKE cluster
 - The [`gke-gcloud-auth-plugin` CLI](https://docs.cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl) installed and `kubectl` configured to use the plugin
-- The [`hctl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
+- The [`octl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
 - Depending on your choice of tooling:
   - TF: Either the [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) or the [OpenTofu CLI](https://opentofu.org/docs/intro/install/) installed
-  - `hctl` CLI: [helm](https://helm.sh/docs/intro/install/) installed locally
+  - `octl` CLI: [helm](https://helm.sh/docs/intro/install/) installed locally
 
 The setup utilizes [workload identity using a Google Service Account](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/provider_reference#running-terraform-on-google-cloud) for the GKE cluster to provide credentials to the runner for TF execution.
 
@@ -962,7 +962,7 @@ provider "google" {
   region  = local.gcp_region
 }
 
-# Platform Orchestrator provider. Authentication taken from local "hctl" CLI
+# Platform Orchestrator provider. Authentication taken from local "octl" CLI
 provider "platform-orchestrator" {
   org_id = local.humanitec_org
 }
@@ -1188,7 +1188,7 @@ The value `serviceAccount.annotations.iam.gke.io/gcp-service-account` annotates 
 10. Register the `kubernetes-agent` runner with the Orchestrator:
 
 ```bash
-hctl create runner ${RUNNER_ID} \
+octl create runner ${RUNNER_ID} \
   --set=runner_configuration="$(jq -nc --arg key "$(cat runner_public_key.pem)" '{"type": "kubernetes-agent","key":$key,"job":{"namespace":"'${CLUSTER_RUNNER_JOB_NAMESPACE}'","service_account":"'${CLUSTER_RUNNER_JOB_SERVICEACCOUNT}'"}}')" \
   --set=state_storage_configuration='{"type":"kubernetes","namespace":"'${CLUSTER_RUNNER_JOB_NAMESPACE}'"}'
 ```
@@ -1212,11 +1212,11 @@ To have the `kubernetes-agent` runner in your AKS cluster, you need:
 
 - An existing [Azure AKS cluster](https://learn.microsoft.com/en-us/azure/aks/what-is-aks) with [OIDC Issuer](https://learn.microsoft.com/en-us/azure/aks/use-oidc-issuer) and [Azure Workload Identity](https://learn.microsoft.com/en-us/azure/aks/workload-identity-overview) enabled
 - The [`az` CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) installed and authenticated with a principal having permission to manage managed identities and role assignments in the Azure subscription of the AKS cluster
-- The [`hctl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
+- The [`octl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) installed locally and the current context set to the target cluster
 - Depending on your choice of tooling:
   - TF: Either the [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) or the [OpenTofu CLI](https://opentofu.org/docs/intro/install/) installed
-  - `hctl` CLI: [helm](https://helm.sh/docs/intro/install/) installed locally
+  - `octl` CLI: [helm](https://helm.sh/docs/intro/install/) installed locally
 
 The setup utilizes [Azure Workload Identity](https://learn.microsoft.com/en-us/azure/aks/workload-identity-overview) for the AKS cluster to provide credentials to the runner for TF execution.
 
@@ -1305,7 +1305,7 @@ provider "azurerm" {
   features {}
 }
 
-# Platform Orchestrator provider. Authentication taken from local "hctl" CLI
+# Platform Orchestrator provider. Authentication taken from local "octl" CLI
 provider "platform-orchestrator" {
   org_id = local.humanitec_org
 }
@@ -1557,7 +1557,7 @@ The value `serviceAccount.annotations.azure.workload.identity/client-id` annotat
 10. Register the `kubernetes-agent` runner with the Orchestrator, configuring the pod label required by Azure Workload Identity:
 
 ```bash
-hctl create runner ${RUNNER_ID} \
+octl create runner ${RUNNER_ID} \
   --set=runner_configuration="$(jq -nc --arg key "$(cat runner_public_key.pem)" '{"type": "kubernetes-agent","key":$key,"job":{"namespace":"'${CLUSTER_RUNNER_JOB_NAMESPACE}'","service_account":"'${CLUSTER_RUNNER_JOB_SERVICEACCOUNT}'","pod_template":{"metadata":{"labels":{"azure.workload.identity/use":"true"}}}}}')" \
   --set=state_storage_configuration='{"type":"kubernetes","namespace":"'${CLUSTER_RUNNER_JOB_NAMESPACE}'"}'
 ```

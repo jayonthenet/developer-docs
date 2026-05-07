@@ -153,7 +153,7 @@ Since an Orchestrator module may contain any number of TF resources, the TF depe
 Each node in the resource graph represents an active resource. You can query the details of all active resources in an environment by selecting a node in the console view or by using this command:
 
 ```bash
-hctl get active-resource-nodes my-project my-environment -o yaml # or "-o json" for JSON output
+octl get active-resource-nodes my-project my-environment -o yaml # or "-o json" for JSON output
 ```
 
 The properties of each active resource include its resource type, its project, environment, and deployment, as well as the module used to provision it.

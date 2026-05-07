@@ -34,7 +34,7 @@ resource "platform-orchestrator_runner_rule" "my-runner-my-project" {
 {{% tab name="CLI" %}}
 
 ```bash
-hctl create runner-rule --set=runner_id=my-runner --set=project_id=my-project
+octl create runner-rule --set=runner_id=my-runner --set=project_id=my-project
 ```
 
 {{% /tab %}}
@@ -52,15 +52,15 @@ You cannot update a runner rule. Changing one of its properties forces replaceme
 {{% /tab %}}
 {{% tab name="CLI" %}}
 
-Manage runner rules using the `hctl` CLI:
+Manage runner rules using the `octl` CLI:
 
 ```bash
 # Create a runner rule
-hctl create runner-rule --set=runner_id=my-runner --set=project_id=my-project
+octl create runner-rule --set=runner_id=my-runner --set=project_id=my-project
 
-hctl get runner-rules                                        # List all runner rules of your organization
-hctl get runner-rule 1f8a1ecd-2b06-41de-a646-34717b138582    # Get details on a runner rule
-hctl delete runner-rule 1f8a1ecd-2b06-41de-a646-34717b138582 # Delete a runner rule
+octl get runner-rules                                        # List all runner rules of your organization
+octl get runner-rule 1f8a1ecd-2b06-41de-a646-34717b138582    # Get details on a runner rule
+octl delete runner-rule 1f8a1ecd-2b06-41de-a646-34717b138582 # Delete a runner rule
 ```
 
 You cannot `update` a runner rule. Instead, delete the unwanted one and create a new runner rule with the desired configuration instead.

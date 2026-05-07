@@ -25,7 +25,7 @@ A project is mainly a container that holds a set of [environments]({{< relref "/
 {{% tab name="CLI" %}}
 
 ```bash
-hctl create project my-project --set-yaml=@project-config.yaml
+octl create project my-project --set-yaml=@project-config.yaml
 ```
 
 where `project-config.yaml`:
@@ -34,7 +34,7 @@ where `project-config.yaml`:
 display_name: Backend Project
 ```
 
-Note: the project `id` is part of the CLI command, e.g. `humctl create my-project`, and therefore not shown as part of the configuration. 
+Note: the project `id` is part of the CLI command, e.g. `octl create my-project`, and therefore not shown as part of the configuration.
 
 {{% /tab %}}
 {{< /tabs >}}

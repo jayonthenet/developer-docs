@@ -46,7 +46,7 @@ resource "platform-orchestrator_kubernetes_eks_runner" "my_runner" {
 {{% tab name="CLI" %}}
 
 ```bash
-hctl create runner my-runner --set-yaml=@runner-config.yaml
+octl create runner my-runner --set-yaml=@runner-config.yaml
 ```
 
 where `runner-config.yaml` is:
@@ -148,7 +148,7 @@ You will need the following resources and permissions:
 - The [`gcloud` CLI](https://cloud.google.com/sdk/docs/install) installed and authenticated with a principal having permission to manage workload identity pools, service accounts, and IAM policies in the Google Cloud project of the target GKE cluster
 - A GKE cluster with a publicly available API server endpoint and [Workload Identity Federation enabled](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity)
 - The [`kubectl` CLI](https://kubernetes.io/docs/tasks/tools/#kubectl) installed and the current context set to target the GKE cluster and using a principal with permission to create namespaces, service accounts, Roles, and RoleBindings on it
-- The [`hctl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
+- The [`octl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
 - A [project]({{< relref "/platform-orchestrator/docs/configure/projects" >}}) in your Orchestrator organization
 
 ## Prepare the cloud environment

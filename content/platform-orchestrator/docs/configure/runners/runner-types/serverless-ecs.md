@@ -235,7 +235,7 @@ The steps below serve as a general guide of the steps to configure the runner us
 - The [`aws` CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) installed and authenticated with a principal having permission to manage IAM roles and policies in the AWS account of the ECS cluster
 - Depending on your choice of tooling:
   - TF: Either the [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) or the [OpenTofu CLI](https://opentofu.org/docs/intro/install/) installed
-  - CLI: The [`hctl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
+  - CLI: The [`octl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
 
 {{< alert context="info" >}}
 A [public Terraform/OpenTofu module](https://github.com/humanitec-tf-modules/serverless-ecs-orchestrator-runner) is available for the ECS runner. Instead of creating the TF code manually as shown below, we recommend you use the module for greater convenience. Refer to the module description for usage instructions.

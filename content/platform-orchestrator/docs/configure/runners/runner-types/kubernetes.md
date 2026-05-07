@@ -53,7 +53,7 @@ resource "platform-orchestrator_kubernetes_runner" "my_runner" {
 {{% tab name="CLI" %}}
 
 ```bash
-hctl create runner my-runner --set-yaml=@runner-config.yaml
+octl create runner my-runner --set-yaml=@runner-config.yaml
 ```
 
 where `runner-config.yaml` is:
@@ -141,7 +141,7 @@ You will need the following resources and permissions:
 
 - A kubernetes cluster with a publicly available API server endpoint
 - The [`kubectl` CLI](https://kubernetes.io/docs/tasks/tools/#kubectl) installed and the current context set to target the kubernetes cluster
-- The [`hctl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
+- The [`octl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
 - A [project]({{< relref "/platform-orchestrator/docs/configure/projects" >}}) in your Orchestrator organization
 
 The runner supports client certificate authentication to the cluster only. Use this command to see if the user of the current context uses a client certificate:

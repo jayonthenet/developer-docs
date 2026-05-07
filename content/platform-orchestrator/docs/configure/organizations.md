@@ -28,7 +28,7 @@ You can find your Organization ID in multiple ways.
 List your Organizations:
 
 ```bash
-hctl get current-user
+octl get current-user
 ```
 
 The IDs of Organizations of which you are a member are in the **OrganizationMemberships** column.

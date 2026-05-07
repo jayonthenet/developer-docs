@@ -24,7 +24,7 @@ A module with no module rules will not be considered for selection.
 
 ## Manage module rules
 
-You can manage module rules using either the [Terraform provider](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/module_rule), [OpenTofu provider](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/module_rule), or the [`hctl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}).
+You can manage module rules using either the [Terraform provider](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/module_rule), [OpenTofu provider](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/module_rule), or the [`octl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}).
 
 {{< tabs >}}
 {{% tab name="TF" %}}
@@ -47,17 +47,17 @@ data "platform-orchestrator_module_rule" "example" {
 {{% /tab %}}
 {{% tab name="CLI" %}}
 
-Manage module rules using the `hctl` CLI:
+Manage module rules using the `octl` CLI:
 
 ```bash
 # Create a module rule
-hctl create module-rule --set=module_id=my-module --set=project_id=my-project
+octl create module-rule --set=module_id=my-module --set=project_id=my-project
 
 # Get details on a module rule
-hctl get module-rule 1f8a1ecd-2b06-41de-a646-34717b138582
+octl get module-rule 1f8a1ecd-2b06-41de-a646-34717b138582
 
 # Delete a module rule
-hctl delete module-rule 1f8a1ecd-2b06-41de-a646-34717b138582
+octl delete module-rule 1f8a1ecd-2b06-41de-a646-34717b138582
 ```
 
 {{% /tab %}}
@@ -181,7 +181,7 @@ resource "platform-orchestrator_module_rule" "default" {
 **Create a module rule with all criteria:**
 
 ```bash
-hctl create module-rule \
+octl create module-rule \
   --set=module_id=my-module \
   --set=project_id=my-project \
   --set=env_type_id=development \
@@ -193,7 +193,7 @@ hctl create module-rule \
 **Create a module rule for a specific project only:**
 
 ```bash
-hctl create module-rule \
+octl create module-rule \
   --set=module_id=my-module \
   --set=project_id=my-project
 ```
@@ -201,7 +201,7 @@ hctl create module-rule \
 **Create a module rule for a specific environment type:**
 
 ```bash
-hctl create module-rule \
+octl create module-rule \
   --set=module_id=my-module \
   --set=env_type_id=production
 ```
@@ -209,7 +209,7 @@ hctl create module-rule \
 **Create a catch-all module rule:**
 
 ```bash
-hctl create module-rule --set=module_id=my-module
+octl create module-rule --set=module_id=my-module
 ```
 
 {{% /tab %}}

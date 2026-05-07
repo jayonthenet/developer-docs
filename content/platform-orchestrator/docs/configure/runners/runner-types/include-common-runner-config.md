@@ -86,7 +86,7 @@ Create the runner using the configuration prepared previously:
 {{% tab name="CLI" %}}
 
 ```bash
-hctl create runner ${RUNNER_ID} \
+octl create runner ${RUNNER_ID} \
   --set-yaml=@runner-config.yaml
 ```
 
