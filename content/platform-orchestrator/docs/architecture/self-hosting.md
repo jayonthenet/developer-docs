@@ -62,7 +62,7 @@ infrastructure) that it depends on.
 | `rabbitmq-cluster-operator` | [charts/rabbitmq-cluster-operator](charts/rabbitmq-cluster-operator) | Local | RabbitMQ Cluster Operator |
 | `spicedb-operator` | [charts/spicedb-operator](charts/spicedb-operator) | Local | SpiceDB operator |
 | `keycloak-operator` | [charts/keycloak-operator](charts/keycloak-operator) | Local | Keycloak operator |
-| `vault` | `vault/vault` | External | HashiCorp Vault |
+| `openbao` | `openbao/openbao` | External | OpenBao (Vault-compatible secret store) |
 | `cluster-issuer` | [charts/cluster-issuer](charts/cluster-issuer) | Local | cert-manager ClusterIssuer resource |
 | `opentelemetry-operator` | `opentelemetry-operator/opentelemetry-operator` | External | OpenTelemetry operator |
 | `opentelemetry` | [charts/opentelemetry](charts/opentelemetry) | Local | OpenTelemetry Collector configuration |
@@ -85,12 +85,13 @@ OR (which is the same):
 make setup-local
 ````
 
-Add the following to `/etc/hosts`:
+Add your domains to `/etc/hosts`, e.g.:
 ```
-127.0.0.1 console.local.humanitec.dev
-127.0.0.1 api.local.humanitec.dev
-127.0.0.1 keycloak.local.humanitec.dev
+127.0.0.1 api.example.com
+127.0.0.1 console.example.com
+127.0.0.1 keycloak.example.com
 ```
+(The domains are configured in `state-values.yaml` in `platformOrchestratorValues.global.[api|console|keycloak].hostname`)
 
 ## Installation in a random cluster with default values
 
@@ -117,9 +118,9 @@ Get superuser token:
 export SUPERUSER_TOKEN=$(kubectl get secret platform-orchestrator-secrets -n platform-orchestrator -o jsonpath='{.data.superUserToken}' | base64 --decode)
 ```
 
-List all organizations:
+List all organizations (take the API URL from `platformOrchestratorValues.global.api.hostname` in `state-values.yaml`):
 ```bash
-export API_URL=https://api.local.humanitec.dev
+export API_URL=https://api.example.com
 curl -k -H "Authorization: Bearer ${SUPERUSER_TOKEN}" ${API_URL}/admin/orgs
 ```
 
@@ -137,10 +138,10 @@ curl -k -XPOST \
 ```bash
 make print-keycloak-admin
 ```
-- Login to https://keycloak.local.humanitec.dev/
+- Login to your Keycloak instance (see the hostname in state-values.yaml, `platformOrchestratorValues.global.keycloak.hostname`), e.g. https://keycloak.example.com/
 - Switch realm from `master` to `platform-orchestrator` (the realm is created with the helm installation, you can customize its name with helm values)
 - Add a new user under Users and set a password
-- Go to https://console.local.humanitec.dev/ and click on SSO Login
+- Go to Console (see the hostname in state-values.yaml, `platformOrchestratorValues.global.gatewayApi.frontend.hostname`), e.g. https://console.example.com/ and click on SSO Login
 - Put in your org name
 
 ## Smoke Tests
@@ -150,7 +151,7 @@ The `test/` directory contains a smoke test that provisions a minimal Platform O
 ### Prerequisites
 
 - [`terraform`](https://developer.hashicorp.com/terraform/install) installed
-- [`octl`](https://docs.humanitec.com/getting-started/cli) installed and authenticated
+- [`hctl`](https://docs.humanitec.com/getting-started/cli) installed and authenticated
 - `kubectl` configured and pointing at the target cluster (used to pull cluster credentials)
 - Platform Orchestrator deployed and accessible
 
@@ -165,7 +166,7 @@ terraform apply
 > **Note:** All variable defaults are pre-configured for the local KinD cluster set up via `make setup-local`. No variable overrides are needed when running against that cluster.
 
 This provisions:
-- A Humanitec project, environment, and environment type
+- A Platform Orchestrator project, environment, and environment type
 - A Kubernetes runner registered with Platform Orchestrator
 - A test resource type, module, and module rule
 
@@ -176,7 +177,7 @@ cd test/
 bash run-test.sh
 ```
 
-This deploys `manifest.yaml` using `octl`, which triggers the runner to execute the test module and verify the pipeline is working end-to-end.
+This deploys `manifest.yaml` using `hctl`, which triggers the runner to execute the test module and verify the pipeline is working end-to-end.
 
 ### Teardown
 

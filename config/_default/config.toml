@@ -109,7 +109,7 @@ source = "node_modules/@hyas/images/layouts"
 target = "layouts"
 
 [Params]
-octlVersion = "1.49.0"
+octlVersion = "1.0.0"
 canyonRunnerImageVersion = "1.11.0"
 scoreHumanitecVersion = "0.10.2"
 GitHubBaseUrl = "https://github.com"
