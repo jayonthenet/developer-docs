@@ -27,7 +27,6 @@ This document provides regular updates on changes to the [Platform Orchestrator]
 - **New:** Added documentation for how to configure [Google Cloud Storage (GCS)]({{< relref "../configure/runners/state-storage-types/gcs.md" >}}) and [Azure Blob Storage]({{< relref "../configure/runners/state-storage-types/azurerm.md" >}}) as the default state storage mechanism for Platform Orchestrator runners.
 - **New:** Added documentation for [how to use `kubernetes-agent` when self-hosting]({{< relref "../configure/runners/runner-types/kubernetes-agent.md#self-hosting-requirements" >}}) the Platform Orchestrator.
 - **Improved:** Added support for Azure in our [Get Started tutorial]({{< relref "../tutorial/get-started.md" >}}).
-- **Improved:** Simplified the "Getting Started" sandbox environment experience on web.
 - **Improved:** Rebuilt how we display messages generated on the web application when a deployment encounters an error.
 - **Improved:** Fixed a number of minor bugs.
 

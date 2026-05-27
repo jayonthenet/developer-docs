@@ -16,7 +16,7 @@ aliases:
 
 You will find a visual rendering of the resource graph in the Orchestrator [console](https://console.humanitec.dev) for each environment that has a deployment. It may look like this:
 
-![Sample resource graph](/images/sandbox_resource_graph.png "Sample resource graph")
+![Sample resource graph](/images/example_resource_graph.png 'Sample resource graph')
 
 You can hold and drag nodes to rearrange them in the console view, and click on any node to see its details.
 
