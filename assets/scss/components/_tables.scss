@@ -22,9 +22,26 @@ table {
 
     font-size: 16px;
     line-height: 22px;
+    color: var(--ink);
 
     [data-dark-mode] & {
       background-color: transparent;
+      color: var(--ink);
+    }
+  }
+
+  code {
+    background-color: var(--teal-veil);
+    color: var(--midnight);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: -0.03em;
+    white-space: normal;
+
+    [data-dark-mode] & {
+      background-color: var(--teal-veil);
+      color: var(--midnight);
     }
   }
 
@@ -35,4 +52,15 @@ table {
       border-bottom: 1px solid $gray-700;
     }
   }
+}
+
+body .docs-content table code:not(.hljs),
+body .docs-content table code {
+  background-color: var(--teal-veil) !important;
+  color: var(--midnight) !important;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: -0.03em;
+  white-space: normal;
 }
