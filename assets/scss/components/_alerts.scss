@@ -7,6 +7,10 @@
   --bs-alert-padding-y: .5rem;
 }
 
+.alert p:last-child {
+  margin-bottom: 0;
+}
+
 .alert-icon {
   margin-right: 0.75rem;
 }
@@ -14,7 +18,7 @@
 .alert .alert-link,
 .alert a {
   text-decoration: underline;
-  color: $white;
+  font-weight: 700;
 }
 
 .alert-doks {
@@ -40,7 +44,7 @@
   background-color: rgba(8, 172, 113, 0.1);
   border-color: rgba(8, 172, 113, 0.5);
   [data-dark-mode] & {
-    color: $bg-light;
+    color: $gray-900;
   }
 }
 
@@ -57,7 +61,7 @@
   background-color: rgba(46, 182, 181, 0.1);
   border-color: rgba(46, 182, 181, 0.4);
   [data-dark-mode] & {
-    color: $bg-light;
+    color: $gray-900;
   }
 }
 
@@ -74,7 +78,7 @@
   background-color: rgba(255, 184, 0, 0.1);
   border-color: rgba(255, 184, 0, 0.5);
   [data-dark-mode] & {
-    color: $bg-light;
+    color: $gray-900;
   }
 }
 
@@ -91,15 +95,15 @@
   background-color: rgba(254, 126, 56, 0.1);
   border-color: rgba(254, 126, 56, 0.5);
   [data-dark-mode] & {
-    color: $bg-light;
+    color: $gray-900;
   }
 }
 
 .alert-warning .alert-link,
 .alert-warning a {
-  color: rgba(254, 126, 56, 1);
+  color: #c44714;
   [data-dark-mode] & {
-    color: rgba(254, 126, 56, 1);
+    color: #c44714;
   }
 }
 
@@ -108,7 +112,7 @@
   background-color: rgba(234, 71, 75, 0.1);
   border-color: rgba(234, 71, 75, 0.5);
   [data-dark-mode] & {
-    color: $bg-light;
+    color: $gray-900;
   }
 }
 
