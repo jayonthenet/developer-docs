@@ -1,4 +1,5 @@
-.mermaid {
+.mermaid,
+pre:has(> code.language-mermaid) {
   margin: 1.5rem 0;
   padding: 1.5rem;
   color: var(--on-dark);
@@ -7,38 +8,57 @@
   border-radius: var(--r-md);
 }
 
-.mermaid svg {
+.mermaid svg,
+.language-mermaid svg {
   height: auto;
 }
 
 .mermaid svg,
+.language-mermaid svg,
 .mermaid svg text,
+.language-mermaid svg text,
 .mermaid svg .label,
+.language-mermaid svg .label,
 .mermaid svg .nodeLabel,
+.language-mermaid svg .nodeLabel,
 .mermaid svg .edgeLabel,
+.language-mermaid svg .edgeLabel,
 .mermaid svg .cluster-label,
+.language-mermaid svg .cluster-label,
 .mermaid svg foreignObject,
+.language-mermaid svg foreignObject,
 .mermaid svg foreignObject div,
+.language-mermaid svg foreignObject div,
 .mermaid svg foreignObject span,
-.mermaid svg p {
+.language-mermaid svg foreignObject span,
+.mermaid svg p,
+.language-mermaid svg p,
+.language-mermaid svg .nodeLabel *,
+.language-mermaid svg .edgeLabel * {
   color: var(--on-dark) !important;
   fill: var(--on-dark) !important;
 }
 
 .mermaid svg .node rect,
+.language-mermaid svg .node rect,
 .mermaid svg .node polygon,
+.language-mermaid svg .node polygon,
 .mermaid svg .node circle,
+.language-mermaid svg .node circle,
 .mermaid svg .node ellipse {
   fill: var(--midnight-soft) !important;
   stroke: var(--teal) !important;
 }
 
 .mermaid svg .edgePath .path,
+.language-mermaid svg .edgePath .path,
 .mermaid svg .flowchart-link {
   stroke: rgba(255, 255, 255, 0.68) !important;
 }
 
-.mermaid svg marker path {
+.language-mermaid svg .flowchart-link,
+.mermaid svg marker path,
+.language-mermaid svg marker path {
   fill: rgba(255, 255, 255, 0.68) !important;
   stroke: rgba(255, 255, 255, 0.68) !important;
 }
