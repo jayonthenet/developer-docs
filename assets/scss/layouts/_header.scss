@@ -16,6 +16,8 @@
 
 .navbar-brand {
   font-weight: $headings-font-weight;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 /*
@@ -32,7 +34,8 @@
 
 .nav-logo {
   display: flex;
-  height: 30px;
+  height: 42px;
+  width: auto;
   [data-dark-mode] & {
     display: none;
   }
@@ -42,7 +45,8 @@
   display: none;
   [data-dark-mode] & {
     display: flex;
-    height: 30px;
+    height: 42px;
+    width: auto;
   }
 }
 
@@ -64,8 +68,8 @@
 @include media-breakpoint-up(lg) {
   .navbar {
     z-index: 1025;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
   }
 }
 
