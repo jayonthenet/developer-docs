@@ -73,6 +73,18 @@
     suggestions.innerHTML = '';
   }
 
+  const searchPlaceholder = search.getAttribute('placeholder') || '';
+
+  function clearSearchPlaceholder() {
+    search.setAttribute('placeholder', '');
+  }
+
+  function restoreSearchPlaceholder() {
+    if (search.value.trim().length === 0) {
+      search.setAttribute('placeholder', searchPlaceholder);
+    }
+  }
+
   function getFlatResults(searchQuery, maxResult) {
     const results = index.search(searchQuery, { limit: maxResult, enrich: true });
     const flatResults = new Map();
@@ -170,7 +182,11 @@
   }
 
   search.addEventListener('input', showResults, true);
-  search.addEventListener('focus', showResults, true);
+  search.addEventListener('focus', () => {
+    clearSearchPlaceholder();
+    showResults();
+  }, true);
+  search.addEventListener('blur', restoreSearchPlaceholder, true);
 
   if (searchForm) {
     searchForm.addEventListener('submit', (event) => {

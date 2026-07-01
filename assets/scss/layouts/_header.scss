@@ -209,8 +209,8 @@ button#doks-versions {
   max-width: 564px;
   margin-top: 0.125rem;
   margin-bottom: 0.125rem;
-  background: var(--paper);
-  border: 1px solid var(--line-strong);
+  background: var(--midnight-soft);
+  border: 1px solid var(--line-on-dark);
   border-radius: var(--r-sm);
 
   input {
@@ -218,22 +218,27 @@ button#doks-versions {
     font-family: var(--font-mono);
     font-weight: 500;
     font-size: 16px;
-    color: var(--ink-mute);
+    color: var(--on-dark);
     letter-spacing: 0.04em;
 
+    &::placeholder {
+      color: var(--on-dark-soft);
+      opacity: 1;
+    }
+
     [data-dark-mode] & {
-      color: $gray-500;
+      color: var(--on-dark);
     }
   }
 
   i {
-    color: var(--ink-mute);
+    color: var(--on-dark-soft);
     font-size: 18px;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
 
     [data-dark-mode] & {
-      color: $gray-500;
+      color: var(--on-dark-soft);
     }
   }
 
@@ -258,6 +263,10 @@ button#doks-versions {
     [data-dark-mode] & {
       background-color: var(--teal-deep);
     }
+  }
+
+  &:focus-within {
+    border-color: var(--teal);
   }
 }
 
@@ -285,10 +294,16 @@ button#doks-versions {
   */
 }
 
-.form-control.is-search {
+.doks-navbar .form-control.is-search {
   padding-right: 4rem;
   border: 1px solid transparent;
-  background: $bg-light;
+  background: transparent;
+
+  [data-dark-mode] body & {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--on-dark);
+  }
 
   @include media-breakpoint-up(md) {
     width: calc(100% + 2rem);
@@ -299,8 +314,9 @@ button#doks-versions {
   }
 }
 
-.form-control.is-search:focus {
-  border: 1px solid $primary;
+.doks-navbar .form-control.is-search:focus {
+  border: 1px solid transparent;
+  box-shadow: none;
 }
 
 // .doks-search::after {
