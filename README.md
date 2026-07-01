@@ -67,7 +67,6 @@ When hosting this repo on any other service, you will need to find equivalents t
 
 ### Further changes
 
-- Adjust the link target for the "Login" button in `layouts/partials/header/header.html` from the current value `https://console.humanitec.dev/auth/login`
 - Adjust the `domainTLD` in `config/staging/params.toml` and `config/production/params.toml`
 - Adjust all GitHub links pointing to Humanitec sources. Search for "`github.com/humanitec`" to find all occurrences
 - Adjust the links to the Terraform/OpenTofu providers in `content/platform-orchestrator/docs/integrations/terraform-opentofu-providers.md`
