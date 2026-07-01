@@ -55,24 +55,6 @@ The source and probably the name of the `htcl` are subject to change.
 - Adjust the `"gen-octl-version"` script in `package.json` to pull the CLI version from its new source
 - Rename the property `octlVersion` globally
 
-### Kapa.ai integration
-
-To continue using [Kapa.ai](https://kapa.ai) as the search + AI assistant in the developer docs:
-
-- Sign up and create your own Kapa tenant and project
-- Create an integration ID and enter it as the `data-website-id` property in `layouts/partials/head/kapa-ai.html`
-- Create an MCP server integration and enter its URL as the `KapaMCPknowledgeV2Url` property in `config/_default/config.toml`
-
-To otherwise remove Kapa from the docs:
-
-- Delete `layouts/partials/head/kapa-ai.html`
-- Remove the block `{{ block "head/kapa-ai" . }}` from `layouts/partials/head/head.html`
-- Remove the block `{{ block "search-section" . }}` from `layouts/_default/baseof.html`
-- Remove the `KapaMCPknowledgeV2Url` property from `config/_default/config.toml`
-- Delete all pages containing `*mcp*` in `content/platform-orchestrator/docs/integrations`
-- Delete the mention of the MCP server from `content/platform-orchestrator/docs/updates/change-log.md`
-- Delete the "MCP knowledge server" item from `data/landingcards.yaml`
-
 ### GitHub
 
 These GitHub specific artefacts are included:

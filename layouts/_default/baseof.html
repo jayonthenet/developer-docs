@@ -17,9 +17,6 @@
     {{ if eq .Type "guides" }}
       {{ partial "content/guides/navigation" . }}
     {{ end }}
-    {{ block "search-section" . }}
-      {{ partial "search-section" . }}
-    {{ end }}
     {{ if .Site.Params.googleTagManagerId }}
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ $.Site.Params.googleTagManagerId }}"

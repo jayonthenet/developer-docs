@@ -105,9 +105,6 @@
     - type: link
       title: Public TF modules
       url: /platform-orchestrator/docs/integrations/public-tf-modules/
-    - type: link
-      title: MCP knowledge server
-      url: /platform-orchestrator/docs/integrations/mcp-knowledge-server/
 - title: 🔐 Security
   column: 3
   weight: 2

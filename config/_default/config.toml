@@ -114,7 +114,6 @@ canyonRunnerImageVersion = "1.0.0"
 scoreHumanitecVersion = "0.10.2"
 GitHubBaseUrl = "https://github.com"
 GitHubRawBaseUrl = "https://raw.githubusercontent.com"
-KapaMCPknowledgeV2Url = "https://humanitec-orchestrator-v2.mcp.kapa.ai"
 [[Params.exampleFileTypes]]
 name = "yaml"
 label = "YAML"

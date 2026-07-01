@@ -37,7 +37,6 @@ This document provides regular updates on changes to the [Platform Orchestrator]
 
 ## January 23, 2026
 
-- **New:** AI based product support is now accessible via an [MCP server]({{< relref "/platform-orchestrator/docs/integrations/mcp-knowledge-server" >}}).
 - **New:** Added support for [scoped permissions in role-based access control (RBAC)]({{< relref "../security/rbac.md#scopes" >}})
 - **New:** Added support for [self placeholders]({{< relref "/platform-orchestrator/docs/reference/placeholder-expressions#self-placeholders" >}}) for passing current resource outputs to co-provisioned resources
 - **Improved:** The [Get started tutorial]({{< relref "/platform-orchestrator/docs/tutorial/get-started" >}}) now has lower tooling prerequisites due to an improved backing code structure
