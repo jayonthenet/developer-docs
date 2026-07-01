@@ -294,6 +294,29 @@ body .docs-toc {
   background-color: rgba(255, 255, 255, 0.06);
   text-decoration: none;
 }
+
+.docs-sidebar .docs-links .docs-link:hover,
+.docs-sidebar .docs-links .docs-link:focus,
+.docs-sidebar .docs-links .btn-toggle-nav a:hover,
+.docs-sidebar .docs-links .btn-toggle-nav a:focus {
+  color: var(--on-dark) !important;
+  background: var(--midnight-soft);
+  box-shadow: inset 3px 0 0 var(--teal);
+  text-decoration: none;
+}
+
+.docs-sidebar .docs-links .btn-toggle:hover,
+.docs-sidebar .docs-links .btn-toggle:focus {
+  color: var(--on-dark) !important;
+  background: var(--purple);
+}
+
+.docs-sidebar .docs-link.active:hover,
+.docs-sidebar .docs-link.active:focus {
+  color: var(--teal-glow) !important;
+  background: var(--teal-fog);
+}
+
 .docs-link.active {
   background: var(--teal-veil);
   border-left: 3px solid var(--teal);
