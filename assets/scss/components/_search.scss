@@ -89,32 +89,3 @@
     padding-left: 1rem;
   }
 }
-
-.DocSearch {
-  z-index: 9999;
-}
-
-.DocSearch-Modal {
-  margin-top: 120px;
-
-  @media (max-width: 767px) {
-    margin-top: 60px;
-  }
-}
-
-[data-dark-mode] .DocSearch-Button {
-  background: $bg-dark;
-
-  &:hover {
-    color: $white;
-  }
-}
-
-[data-dark-mode] .DocSearch-Search-Icon {
-  color: $white;
-}
-
-[data-dark-mode] .DocSearch-Button-Key {
-  background: $dark;
-  box-shadow: 0 0 0 1px $dark;
-}

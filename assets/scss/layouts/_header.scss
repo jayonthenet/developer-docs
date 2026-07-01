@@ -375,56 +375,6 @@ button#doks-versions {
 }
 */
 
-/*! purgecss start ignore */
-.algolia-autocomplete {
-  display: flex !important;
-}
-
-.algolia-autocomplete .ds-dropdown-menu {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-}
-
-@include media-breakpoint-down(sm) {
-  .algolia-autocomplete .ds-dropdown-menu {
-    max-width: 512px !important;
-    min-width: 312px !important;
-    width: auto !important;
-  }
-
-  .algolia-autocomplete
-    .algolia-docsearch-suggestion
-    .algolia-docsearch-suggestion--subcategory-column {
-    font-weight: normal;
-  }
-
-  .algolia-autocomplete
-    .algolia-docsearch-suggestion
-    .algolia-docsearch-suggestion--subcategory-column::after {
-    content: "/";
-    margin-right: 0.25rem;
-  }
-}
-
-.algolia-autocomplete .algolia-docsearch-suggestion--category-header {
-  color: $black;
-}
-
-.algolia-autocomplete .algolia-docsearch-suggestion--title {
-  margin-bottom: 0;
-}
-
-.algolia-autocomplete .algolia-docsearch-suggestion--highlight {
-  padding: 0 0.05em;
-}
-
-.algolia-autocomplete .algolia-docsearch-footer {
-  margin-top: 1rem;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-/*! purgecss end ignore */
-
 /*
  * Source: https://medium.com/creative-technology-concepts-code/responsive-mobile-dropdown-navigation-using-css-only-7218e4498a99
 */
@@ -637,70 +587,6 @@ button#doks-versions {
 
   @media (max-width: 767px) {
     margin: 15px 0;
-  }
-}
-
-.search-section-wrapper {
-  background-color: #f7f8fa;
-  background-image: url("/images/svg/home/pattern.svg");
-  background-repeat: no-repeat;
-  background-position: right;
-  border-bottom: 1px solid #e9ecef;
-  padding: 20px 0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-
-  @media (max-width: 991px) {
-    flex-direction: column;
-    background-size: cover;
-  }
-
-  [data-dark-mode] & {
-    background-image: url("/images/svg/home/pattern_dark.svg");
-    background-color: #131724;
-    border-bottom: 1px solid #343a40;
-  }
-}
-
-.search-section-item {
-  font-family: "Akkurat";
-  font-size: 16px;
-  letter-spacing: 0.05em;
-  color: $gray-500;
-  background-color: $bg-light;
-  border: 1px solid $gray-500;
-  border-radius: 6px;
-  padding: 6px 16px;
-  display: flex;
-  align-items: center;
-
-  &#ai {
-    width: 35%;
-    @media (max-width: 991px) {
-      width: 60%;
-    }
-  }
-
-  [data-dark-mode] & {
-    background-color: $bg-highlight-card-dark;
-  }
-}
-
-.search-section-icon {
-  margin-right: 10px;
-  display: flex;
-  [data-dark-mode] & {
-    display: none;
-  }
-
-  &.dark {
-    display: none;
-    [data-dark-mode] & {
-      display: flex;
-    }
   }
 }
 

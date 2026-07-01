@@ -35,7 +35,7 @@
 {{ $showFlexSearch := .Site.Params.options.flexSearch }}
 
 {{ if $showFlexSearch -}}
-  {{ $flexSearch := resources.Get "js/vendor/flexsearch/dist/flexsearch.bundle.js" -}}
+  {{ $flexSearch := resources.Get "js/vendor/flexsearch/dist/flexsearch.bundle.min.js" -}}
   {{ $slice = $slice | append $flexSearch -}}
   {{ if and (isset .Site.Params.options "searchsectionsshow") (not (eq .Site.Params.options.searchSectionsShow "ALL")) -}}
   {{ $showFlexSearch = or (eq (len .Site.Params.options.searchSectionsShow) 0) (in .Site.Params.options.searchSectionsShow .Section) (and .IsHome (in .Site.Params.options.searchSectionsShow "HomePage")) -}}
@@ -107,28 +107,6 @@
     <script src="{{ $index.Permalink }}" integrity="{{ $index.Data.Integrity }}" crossorigin="anonymous" defer></script>
   {{ end -}}
 {{ end -}}
-
-{{ if .Site.Params.options.algolia_docsearch }}
-  <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
-  <script>
-    docsearch({
-      container: "#docsearch",
-      appId: "{{ .Site.Params.docsearch.appId }}",
-      indexName: "{{ .Site.Params.docsearch.indexName }}",
-      apiKey: "{{ .Site.Params.docsearch.apiKey }}",
-    });
-    const docSearchButton = document.getElementsByClassName("DocSearch-Button");
-    const offcanvas = document.getElementById("offcanvasDoks");
-    docSearchButton[0].addEventListener("click", function () {
-      if (offcanvas.classList.contains("show")) {
-        offcanvas.classList.remove("show");
-        offcanvas.removeAttribute("aria-modal");
-        offcanvas.removeAttribute("role");
-        window.scrollTo(0,0);
-      }
-    });
-  </script>
-{{ end }}
 
 <!-- Scroll navigation all the way to the bottom to maximize the chance
  that the current page's nav item is visible -->

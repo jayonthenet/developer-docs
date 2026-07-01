@@ -90,9 +90,9 @@ googleTagManagerId = "GTM-MV484BQ"
   lazySizes = true
   clipBoard = true
   instantPage = true
-  flexSearch = false
-  searchSectionsShow = []
-  searchSectionsIndex = []
+  flexSearch = true
+  searchSectionsShow = "ALL"
+  searchSectionsIndex = ["docs", "guides"]
   darkMode = true
   bootStrapJs = true
   breadCrumb = true
@@ -104,12 +104,6 @@ googleTagManagerId = "GTM-MV484BQ"
   navbarSticky = true
   toTopButton = true
   scrollSpy = true # experimental; needs Bootstrap >= 5.2.0-beta1
-  algolia_docsearch = false
-
-[docsearch]
-  appId = "BSUK3YPT9Y"
-  apiKey = "6995d203735869117ae0300008e3d190"
-  indexName = "developer-humanitec"
 
 # lazyimg
 [lazyimg]

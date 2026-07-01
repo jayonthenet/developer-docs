@@ -1,67 +1,9 @@
-var suggestions = document.getElementById('suggestions');
-var search = document.getElementById('search');
+(() => {
+  const suggestions = document.getElementById('suggestions');
+  const search = document.getElementById('search');
+  const searchForm = search ? search.closest('form') : null;
 
-if (search !== null) {
-  document.addEventListener('keydown', inputFocus);
-}
-
-function inputFocus(e) {
-  if (e.ctrlKey && e.key === '/' ) {
-    e.preventDefault();
-    search.focus();
-  }
-  if (e.key === 'Escape' ) {
-    search.blur();
-    suggestions.classList.add('d-none');
-  }
-}
-
-document.addEventListener('click', function(event) {
-
-  var isClickInsideElement = suggestions.contains(event.target);
-
-  if (!isClickInsideElement) {
-    suggestions.classList.add('d-none');
-  }
-
-});
-
-/*
-Source:
-  - https://dev.to/shubhamprakash/trap-focus-using-javascript-6a3
-*/
-
-document.addEventListener('keydown',suggestionFocus);
-
-function suggestionFocus(e) {
-  const suggestionsHidden = suggestions.classList.contains('d-none');
-  if (suggestionsHidden) return;
-
-  const focusableSuggestions= [...suggestions.querySelectorAll('a')];
-  if (focusableSuggestions.length === 0) return;
-
-  const index = focusableSuggestions.indexOf(document.activeElement);
-
-  if (e.key === "ArrowUp") {
-    e.preventDefault();
-    const nextIndex = index > 0 ? index - 1 : 0;
-    focusableSuggestions[nextIndex].focus();
-  }
-  else if (e.key === "ArrowDown") {
-    e.preventDefault();
-    const nextIndex= index + 1 < focusableSuggestions.length ? index + 1 : index;
-    focusableSuggestions[nextIndex].focus();
-  }
-
-}
-
-/*
-Source:
-  - https://github.com/nextapps-de/flexsearch#index-documents-field-search
-  - https://raw.githack.com/nextapps-de/flexsearch/master/demo/autocomplete.html
-*/
-
-(function(){
+  if (!search || !suggestions || !window.FlexSearch) return;
 
   var index = new FlexSearch.Document({
     tokenize: "forward",
@@ -117,63 +59,133 @@ Source:
         href: "{{ .RelPermalink }}",
         title: {{ .Title | jsonify }},
         {{ with .Description -}}
-          description: {{ . | jsonify }},
+          description: {{ . | plainify | truncate 180 | jsonify }},
         {{ else -}}
-          description: {{ .Summary | plainify | jsonify }},
+          description: {{ .Summary | plainify | truncate 180 | jsonify }},
         {{ end -}}
         content: {{ .Plain | jsonify }}
       }
     );
-  {{ end -}}
+	  {{ end -}}
 
-  search.addEventListener('input', show_results, true);
+  function hideSuggestions() {
+    suggestions.classList.add('d-none');
+    suggestions.innerHTML = '';
+  }
 
-  function show_results(){
-    const maxResult = 5;
-    var searchQuery = this.value;
-    var results = index.search(searchQuery, {limit: maxResult, enrich: true});
+  function getFlatResults(searchQuery, maxResult) {
+    const results = index.search(searchQuery, { limit: maxResult, enrich: true });
+    const flatResults = new Map();
 
-    // flatten results since index.search() returns results for each indexed field
-    const flatResults = new Map(); // keyed by href to dedupe results
-    for (const result of results.flatMap(r => r.result)) {
-      if (flatResults.has(result.doc.href)) continue;
-      flatResults.set(result.doc.href, result.doc);
+    for (const result of results.flatMap((field) => field.result)) {
+      if (!flatResults.has(result.doc.href)) {
+        flatResults.set(result.doc.href, result.doc);
+      }
     }
 
-    suggestions.innerHTML = "";
-    suggestions.classList.remove('d-none');
+    return flatResults;
+  }
 
-    // inform user that no results were found
-    if (flatResults.size === 0 && searchQuery) {
-      const noResultsMessage = document.createElement('div')
-      noResultsMessage.innerHTML = `No results for "<strong>${searchQuery}</strong>"`
-      noResultsMessage.classList.add("suggestion__no-results");
-      suggestions.appendChild(noResultsMessage);
+  function renderNoResults(searchQuery) {
+    const noResultsMessage = document.createElement('div');
+    noResultsMessage.classList.add('suggestion__no-results');
+    noResultsMessage.append('No results for ');
+
+    const query = document.createElement('strong');
+    query.textContent = searchQuery;
+    noResultsMessage.append(query);
+
+    suggestions.appendChild(noResultsMessage);
+  }
+
+  function renderResult(doc) {
+    const entry = document.createElement('div');
+    const link = document.createElement('a');
+    const title = document.createElement('span');
+    const description = document.createElement('span');
+
+    link.href = doc.href;
+    title.textContent = doc.title;
+    title.classList.add('suggestion__title');
+    description.textContent = doc.description;
+    description.classList.add('suggestion__description');
+
+    link.append(title, description);
+    entry.appendChild(link);
+    suggestions.appendChild(entry);
+  }
+
+  function showResults() {
+    const maxResult = 8;
+    const searchQuery = search.value.trim();
+
+    suggestions.innerHTML = '';
+
+    if (searchQuery.length < 2) {
+      hideSuggestions();
       return;
     }
 
-    // construct a list of suggestions
-    for(const [href, doc] of flatResults) {
-        const entry = document.createElement('div');
-        suggestions.appendChild(entry);
+    const flatResults = getFlatResults(searchQuery, maxResult);
+    suggestions.classList.remove('d-none');
 
-        const a = document.createElement('a');
-        a.href = href;
-        entry.appendChild(a);
+    if (flatResults.size === 0) {
+      renderNoResults(searchQuery);
+      return;
+    }
 
-        const title = document.createElement('span');
-        title.textContent = doc.title;
-        title.classList.add("suggestion__title");
-        a.appendChild(title);
-
-        const description = document.createElement('span');
-        description.textContent = doc.description;
-        description.classList.add("suggestion__description");
-        a.appendChild(description);
-
-        suggestions.appendChild(entry);
-
-        if(suggestions.childElementCount == maxResult) break;
+    for (const doc of flatResults.values()) {
+      renderResult(doc);
+      if (suggestions.childElementCount === maxResult) break;
     }
   }
-}());
+
+  function focusSearch(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === '/') {
+      e.preventDefault();
+      search.focus();
+    }
+
+    if (e.key === 'Escape') {
+      search.blur();
+      hideSuggestions();
+    }
+  }
+
+  function focusSuggestion(e) {
+    if (suggestions.classList.contains('d-none')) return;
+
+    const focusableSuggestions = [...suggestions.querySelectorAll('a')];
+    if (focusableSuggestions.length === 0) return;
+
+    const currentIndex = focusableSuggestions.indexOf(document.activeElement);
+
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      focusableSuggestions[Math.max(currentIndex - 1, 0)].focus();
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      focusableSuggestions[Math.min(currentIndex + 1, focusableSuggestions.length - 1)].focus();
+    }
+  }
+
+  search.addEventListener('input', showResults, true);
+  search.addEventListener('focus', showResults, true);
+
+  if (searchForm) {
+    searchForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const firstResult = suggestions.querySelector('a');
+      if (firstResult) {
+        window.location.href = firstResult.href;
+      }
+    });
+  }
+
+  document.addEventListener('keydown', focusSearch);
+  document.addEventListener('keydown', focusSuggestion);
+  document.addEventListener('click', (event) => {
+    if (!searchForm || searchForm.contains(event.target)) return;
+    hideSuggestions();
+  });
+})();

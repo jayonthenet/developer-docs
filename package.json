@@ -80,7 +80,6 @@
     "hugo": "0.142.0"
   },
   "dependencies": {
-    "@docsearch/js": "^4.0.1",
     "gray-matter": "^4.0.3",
     "hcl2-parser": "^1.0.3",
     "toml": "^3.0.0"
