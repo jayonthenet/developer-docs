@@ -11,19 +11,8 @@ const lightModeConfig = {
   },
 };
 
-/* securityLevel 'loose' is required for opening links in new tabs */
-const darkModeConfig = {
-  theme: 'base',
-  securityLevel: 'loose',
-  themeVariables: {
-    darkMode: true,
-    ...data.dark,
-  },
-};
-
 window.mermaid = mermaid;
 window.lightModeConfig = lightModeConfig;
-window.darkModeConfig = darkModeConfig;
 
 const elements = document.querySelectorAll('.language-mermaid');
 elements.forEach((ele) => {
@@ -47,20 +36,6 @@ const resetProcessed = () => {
 
 window.resetMermaidDiagrams = resetProcessed;
 
-const init = () => {
-  document.body.addEventListener('dark-theme-set', () => {
-    resetProcessed().then(loadMermaid(darkModeConfig)).catch(console.error);
-  });
-  document.body.addEventListener('light-theme-set', () => {
-    resetProcessed().then(loadMermaid(lightModeConfig)).catch(console.error);
-  });
-};
-
 document.addEventListener('DOMContentLoaded', () => {
-  init();
-  if (localStorage.getItem('theme') === 'dark') {
-    loadMermaid(darkModeConfig);
-  } else {
-    loadMermaid(lightModeConfig);
-  }
+  loadMermaid(lightModeConfig);
 });

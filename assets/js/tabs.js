@@ -63,11 +63,7 @@ const reinitMermaidInTab = (tabPane) => {
     ele.removeAttribute('data-processed');
   });
 
-  if (localStorage.getItem('theme') === 'dark') {
-    window.mermaid.init(window.darkModeConfig || {}, mermaidDiagrams);
-  } else {
-    window.mermaid.init(window.lightModeConfig || {}, mermaidDiagrams);
-  }
+  window.mermaid.init(window.lightModeConfig || {}, mermaidDiagrams);
 };
 
 tabs.forEach((tab) => {
