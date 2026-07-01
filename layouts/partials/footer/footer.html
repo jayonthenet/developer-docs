@@ -2,50 +2,27 @@
   <div
     class="container-{{ if .Site.Params.options.fullWidth }}fluid{{ else }}xxl{{ end }}"
   >
-    <div class="row">
-      <div class="col-lg-8 order-last order-lg-first d-flex align-items-center">
-        <ul class="list-inline d-flex footer-back-to">
-          <li class="list-inline-item">{{ .Site.Params.footer | safeHTML }}</li>
-          <a href="{{ "/" | relLangURL }}" class="footer-logo">
-            <img
-              src="/stellwerk-lockup-horizontal.svg"
-              alt="Stellwerk Labs"
-              class="nav-logo"
-            />
-            <img
-              src="/stellwerk-lockup-horizontal-on-dark.svg"
-              alt="Stellwerk Labs"
-              class="nav-logo-dark"
-            />
-          </a>
-        </ul>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="{{ "/" | relLangURL }}" class="footer-logo">
+          <img
+            src="/stellwerk-lockup-horizontal-on-dark.svg"
+            alt="Stellwerk Labs"
+          />
+        </a>
+        <p>Sovereign Platform Orchestration · Open source · Engineered in Europe.</p>
       </div>
       {{ if .Site.Menus.footer }}
-      <div class="col-lg-8 order-first order-lg-last text-lg-end">
-        <ul class="list-inline">
+        <nav class="footer-links" aria-label="Footer">
           {{ range .Site.Menus.footer -}}
-          <li class="list-inline-item">
             <a href="{{ .URL | relURL }}">{{ .Name }}</a>
-          </li>
           {{ end -}}
-        </ul>
-      </div>
+        </nav>
       {{ end }}
-      {{ if .Site.Menus.social }}
-        <div class="col-lg-8 order-first order-lg-last text-lg-end">
-          <div class="footer-links">
-            <ul class="nav flex-row">
-              {{ range .Site.Menus.social -}}
-              <li class="nav-item">
-                <a class="nav-link social-link" href="{{ .URL | relURL }}" target="_blank"
-                  >{{ .Pre | safeHTML }}</a
-                >
-              </li>
-              {{ end -}}
-            </ul>
-          </div>
-        </div>
-      {{ end }}
+    </div>
+    <div class="footer-legal">
+      <span>© 2026 Stellwerk Labs GmbH · Ratingen, Germany</span>
+      <span>Stellwerk Labs Switch · SLS · stellwerk.dev</span>
     </div>
   </div>
 </footer>

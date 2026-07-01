@@ -1,11 +1,11 @@
 .footer {
-  border-top: 1px solid var(--line);
-  padding-top: 1.125rem;
-  padding-bottom: 1.125rem;
-  background-color: var(--paper-warm);
+  border-top: 2px solid var(--teal);
+  padding: 3rem 0 2rem;
+  background-color: var(--midnight);
+  color: var(--on-dark);
 
   [data-dark-mode] & {
-    background-color: $bg-nav-dark;
+    background-color: var(--midnight);
   }
 }
 
@@ -24,14 +24,45 @@
   }
 }
 
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--line-on-dark);
+}
+
+.footer-brand p {
+  max-width: 40ch;
+  margin: 1rem 0 0;
+  color: var(--on-dark-soft);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.footer-logo {
+  display: inline-flex;
+}
+
+.footer-logo img {
+  display: block;
+  height: 40px;
+  width: auto;
+}
+
 .footer-links {
   display: flex;
-  justify-content: end;
-  align-items: end;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
 
   @media (max-width: 991px) {
-    flex-direction: column;
     align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1rem;
   }
 }
 
@@ -39,13 +70,17 @@
   color: $body-color;
 }
 
+.footer-links a,
 .footer-links .nav-link {
-  color: var(--ink-mute);
+  color: var(--on-dark-mute);
+  font-size: 0.95rem;
 }
 
+.footer-links a:hover,
+.footer-links a:focus,
 .footer-links .nav-link:hover,
 .footer-links .nav-link:focus {
-  color: var(--teal-deep);
+  color: var(--teal-glow);
   text-decoration: none;
 }
 
@@ -58,28 +93,16 @@
   }
 }
 
-.footer-back-to {
-  color: var(--ink-mute);
-
-  [data-dark-mode] & {
-    color: $white;
-  }
-}
-
-.footer-logo {
-  margin-top: 2px;
-}
-
-.footer .nav-logo {
+.footer-legal {
   display: flex;
-  [data-dark-mode] & {
-    display: none;
-  }
-}
-
-.footer .nav-logo-dark {
-  display: none;
-  [data-dark-mode] & {
-    display: flex;
-  }
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 1.25rem;
+  color: var(--on-dark-mute);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: var(--tr-uppercase, 0.14em);
+  text-transform: uppercase;
 }
