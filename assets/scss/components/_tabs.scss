@@ -13,44 +13,50 @@
 }
 
 .nav .doks-nav-link.nav-link {
-  color: $gray-600;
-  background-color: #e9eefe;
-  border-bottom: 1px solid $link-color-dark;
+  color: var(--on-dark-soft);
+  background-color: var(--midnight-soft);
+  border: 1px solid var(--midnight-soft);
+  border-bottom: 1px solid var(--teal);
+  font-weight: 800;
 
   [data-dark-mode] & {
-    background-color: #1c243c;
-    border-bottom: 1px solid $link-color-dark;
-    color: $gray-500;
+    background-color: var(--midnight-soft);
+    border-color: var(--midnight-soft);
+    border-bottom: 1px solid var(--teal);
+    color: var(--on-dark-soft);
   }
 
   &:hover {
-    color: $gray-900;
-    background-color: #e9eefe;
-    border-color: transparent;
-    border-bottom: 1px solid $link-color-dark;
+    color: var(--on-dark);
+    background-color: var(--purple);
+    border-color: var(--purple);
+    border-bottom: 1px solid var(--teal);
 
     [data-dark-mode] & {
-      background-color: #1c243c;
-      color: $white;
+      background-color: var(--purple);
+      border-color: var(--purple);
+      border-bottom: 1px solid var(--teal);
+      color: var(--on-dark);
     }
   }
 
   &.active {
-    color: $primary;
-    background-color: #e9eefe;
-    border-color: $link-color-dark;
+    color: var(--teal-glow);
+    background-color: var(--midnight);
+    border-color: var(--teal);
     border-bottom: 1px solid transparent;
 
     [data-dark-mode] & {
-      background-color: #1c243c;
+      background-color: var(--midnight);
+      border-color: var(--teal);
       border-bottom: 1px solid transparent;
-      color: $link-color-dark;
+      color: var(--teal-glow);
     }
   }
 }
 
 .tab-content.doks-tab-content {
-  border: 1px solid $link-color-dark;
+  border: 1px solid var(--teal);
   border-radius: 12px;
   border-top-left-radius: 0;
   padding: 20px;
