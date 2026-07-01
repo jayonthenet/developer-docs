@@ -15,14 +15,17 @@ code {
 
 pre {
   margin: 2rem 0;
-  border-radius: 14px;
-  border: 1px solid $gray-300;
+  background: var(--midnight);
+  border-radius: var(--r-md);
+  border: 1px solid var(--line-on-dark);
   [data-dark-mode] & {
-    border: none;
+    border: 1px solid var(--line-on-dark);
   }
 }
 
 pre code {
+  background: var(--midnight);
+  color: var(--on-dark);
   display: block;
   overflow-x: auto;
   line-height: $line-height-base;
@@ -32,8 +35,14 @@ pre code {
   scrollbar-color: transparent transparent;
 }
 
+pre code:not(.hljs),
+[data-dark-mode] body pre code:not(.hljs) {
+  background: var(--midnight);
+  color: var(--on-dark);
+}
+
 .hljs {
-  padding: 2rem !important;
+  padding: 1.5rem !important;
 }
 
 @include media-breakpoint-down(sm) {
@@ -54,16 +63,16 @@ pre code::-webkit-scrollbar {
 }
 
 pre code::-webkit-scrollbar-thumb {
-  background: $gray-400;
+  background: var(--on-dark-whisper);
 }
 
 pre code:hover {
   scrollbar-width: thin;
-  scrollbar-color: $gray-500 transparent;
+  scrollbar-color: var(--on-dark-mute) transparent;
 }
 
 pre code::-webkit-scrollbar-thumb:hover {
-  background: $gray-500;
+  background: var(--on-dark-mute);
 }
 
 code.language-mermaid {

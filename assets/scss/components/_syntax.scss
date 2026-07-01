@@ -8,8 +8,8 @@ Based on Ascetic by (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
   display: block;
   overflow-x: auto;
   padding: 1.25rem 1.5rem;
-  background: $bg-light;
-  color: $body-color;
+  background: var(--midnight);
+  color: var(--on-dark);
 }
 
 .hljs-string,
@@ -21,14 +21,14 @@ Based on Ascetic by (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
 .hljs-addition,
 .hljs-attribute,
 .hljs-link {
-  color: $red-500;
+  color: var(--teal-glow);
 }
 
 .hljs-comment,
 .hljs-quote,
 .hljs-meta,
 .hljs-deletion {
-  color: #888;
+  color: var(--on-dark-mute);
 }
 
 .hljs-keyword,
@@ -37,16 +37,18 @@ Based on Ascetic by (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
 .hljs-name,
 .hljs-type,
 .hljs-strong {
+  color: #d8c6ff;
   font-weight: bold;
 }
 
 .hljs-emphasis {
+  color: var(--paper-cool);
   font-style: italic;
 }
 
 [data-dark-mode] body .hljs {
-  background: $bg-card-dark;
-  color: $body-color-dark;
+  background: var(--midnight);
+  color: var(--on-dark);
 }
 
 [data-dark-mode] body .hljs-string,
@@ -58,5 +60,5 @@ Based on Ascetic by (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
 [data-dark-mode] body .hljs-addition,
 [data-dark-mode] body .hljs-attribute,
 [data-dark-mode] body .hljs-link {
-  color: $red-500;
+  color: var(--teal-glow);
 }
