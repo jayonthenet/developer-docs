@@ -1,13 +1,24 @@
+body.docs,
+body.guides {
+  background: var(--paper);
+
+  [data-dark-mode] & {
+    background: var(--paper);
+    color: var(--ink);
+  }
+}
+
 .content {
   [data-dark-mode] & {
-    color: $white;
+    color: var(--ink);
   }
 }
 
 .content-page {
   background-color: var(--paper);
+
   [data-dark-mode] & {
-    background-color: $bg-dark;
+    background-color: var(--paper);
   }
 }
 
@@ -15,9 +26,10 @@
   padding: 4rem;
   border-right: 1px solid var(--line);
   order: 1;
+
   [data-dark-mode] & {
-    border-right: 1px solid $gray-800;
-    color: $white;
+    border-right: 1px solid var(--line);
+    color: var(--ink);
   }
 
   @media (max-width: 991px) {
@@ -37,7 +49,7 @@
   details,
   .lead {
     [data-dark-mode] & {
-      color: $white;
+      color: inherit;
     }
   }
 
@@ -47,6 +59,10 @@
     margin-top: 0;
     letter-spacing: -0.01em;
     color: var(--midnight);
+
+    [data-dark-mode] & {
+      color: var(--midnight);
+    }
   }
 
   h2 {
@@ -54,6 +70,10 @@
     line-height: 34px;
     letter-spacing: -0.01em;
     color: var(--midnight);
+
+    [data-dark-mode] & {
+      color: var(--midnight);
+    }
   }
 
   h3 {
@@ -62,6 +82,10 @@
     margin-top: 0;
     letter-spacing: -0.01em;
     color: var(--midnight);
+
+    [data-dark-mode] & {
+      color: var(--midnight);
+    }
   }
 
   h4,
@@ -72,11 +96,19 @@
     margin-top: 0;
     letter-spacing: -0.01em;
     color: var(--midnight);
+
+    [data-dark-mode] & {
+      color: var(--midnight);
+    }
   }
 
   p,
   .lead {
     color: var(--ink-soft);
+
+    [data-dark-mode] & {
+      color: var(--ink-soft);
+    }
   }
 
   p {
@@ -119,8 +151,8 @@
     color: var(--midnight);
 
     [data-dark-mode] & {
-      background-color: rgba(99, 138, 255, 0.15);
-      color: $white;
+      background-color: var(--teal-veil);
+      color: var(--midnight);
     }
   }
 
@@ -165,10 +197,11 @@
     }
 
     [data-dark-mode] & {
-      color: $white;
-      background-color: rgba(255, 255, 255, 0.05);
+      color: $dark;
+      background-color: var(--paper-cool);
+
       &:hover {
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: var(--teal-veil);
       }
     }
   }
@@ -182,7 +215,7 @@
     color: var(--teal-deep);
 
     [data-dark-mode] & {
-      color: $link-color;
+      color: var(--teal-deep);
     }
   }
 
@@ -195,7 +228,7 @@
     color: var(--teal-deep);
 
     [data-dark-mode] & {
-      color: $link-color;
+      color: var(--teal-deep);
     }
   }
 
