@@ -30,12 +30,31 @@ If "file" is not set, tries to read its contents from the URL at "gitHubUrl", wh
       {{ errorf "File %s does not exist: " .file }}
   {{- end }}
 {{- else }}
-  {{ $resource := resources.GetRemote .gitHubUrl }}
-  {{- $fileContent = ( $resource.Content | safeHTML ) }}
   {{ $u := urls.Parse .gitHubUrl }}
   {{- $path := ( $u.Path | path.Split ) }}
   {{- $base = $path.File }}
   {{- $lang = path.Ext $base }}
+  {{- with try (resources.GetRemote $.gitHubUrl) }}
+    {{- with .Err }}
+      {{- $message := printf "Unable to fetch remote code block %q for page %q: %s" $.gitHubUrl $.currentPage.File.Path . }}
+      {{- if eq hugo.Environment "production" }}
+        {{- errorf "%s" $message }}
+      {{- else }}
+        {{- warnf "%s" $message }}
+        {{- $fileContent = printf "Remote file unavailable in %s build.\n\n%s" hugo.Environment $.gitHubUrl }}
+      {{- end }}
+    {{- else with .Value }}
+      {{- $fileContent = ( .Content | safeHTML ) }}
+    {{- else }}
+      {{- $message := printf "Unable to fetch remote code block %q for page %q: no resource returned" $.gitHubUrl $.currentPage.File.Path }}
+      {{- if eq hugo.Environment "production" }}
+        {{- errorf "%s" $message }}
+      {{- else }}
+        {{- warnf "%s" $message }}
+        {{- $fileContent = printf "Remote file unavailable in %s build.\n\n%s" hugo.Environment $.gitHubUrl }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
 {{- end }}
 
 <!-- Print a markdown code block -->
