@@ -1,15 +1,51 @@
 .mermaid {
   margin: 1.5rem 0;
   padding: 1.5rem;
+  color: var(--on-dark);
+  background: var(--midnight);
+  border: 1px solid var(--line-on-dark);
+  border-radius: var(--r-md);
 }
 
 .mermaid svg {
   height: auto;
 }
 
+.mermaid svg,
+.mermaid svg text,
+.mermaid svg .label,
+.mermaid svg .nodeLabel,
+.mermaid svg .edgeLabel,
+.mermaid svg .cluster-label,
+.mermaid svg foreignObject,
+.mermaid svg foreignObject div,
+.mermaid svg foreignObject span,
+.mermaid svg p {
+  color: var(--on-dark) !important;
+  fill: var(--on-dark) !important;
+}
+
+.mermaid svg .node rect,
+.mermaid svg .node polygon,
+.mermaid svg .node circle,
+.mermaid svg .node ellipse {
+  fill: var(--midnight-soft) !important;
+  stroke: var(--teal) !important;
+}
+
+.mermaid svg .edgePath .path,
+.mermaid svg .flowchart-link {
+  stroke: rgba(255, 255, 255, 0.68) !important;
+}
+
+.mermaid svg marker path {
+  fill: rgba(255, 255, 255, 0.68) !important;
+  stroke: rgba(255, 255, 255, 0.68) !important;
+}
+
 // ER diagrams
 .attributeBoxOdd {
-  fill: #f4f6f8 !important;
+  fill: var(--midnight-soft) !important;
 }
 
 // Custom styles that you can apply in Mermaid diagrams
