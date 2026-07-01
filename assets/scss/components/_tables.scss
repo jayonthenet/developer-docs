@@ -45,6 +45,25 @@ table {
     }
   }
 
+  pre {
+    margin: 0;
+    padding: 0.75rem;
+    background-color: var(--teal-veil);
+    color: var(--midnight);
+    border: 0;
+    border-radius: var(--r-sm);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 150%;
+    white-space: pre-wrap;
+
+    [data-dark-mode] & {
+      background-color: var(--teal-veil);
+      color: var(--midnight);
+      border: 0;
+    }
+  }
+
   tr {
     border-bottom: 1px solid $gray-200;
 
@@ -63,4 +82,10 @@ body .docs-content table code {
   line-height: 150%;
   letter-spacing: -0.03em;
   white-space: normal;
+}
+
+body .docs-content table pre {
+  background-color: var(--teal-veil) !important;
+  color: var(--midnight) !important;
+  border: 0 !important;
 }
