@@ -66,7 +66,7 @@
 
 // Scrollbar Styles for Sidebar Links
 .docs-links,
-.docs-toc {
+body .docs-toc {
   scrollbar-width: thin;
   scrollbar-color: var(--line-on-dark) var(--midnight);
 
@@ -84,6 +84,47 @@
     &::-webkit-scrollbar-thumb {
       background: var(--on-dark-whisper);
     }
+  }
+}
+
+.docs-toc {
+  background: var(--paper);
+  border-left: 1px solid var(--line);
+
+  [data-dark-mode] & {
+    background: var(--paper);
+    border-left: 1px solid var(--line);
+  }
+
+  .page-links h3 {
+    color: var(--midnight) !important;
+    font-weight: 800;
+  }
+
+  .page-links a {
+    color: var(--ink-soft) !important;
+    background: transparent;
+    border-radius: 0;
+    font-weight: 600;
+
+    &:hover,
+    &:focus {
+      color: var(--teal-deep);
+      color: var(--teal-deep) !important;
+      background: var(--teal-veil);
+      text-decoration: none;
+    }
+
+    &.active {
+      color: var(--teal-deep) !important;
+      background: var(--teal-veil);
+      border-left: 3px solid var(--teal);
+      font-weight: 800;
+    }
+  }
+
+  .page-links li:not(:first-child) {
+    border-top: 1px dashed var(--line-strong);
   }
 }
 
