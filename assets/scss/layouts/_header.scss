@@ -567,32 +567,6 @@ button#doks-versions {
   }
 }
 
-.login-button {
-  border-radius: 6px;
-  padding: 10px 16px;
-  margin-bottom: 2px;
-  margin-left: 140px;
-  color: $white;
-  font-family: var(--font-sans);
-  font-weight: 800;
-  font-size: 15px;
-  background: $link-color;
-
-  [data-dark-mode] & {
-    background: $link-color;
-    color: $white;
-  }
-
-  &:hover,
-  &:focus,
-  &:active {
-    color: $white;
-  }
-
-  @media (max-width: 767px) {
-    margin: 15px 0;
-  }
-}
 
 .header-mode-button {
   border: none;
