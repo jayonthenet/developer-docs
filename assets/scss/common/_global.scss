@@ -1,9 +1,52 @@
+:root {
+  color-scheme: light;
+  --midnight: #0f1638;
+  --midnight-deep: #0b1027;
+  --midnight-soft: #1a2350;
+  --purple: #5b2d90;
+  --purple-deep: #4a2275;
+  --purple-soft: #7a4fb0;
+  --purple-veil: rgba(91, 45, 144, 0.1);
+  --purple-fog: rgba(91, 45, 144, 0.2);
+  --teal: #2eb6b5;
+  --teal-deep: #1f8e8d;
+  --teal-glow: #4ecccb;
+  --teal-veil: rgba(46, 182, 181, 0.1);
+  --teal-fog: rgba(46, 182, 181, 0.22);
+  --paper: #fff;
+  --paper-warm: #fafafb;
+  --paper-cool: #f4f6f8;
+  --ink: #14151a;
+  --ink-soft: rgba(20, 21, 26, 0.78);
+  --ink-mute: rgba(20, 21, 26, 0.54);
+  --ink-whisper: rgba(20, 21, 26, 0.32);
+  --ink-trace: rgba(20, 21, 26, 0.1);
+  --on-dark: #fff;
+  --on-dark-soft: rgba(255, 255, 255, 0.78);
+  --on-dark-mute: rgba(255, 255, 255, 0.56);
+  --on-dark-whisper: rgba(255, 255, 255, 0.32);
+  --line: rgba(20, 21, 26, 0.1);
+  --line-strong: rgba(20, 21, 26, 0.18);
+  --line-on-dark: rgba(255, 255, 255, 0.14);
+  --alert: #da3640;
+  --font-sans: "Nunito", ui-sans-serif, "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-circle: 9999px;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --dur-fast: 150ms;
+}
+
 body {
-  background-color: $white;
-  font-family: "Akkurat";
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "tnum" 1, "kern" 1;
+  letter-spacing: 0;
 
   [data-dark-mode] & {
-    background-color: #11141d;
+    background-color: var(--midnight-deep);
   }
 }
 
@@ -38,8 +81,10 @@ h6,
 .h5,
 .h6 {
   margin: 2rem 0 1rem;
-  font-family: "Lazzer";
-  font-weight: 600;
+  color: var(--midnight);
+  font-family: var(--font-sans);
+  font-weight: 800;
+  letter-spacing: 0;
 }
 
 .offcanvas-header {
@@ -83,7 +128,9 @@ body.docs {
 
 a:hover,
 a:focus {
-  text-decoration: underline;
+  color: var(--teal-deep);
+  text-decoration-color: var(--teal-fog);
+  text-underline-offset: 0.18em;
 }
 
 a.btn:hover,
@@ -194,12 +241,19 @@ body {
 }
 
 #toc a.active {
-  color: $primary;
-  font-weight: 500;
+  color: var(--teal-deep);
+  font-weight: 700;
 }
 
 ::selection {
-  background: rgba(210, 223, 255, 0.25);
+  background: var(--teal-fog);
+  color: var(--midnight);
+}
+
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
 }
 
 .bg-dots {
@@ -283,19 +337,19 @@ body {
 }
 
 .select-custom {
-  font-family: 'Akkurat';
+  font-family: var(--font-sans);
   font-size: 1rem;
-  color: #000311;
-  border: 1px solid #d5d9e5;
-  border-radius: 2px;
-  background-color: rgba(195, 208, 248, 0.25);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  background-color: var(--paper);
   padding: 0.5em;
-  transition: border-color 0.3s ease;
+  transition: border-color var(--dur-fast) var(--ease);
 
   & option {
-    font-family: 'Akkurat';
+    font-family: var(--font-sans);
     font-size: 1rem;
-    background-color: rgba(195, 208, 248, 0.25);
+    background-color: var(--paper);
 
     [data-dark-mode] & {
       background-color: #1e2841 !important;
@@ -316,4 +370,3 @@ body {
     border-color: $white !important;
   }
 }
-

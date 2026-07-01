@@ -129,7 +129,7 @@
   .card-subtitle {
     font-size: 16px;
     color: $lightgray;
-    font-family: "Akkurat";
+    font-family: var(--font-sans);
     line-height: 160%;
     margin-top: 18px;
   }
@@ -178,10 +178,10 @@
 }
 
 .home .card-link {
-  font-family: "Akkurat";
+  font-family: var(--font-sans);
   font-size: 16px;
   line-height: 130%;
-  color: $electric-blue;
+  color: var(--teal-deep);
 
   [data-dark-mode] & {
     color: $link-color-dark;

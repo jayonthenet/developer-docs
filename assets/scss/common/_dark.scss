@@ -12,7 +12,7 @@ $border-dark: $gray-800;
 $body-color-dark: $gray-300;
 $dots-dark: darken($body-color-dark, 50%);
 
-$link-color-dark: #638aff;
+$link-color-dark: #4ecccb;
 $button-color-dark: $link-color-dark;
 $focus-color-dark: lighten($link-color-dark, 2.5%);
 
@@ -599,7 +599,7 @@ $navbar-dark-active-color: $link-color-dark;
 
 // Custom styles that you can apply in Mermaid diagrams
 [data-dark-mode] .highlight > rect, .highlight > polygon, .highlight > circle, .highlight > g > path {
-  stroke: #2156f6 !important;
+  stroke: #2eb6b5 !important;
 }
 
 [data-dark-mode] .nested > rect {

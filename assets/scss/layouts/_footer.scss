@@ -1,8 +1,8 @@
 .footer {
-  border-top: 1px solid $gray-200;
+  border-top: 1px solid var(--line);
   padding-top: 1.125rem;
   padding-bottom: 1.125rem;
-  background-color: $white;
+  background-color: var(--paper-warm);
 
   [data-dark-mode] & {
     background-color: $bg-nav-dark;
@@ -40,18 +40,18 @@
 }
 
 .footer-links .nav-link {
-  color: $body-color;
+  color: var(--ink-mute);
 }
 
 .footer-links .nav-link:hover,
 .footer-links .nav-link:focus {
-  color: $link-color;
+  color: var(--teal-deep);
   text-decoration: none;
 }
 
 .footer-links .nav-link.active {
-  color: $link-color;
-  border-bottom: 3px solid $link-color;
+  color: var(--teal-deep);
+  border-bottom: 3px solid var(--teal);
 
   @media (max-width: 991px) {
     border-bottom: 0;
@@ -59,7 +59,7 @@
 }
 
 .footer-back-to {
-  color: $dark;
+  color: var(--ink-mute);
 
   [data-dark-mode] & {
     color: $white;

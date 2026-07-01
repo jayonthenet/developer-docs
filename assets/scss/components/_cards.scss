@@ -87,8 +87,8 @@
   border-radius: 6px;
   padding: 12px 24px;
   background-color: $white;
-  font-family: Lazzer;
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-weight: 800;
   font-size: 16px;
   color: $dark;
   border: 1px solid #d5d9e5;
@@ -101,7 +101,7 @@
 
   &:hover {
     text-decoration: none;
-    color: $electric-blue;
+    color: var(--teal-deep);
   }
 
   &::after {
@@ -109,11 +109,11 @@
     margin-left: 10px;
     font-size: 24px;
     line-height: 24px;
-    color: $electric-blue;
+    color: var(--teal-deep);
     transform: translateY(-1px);
 
     [data-dark-mode] & {
-      color: $link-color;
+      color: var(--teal-glow);
     }
   }
 }
@@ -131,20 +131,20 @@
   }
 
   & button {
-    font-family: FiraCode;
+    font-family: var(--font-mono);
     font-size: $font-size-base;
     font-weight: 600;
     text-transform: uppercase;
     padding: 5px 10px;
     margin-bottom: 16px;
-    background-color: #d2dfff !important;
+    background-color: var(--teal-veil) !important;
     border: none;
     color: $link-color-dark !important;
     border-radius: 6px;
 
     [data-dark-mode] & {
-      background-color: rgba(99, 138, 255, 0.2) !important;
-      border: 1px solid rgba(99, 138, 255, 0.5) !important;
+      background-color: rgba(46, 182, 181, 0.22) !important;
+      border: 1px solid rgba(46, 182, 181, 0.4) !important;
     }
   }
 

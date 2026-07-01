@@ -9,15 +9,15 @@
 
 // ER diagrams
 .attributeBoxOdd {
-  fill: #ebf0fd !important;
+  fill: #f4f6f8 !important;
 }
 
 // Custom styles that you can apply in Mermaid diagrams
 .highlight > rect, .highlight > polygon, .highlight > circle, .highlight > g > path {
-  stroke: #2156f6 !important;
+  stroke: #2eb6b5 !important;
   stroke-width: 4px !important;
 }
 
 .nested > rect {
-  fill: #ffffff !important;
+  fill: #fff !important;
 }

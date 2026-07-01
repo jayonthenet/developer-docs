@@ -4,10 +4,11 @@ table {
   margin: 1rem 0;
 
   th {
-    background-color: $bg-light;
+    background-color: var(--paper-cool);
     padding: 0.75rem;
-    color: $dark;
-    font-family: Lazzer;
+    color: var(--midnight);
+    font-family: var(--font-sans);
+    font-weight: 800;
     font-size: 18px;
 
     [data-dark-mode] & {

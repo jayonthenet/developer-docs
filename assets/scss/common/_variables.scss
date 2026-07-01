@@ -1,43 +1,43 @@
 // Color system
 
 $white: #fff;
-$gray-100: #f8f9fa;
-$gray-200: #e9ecef;
-$gray-300: #dee2e6;
-$gray-400: #ced4da;
-$gray-500: #96979d;
-$gray-600: #787c89;
-$gray-700: #495057;
-$gray-800: #343a40;
-$gray-900: #222222;
+$gray-100: #fafafb;
+$gray-200: #f4f6f8;
+$gray-300: rgba(20, 21, 26, 0.1);
+$gray-400: rgba(20, 21, 26, 0.18);
+$gray-500: rgba(20, 21, 26, 0.32);
+$gray-600: rgba(20, 21, 26, 0.54);
+$gray-700: rgba(20, 21, 26, 0.78);
+$gray-800: #1a2350;
+$gray-900: #14151a;
 $black: #000;
 
 $bg-light: #fafafa;
-$bg-sidebar: rgb(244, 247, 255);
-$bg-dark: #141926;
-$bg-nav-dark: rgba(0, 3, 19, 0.95);
-$bg-card-dark: #1e2841;
-$bg-highlight-section: #e9edf8;
-$bg-highlight-section-dark: #222838;
-$bg-highlight-card-dark: #30384e;
-$lightgray: rgba(0, 3, 17, 0.65);
-$dark: rgba(0, 3, 17, 1);
+$bg-sidebar: #0f1638;
+$bg-dark: #0b1027;
+$bg-nav-dark: rgba(15, 22, 56, 0.95);
+$bg-card-dark: #1a2350;
+$bg-highlight-section: rgba(46, 182, 181, 0.1);
+$bg-highlight-section-dark: #1a2350;
+$bg-highlight-card-dark: rgba(46, 182, 181, 0.22);
+$lightgray: rgba(20, 21, 26, 0.54);
+$dark: #14151a;
 
-$yellow: #ffe000;
-$black: #1d2d35;
-$beige: #fbf7f0;
-$electric-blue: #2156f6;
+$yellow: #4ecccb;
+$black: #14151a;
+$beige: #fafafb;
+$electric-blue: #2eb6b5;
 
 // $red:      #e55235;
-$purple: #5d2f86;
+$purple: #5b2d90;
 $brown: #aa9c84;
 
 $blue-300: #8ed6fb;
 $pink-100: #fcfaff;
-$pink-500: #d32e9d;
-$red-500: #ea474b;
+$pink-500: #7a4fb0;
+$red-500: #da3640;
 
-$primary: $electric-blue;
+$primary: $purple;
 
 $color-btn-bg: $pink-500;
 $color-btn-border: darken($pink-500, 5%);
@@ -84,7 +84,7 @@ $body-color: $black;
 //
 // Style anchor elements.
 
-$link-color: $primary;
+$link-color: #1f8e8d;
 $link-decoration: none;
 
 // Grid containers
@@ -120,10 +120,10 @@ $border-color: $gray-200;
 // Font, line-height, and color for body text, headings, and more.
 
 // stylelint-disable value-keyword-case
-$font-family-sans-serif: "Jost", -apple-system, blinkmacsystemfont, "Segoe UI",
+$font-family-sans-serif: "Nunito", -apple-system, blinkmacsystemfont, "Segoe UI",
   roboto, "Helvetica Neue", arial, "Noto Sans", sans-serif, "Apple Color Emoji",
   "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-$font-family-monospace: sfmono-regular, menlo, monaco, consolas,
+$font-family-monospace: "Geist Mono", sfmono-regular, menlo, monaco, consolas,
   "Liberation Mono", "Courier New", monospace;
 $font-family-base: $font-family-sans-serif;
 // stylelint-enable value-keyword-case
@@ -136,8 +136,8 @@ $font-size-sm: $font-size-base * 0.875;
 
 // $line-height-base:            1.5;
 
-$headings-font-family: null;
-$headings-font-weight: 700;
+$headings-font-family: $font-family-sans-serif;
+$headings-font-weight: 800;
 
 $lead-font-weight: 400;
 

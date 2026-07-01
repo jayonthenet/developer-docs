@@ -17,9 +17,10 @@
 }
 
 .guides-navigation a {
-  font-family: 'Lazzer';
+  font-family: var(--font-mono);
   font-size: 14px;
-  letter-spacing: 0.03em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   color: $gray-500;
 
   [data-dark-mode] & {
@@ -37,8 +38,8 @@
   }
 
   &.active {
-    color: #000311;
-    border-bottom: 3px solid $electric-blue;
+    color: var(--midnight);
+    border-bottom: 3px solid var(--teal);
     padding-bottom: 0.25rem;
 
     [data-dark-mode] & {

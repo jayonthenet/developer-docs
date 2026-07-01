@@ -54,8 +54,8 @@
 
 .alert-info {
   color: $gray-900;
-  background-color: rgba(33, 86, 246, 0.1);
-  border-color: rgba(33, 86, 246, 0.5);
+  background-color: rgba(46, 182, 181, 0.1);
+  border-color: rgba(46, 182, 181, 0.4);
   [data-dark-mode] & {
     color: $bg-light;
   }
@@ -63,9 +63,9 @@
 
 .alert-info .alert-link,
 .alert-info a {
-  color: rgba(33, 86, 246, 1);
+  color: var(--teal-deep);
   [data-dark-mode] & {
-    color: rgba(33, 86, 246, 1);
+    color: var(--teal-glow);
   }
 }
 
@@ -168,7 +168,7 @@
 }
 
 .alert code {
-  background: rgba(210, 223, 255, 0.75);
+  background: var(--teal-veil);
   color: $black;
   padding: 0.25rem 0.5rem;
 }

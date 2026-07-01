@@ -5,7 +5,7 @@
 }
 
 .content-page {
-  background-color: $white;
+  background-color: var(--paper);
   [data-dark-mode] & {
     background-color: $bg-dark;
   }
@@ -13,7 +13,7 @@
 
 .docs-content {
   padding: 4rem;
-  border-right: 1px solid $gray-300;
+  border-right: 1px solid var(--line);
   order: 1;
   [data-dark-mode] & {
     border-right: 1px solid $gray-800;
@@ -46,14 +46,14 @@
     line-height: 120%;
     margin-top: 0;
     letter-spacing: -0.01em;
-    color: $dark;
+    color: var(--midnight);
   }
 
   h2 {
     font-size: 26px;
     line-height: 34px;
     letter-spacing: -0.01em;
-    color: $dark;
+    color: var(--midnight);
   }
 
   h3 {
@@ -61,7 +61,7 @@
     line-height: 22px;
     margin-top: 0;
     letter-spacing: -0.01em;
-    color: $dark;
+    color: var(--midnight);
   }
 
   h4,
@@ -71,12 +71,12 @@
     line-height: 20px;
     margin-top: 0;
     letter-spacing: -0.01em;
-    color: $dark;
+    color: var(--midnight);
   }
 
   p,
   .lead {
-    color: $gray-900;
+    color: var(--ink-soft);
   }
 
   p {
@@ -111,12 +111,12 @@
   li code,
   .alert code,
   .alert-doks {
-    background-color: rgba(210, 223, 255, 0.25);
-    font-family: FiraCode;
+    background-color: var(--teal-veil);
+    font-family: var(--font-mono);
     font-size: 14px;
     line-height: 150%;
     letter-spacing: -0.03em;
-    color: $lightgray;
+    color: var(--midnight);
 
     [data-dark-mode] & {
       background-color: rgba(99, 138, 255, 0.15);
@@ -129,9 +129,10 @@
   }
 
   .docs-navigation .card {
-    background-color: rgba(0, 3, 17, 0.02);
-    border-radius: 6.30544px;
-    font-family: Lazzer;
+    background-color: var(--paper-cool);
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    font-family: var(--font-sans);
     font-size: 15px;
     line-height: 145%;
     color: $dark;
@@ -141,7 +142,7 @@
     }
 
     &:hover {
-      background-color: rgba(210, 223, 255, 0.5);
+      background-color: var(--teal-veil);
     }
 
     .card-body {
@@ -178,7 +179,7 @@
     font-size: 24px;
     line-height: 24px;
     margin-bottom: 5px;
-    color: $electric-blue;
+    color: var(--teal-deep);
 
     [data-dark-mode] & {
       color: $link-color;
@@ -191,7 +192,7 @@
     font-size: 24px;
     line-height: 24px;
     margin-bottom: 5px;
-    color: $electric-blue;
+    color: var(--teal-deep);
 
     [data-dark-mode] & {
       color: $link-color;
@@ -248,7 +249,7 @@
     }
 
     &:checked {
-      background-color: $electric-blue;
+      background-color: var(--teal);
       color: $white;
     }
 
