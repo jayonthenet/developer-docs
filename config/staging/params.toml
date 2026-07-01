@@ -13,7 +13,7 @@ alertText = ""
 # docsVersion = "0.3"
 
 ## Open Graph
-images = ["logo_bechtle.svg"]
+images = ["stellwerk-lockup-horizontal.svg"]
 ogLocale = "en_US"
 domainTLD = "not.used"
 titleHome = "Developer Docs"
@@ -25,20 +25,20 @@ twitterCreator = "@NOT_USED"
 ## JSON-LD
 # schemaType = "Person"
 schemaType = "Organization"
-schemaName = "Bechtle"
-schemaAuthor = "Bechtle"
+schemaName = "Stellwerk Labs"
+schemaAuthor = "Stellwerk Labs"
 schemaAuthorTwitter = "NOT_USED"
-schemaAuthorLinkedIn = "https://www.linkedin.com/company/bechtle"
+schemaAuthorLinkedIn = "NOT_USED"
 schemaAuthorGitHub = "NOT_USED"
 schemaLocale = "en-US"
-schemaLogo = "logo_bechtle.svg"
-schemaLogoWidth = 512
-schemaLogoHeight = 512
-schemaImage = "logo_bechtle.svg"
-schemaImageWidth = 1280
-schemaImageHeight = 640
+schemaLogo = "stellwerk-lockup-horizontal.svg"
+schemaLogoWidth = 272
+schemaLogoHeight = 72
+schemaImage = "stellwerk-lockup-horizontal.svg"
+schemaImageWidth = 272
+schemaImageHeight = 72
 schemaTwitter = "NOT_USED"
-schemaLinkedIn = "https://www.linkedin.com/company/bechtle"
+schemaLinkedIn = "NOT_USED"
 schemaGitHub = "NOT_USED"
 schemaSection = "blog"
 
@@ -46,7 +46,7 @@ schemaSection = "blog"
 siteLinksSearchBox = false
 
 ## Chrome Browser
-themeColor = "#fff"
+themeColor = "#0F1638"
 
 # Images
 quality = 85
