@@ -31,34 +31,21 @@
         </ul>
       </div>
       {{ end }}
-      <div class="col-lg-8 order-first order-lg-last text-lg-end">
-        <div class="footer-links">
-          <ul class="nav flex-row">
-            {{ range .Site.Menus.social -}}
-            <li class="nav-item">
-              <a class="nav-link social-link" href="{{ .URL | relURL }}" target="_blank"
-                >{{ .Pre | safeHTML }}</a
-              >
-            </li>
-            {{ end -}}
-            {{/*  {{ if .Site.Params.options.darkMode -}}
-            <button
-              class="mode btn btn-link mode-button"
-              type="button"
-              aria-label="Toggle user interface mode"
-            >
-              <span class="toggle-dark">
-                <i class="fas fa-moon"></i>
-              </span>
-              <span class="toggle-light">
-                <i class="fas fa-sun"></i>
-              </span>
-            </button>
-            {{ end -}}  */}}
-          </ul>
-
+      {{ if .Site.Menus.social }}
+        <div class="col-lg-8 order-first order-lg-last text-lg-end">
+          <div class="footer-links">
+            <ul class="nav flex-row">
+              {{ range .Site.Menus.social -}}
+              <li class="nav-item">
+                <a class="nav-link social-link" href="{{ .URL | relURL }}" target="_blank"
+                  >{{ .Pre | safeHTML }}</a
+                >
+              </li>
+              {{ end -}}
+            </ul>
+          </div>
         </div>
-      </div>
+      {{ end }}
     </div>
   </div>
 </footer>

@@ -100,25 +100,27 @@
         </form>
         {{ end -}}
 
-        <hr class="text-black-50">
+        {{ if or .Site.Menus.social .Site.Params.options.darkMode -}}
+          <hr class="text-black-50">
 
-        <ul class="nav flex-row d-lg-none">
-          {{ range .Site.Menus.social -}}
-            <li class="nav-item">
-              <a class="nav-link social-link" href="{{ .URL | relURL }}" target="_blank">{{ .Pre | safeHTML }}</a>
-            </li>
-          {{ end -}}
-          {{ if .Site.Params.options.darkMode -}}
-          <button class="mode btn btn-link d-lg-none" type="button" aria-label="Toggle user interface mode">
-            <span class="toggle-dark">
-              <i class="fas fa-moon"></i>
-            </span>
-            <span class="toggle-light">
-              <i class="fas fa-sun"></i>
-            </span>
-          </button>
-          {{ end -}}
-        </ul>
+          <ul class="nav flex-row d-lg-none">
+            {{ range .Site.Menus.social -}}
+              <li class="nav-item">
+                <a class="nav-link social-link" href="{{ .URL | relURL }}" target="_blank">{{ .Pre | safeHTML }}</a>
+              </li>
+            {{ end -}}
+            {{ if .Site.Params.options.darkMode -}}
+            <button class="mode btn btn-link d-lg-none" type="button" aria-label="Toggle user interface mode">
+              <span class="toggle-dark">
+                <i class="fas fa-moon"></i>
+              </span>
+              <span class="toggle-light">
+                <i class="fas fa-sun"></i>
+              </span>
+            </button>
+            {{ end -}}
+          </ul>
+        {{ end -}}
 
         {{ if eq .Site.Params.options.multilingualMode true -}}
         <hr class="text-black-50 my-4 d-lg-none">
