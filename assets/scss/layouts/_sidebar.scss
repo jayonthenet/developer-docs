@@ -408,7 +408,7 @@ body .docs-toc {
       text-decoration: none;
 
       [data-dark-mode] & {
-        color: $gray-500;
+        color: var(--teal-glow);
       }
     }
   }
