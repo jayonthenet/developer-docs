@@ -75,6 +75,38 @@
 
   const searchPlaceholder = search.getAttribute('placeholder') || '';
 
+  function positionSuggestions() {
+    if (!searchForm || suggestions.classList.contains('d-none')) return;
+    if (suggestions.parentElement !== document.body) {
+      document.body.appendChild(suggestions);
+    }
+
+    const formRect = searchForm.getBoundingClientRect();
+    const gutter = 16;
+    const gap = 8;
+    const desktopWidth = 498;
+    const compactWidth = 352;
+    const preferredWidth = window.matchMedia('(min-width: 992px)').matches
+      ? desktopWidth
+      : compactWidth;
+    const width = Math.min(preferredWidth, window.innerWidth - gutter * 2);
+    const left = Math.min(
+      Math.max(gutter, formRect.right - width),
+      window.innerWidth - width - gutter
+    );
+    const top = formRect.bottom + gap;
+    const maxHeight = Math.max(160, window.innerHeight - top - gutter);
+
+    suggestions.style.position = 'fixed';
+    suggestions.style.top = `${top}px`;
+    suggestions.style.left = `${left}px`;
+    suggestions.style.right = 'auto';
+    suggestions.style.width = `${width}px`;
+    suggestions.style.maxWidth = `${width}px`;
+    suggestions.style.maxHeight = `${maxHeight}px`;
+    suggestions.style.overflowY = 'auto';
+  }
+
   function clearSearchPlaceholder() {
     search.setAttribute('placeholder', '');
   }
@@ -143,6 +175,7 @@
 
     if (flatResults.size === 0) {
       renderNoResults(searchQuery);
+      positionSuggestions();
       return;
     }
 
@@ -150,6 +183,8 @@
       renderResult(doc);
       if (suggestions.childElementCount === maxResult) break;
     }
+
+    positionSuggestions();
   }
 
   function focusSearch(e) {
@@ -201,7 +236,9 @@
   document.addEventListener('keydown', focusSearch);
   document.addEventListener('keydown', focusSuggestion);
   document.addEventListener('click', (event) => {
-    if (!searchForm || searchForm.contains(event.target)) return;
+    if (!searchForm || searchForm.contains(event.target) || suggestions.contains(event.target)) return;
     hideSuggestions();
   });
+  window.addEventListener('resize', positionSuggestions);
+  window.addEventListener('scroll', positionSuggestions, true);
 })();

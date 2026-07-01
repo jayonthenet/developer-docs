@@ -4,10 +4,13 @@
 
 #suggestions {
   position: absolute;
+  top: calc(100% + 0.5rem);
   right: 0;
-  margin-top: 0.5rem;
+  margin-top: 0;
   width: calc(100vw - 3rem);
   max-width: calc(400px - 3rem);
+  max-height: calc(100vh - 7rem);
+  overflow-y: auto;
   z-index: $zindex-dropdown;
 
   @include media-breakpoint-up(md) {
