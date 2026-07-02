@@ -12,7 +12,7 @@ aliases:
 
 ## Authentication in the console
 
-To access the [Platform Orchestrator Console](https://console.humanitec.dev), users must authenticate using an identity provider.
+To access the [Platform Orchestrator Console](https://console.stellwerk.dev), users must authenticate using an identity provider.
 
 {{< alert context="info" >}}
 If your identity provider email changes, your email will be updated in the Orchestrator as well on your next log in.

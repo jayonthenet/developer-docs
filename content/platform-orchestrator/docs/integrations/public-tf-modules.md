@@ -24,7 +24,7 @@ There are two categories of modules:
 | Module | About |
 | --- | --- |
 | [common-resource-types](https://github.com/humanitec-tf-modules/common-resource-types) | A module for provisioning common resource types in the Platform Orchestrator |
-| [kubernetes-agent-orchestrator-runner](https://github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner) | A module for setting up a Kubernetes agent runner for the Humanitec Platform Orchestrator |
+| [kubernetes-agent-orchestrator-runner](https://github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner) | A module for setting up a Kubernetes agent runner for the Stellwerk Platform Orchestrator |
 | [serverless-ecs-orchestrator-runner](https://github.com/humanitec-tf-modules/serverless-ecs-orchestrator-runner) | A module for setting up an ECS Runner for the Platform Orchestrator |
 
 ## Module sources

@@ -20,7 +20,7 @@ Follow the steps below to configure a runner of type `kubernetes-agent`.
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-{{% github-file filename="/humanitec/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_agent_runner/resource.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_agent_runner/resource.tf" %}}
 
 {{% /tab %}}
 {{% tab name="CLI" %}}
@@ -40,11 +40,11 @@ runner_configuration:
     -----END PUBLIC KEY-----
   job:
     namespace: default
-    service_account: humanitec-runner
+    service_account: platform-orchestrator-runner
     pod_template:
       metadata:
         labels:
-          app.kubernetes.io/name: humanitec-runner
+          app.kubernetes.io/name: platform-orchestrator-runner
 state_storage_configuration:
   type: kubernetes
   namespace: humanitec
@@ -67,7 +67,7 @@ Refer to the resource schema in the [Terraform](https://registry.terraform.io/pr
 
 {{% details "Extended example" %}}
 
-{{% github-file filename="/humanitec/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_agent_runner/resource.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_agent_runner/resource.tf" %}}
 
 {{% /details %}}
 
@@ -89,10 +89,10 @@ runner_configuration:
       -----END PUBLIC KEY-----
 
     # Namespace where runner jobs run
-    namespace: humanitec-runner
+    namespace: platform-orchestrator-runner
 
     # Service account to use for the runner jobs
-    service_account: humanitec-runner
+    service_account: platform-orchestrator-runner
 
     # (optional) Pod template for customizing runner job pods
     pod_template:
@@ -186,19 +186,19 @@ Also, If your registry requires authentication, the client executing the TF `app
 
 ### Runner image
 
-Make the public [`humanitec-runner` container image](https://github.com/orgs/humanitec/packages/container/package/humanitec-runner) available in an OCI registry within your infrastructure.
+Make the public [`platform-orchestrator-runner` container image](https://github.com/orgs/Platform-Orchestrator/packages/container/package/platform-orchestrator-runner) available in an OCI registry within your infrastructure.
 
 ```bash
 # Pull the desired version
-docker image pull ghcr.io/humanitec/humanitec-runner:vX.Y.Z
+docker image pull ghcr.io/platform-orchestrator/platform-orchestrator-runner:vX.Y.Z
 
 # Tag the image so that it points to your internal registry
 # Adjust your registry domain and image path according to your setup
-docker image tag ghcr.io/humanitec/humanitec-runner:vX.Y.Z myregistry.example.com/humanitec/humanitec-runner:vX.Y.Z
+docker image tag ghcr.io/platform-orchestrator/platform-orchestrator-runner:vX.Y.Z myregistry.example.com/platform-orchestrator/platform-orchestrator-runner:vX.Y.Z
 
 # Push the image to your internal registry
 # Adjust your registry domain and image path according to your setup
-docker image push myregistry.example.com/humanitec/humanitec-runner:vX.Y.Z
+docker image push myregistry.example.com/platform-orchestrator/platform-orchestrator-runner:vX.Y.Z
 ```
 
 If your registry requires authentication, refer to the [docker login](https://docs.docker.com/reference/cli/docker/login/) command.
@@ -306,7 +306,7 @@ provider "helm" {
 1. Set values
 
 ```bash
-export HUMANITEC_ORG=<my-org>
+export PO_ORG_ID=<my-org>
 export KUBERNETES_AGENT_RUNNER_CHART_REPOSITORY="oci://ghcr.io/humanitec/charts"
 
 # The Kubernetes namespace where the kubernetes-agent runner should run
@@ -433,7 +433,7 @@ octl create runner ${RUNNER_ID} \
 helm install humanitec-kubernetes-agent-runner \
   ${KUBERNETES_AGENT_RUNNER_CHART_REPOSITORY}/humanitec-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
-  --set humanitec.orgId=${HUMANITEC_ORG} \
+  --set humanitec.orgId=${PO_ORG_ID} \
   --set humanitec.runnerId=${RUNNER_ID} \
   --set humanitec.existingSecret=humanitec-kubernetes-agent-runner \
   --set namespaceOverride=${CLUSTER_RUNNER_NAMESPACE} \
@@ -797,7 +797,7 @@ kubectl config current-context
 6. Set values:
 
 ```bash
-export HUMANITEC_ORG=<my-org>
+export PO_ORG_ID=<my-org>
 export RUNNER_ID=kubernetes-agent-${CLUSTER_NAME}
 ```
 
@@ -823,7 +823,7 @@ kubectl create namespace ${CLUSTER_RUNNER_JOB_NAMESPACE}
 helm install humanitec-kubernetes-agent-runner \
   oci://ghcr.io/humanitec/charts/humanitec-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
-  --set humanitec.orgId=${HUMANITEC_ORG} \
+  --set humanitec.orgId=${PO_ORG_ID} \
   --set humanitec.runnerId=${RUNNER_ID} \
   --set humanitec.existingSecret=humanitec-kubernetes-agent-runner \
   --set namespaceOverride=${CLUSTER_RUNNER_NAMESPACE} \
@@ -1145,7 +1145,7 @@ kubectl config current-context
 6. Set values:
 
 ```bash
-export HUMANITEC_ORG=<my-org>
+export PO_ORG_ID=<my-org>
 export RUNNER_ID=kubernetes-agent-${CLUSTER_NAME}
 ```
 
@@ -1171,7 +1171,7 @@ kubectl create namespace ${CLUSTER_RUNNER_JOB_NAMESPACE}
 helm install humanitec-kubernetes-agent-runner \
   oci://ghcr.io/humanitec/charts/humanitec-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
-  --set humanitec.orgId=${HUMANITEC_ORG} \
+  --set humanitec.orgId=${PO_ORG_ID} \
   --set humanitec.runnerId=${RUNNER_ID} \
   --set humanitec.existingSecret=humanitec-kubernetes-agent-runner \
   --set namespaceOverride=${CLUSTER_RUNNER_NAMESPACE} \
@@ -1509,7 +1509,7 @@ kubectl config current-context
 6. Set values:
 
 ```bash
-export HUMANITEC_ORG=<my-org>
+export PO_ORG_ID=<my-org>
 export RUNNER_ID=kubernetes-agent-${CLUSTER_NAME}
 ```
 
@@ -1540,7 +1540,7 @@ export MANAGED_IDENTITY_CLIENT_ID=$(az identity show \
 helm install humanitec-kubernetes-agent-runner \
   oci://ghcr.io/humanitec/charts/humanitec-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
-  --set humanitec.orgId=${HUMANITEC_ORG} \
+  --set humanitec.orgId=${PO_ORG_ID} \
   --set humanitec.runnerId=${RUNNER_ID} \
   --set humanitec.existingSecret=humanitec-kubernetes-agent-runner \
   --set namespaceOverride=${CLUSTER_RUNNER_NAMESPACE} \

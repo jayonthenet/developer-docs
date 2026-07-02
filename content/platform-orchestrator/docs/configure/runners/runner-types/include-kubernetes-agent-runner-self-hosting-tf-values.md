@@ -19,7 +19,7 @@ locals {
   kubernetes_agent_runner_chart_version = "X.Y.Z"
   #
   # Your internal OCI registry for the runner image
-  kubernetes_agent_runner_image_repository = "myregistry.example.com/humanitec/humanitec-runner"
+  kubernetes_agent_runner_image_repository = "myregistry.example.com/platform-orchestrator/platform-orchestrator-runner"
   #
   # Runner image tag (optional)
   kubernetes_agent_runner_image_tag = "vX.Y.Z"

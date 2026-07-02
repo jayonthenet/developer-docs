@@ -11,7 +11,7 @@ The Platform Orchestrator can remediate application or infrastructure issues int
 
 > ℹ️ **Note**
 > 
-> While we are preparing the full use case implementation, you can already see the Platform Orchestrator in action with your own technology stack. [Book a session with us here](https://humanitec.com/schedule-demo).
+> While we are preparing the full use case implementation, you can already see the Platform Orchestrator in action with your own technology stack. [Book a session with us here](https://stellwerk.dev).
 
 When a deployment causes instability in an application or its dependencies, the Platform Orchestrator allows teams to rapidly restore a previously known good state without manual reconstruction of configs or infrastructure.
 
@@ -21,7 +21,7 @@ The rollback is executed like any other deployment and supports dry run and plan
 
 ## References
 
-- [Platform Orchestrator Documentation](https://developer.humanitec.com)
+- [Platform Orchestrator Documentation](https://docs.stellwerk.dev)
 - [Platform Orchestrator Terraform Modules](https://github.com/humanitec-tf-modules)
 
 <!-- BEGIN_TF_DOCS -->

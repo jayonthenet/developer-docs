@@ -41,7 +41,7 @@ The following examples illustrate the querying of Orchestrator data. Consult the
 {{% details "Example: Get all environments of a project" %}}
 
 ```bash
-curl https://api.humanitec.dev/orgs/{org_id}/projects/{project_id}/envs \
+curl https://api.stellwerk.dev/orgs/{org_id}/projects/{project_id}/envs \
   -X GET \
   -H "Authorization: Bearer ${PLATFORM_ORCHESTRATOR_TOKEN}"
 ```
@@ -51,7 +51,7 @@ curl https://api.humanitec.dev/orgs/{org_id}/projects/{project_id}/envs \
 {{% details "Example: Get all active resources of an environment" %}}
 
 ```bash
-curl "https://api.humanitec.dev/orgs/{org_id}/active-resources?project_id={project_id}&env_id={env_id}" \
+curl "https://api.stellwerk.dev/orgs/{org_id}/active-resources?project_id={project_id}&env_id={env_id}" \
   -X GET \
   -H "Authorization: Bearer ${PLATFORM_ORCHESTRATOR_TOKEN}"
 ```
@@ -61,7 +61,7 @@ curl "https://api.humanitec.dev/orgs/{org_id}/active-resources?project_id={proje
 {{% details "Example: Get all available resource types of an environment" %}}
 
 ```bash
-curl "https://api.humanitec.dev/orgs/{orgId}/projects/{projectId}/envs/{envId}/available-resource-types" \
+curl "https://api.stellwerk.dev/orgs/{orgId}/projects/{projectId}/envs/{envId}/available-resource-types" \
   -X GET \
   -H "Authorization: Bearer ${PLATFORM_ORCHESTRATOR_TOKEN}"
 ```
@@ -71,7 +71,7 @@ curl "https://api.humanitec.dev/orgs/{orgId}/projects/{projectId}/envs/{envId}/a
 {{% details "Example: Get the last deployments across all project environments" %}}
 
 ```bash
-curl "https://api.humanitec.dev/orgs/{orgId}/last-deployments" \
+curl "https://api.stellwerk.dev/orgs/{orgId}/last-deployments" \
   -X GET \
   -H "Authorization: Bearer ${PLATFORM_ORCHESTRATOR_TOKEN}"
 ```
@@ -85,7 +85,7 @@ The following examples illustrate the modification of Orchestrator objects via t
 {{% details "Example: Create a new project" %}}
 
 ```bash
-curl "https://api.humanitec.dev/orgs/{orgId}/projects" \
+curl "https://api.stellwerk.dev/orgs/{orgId}/projects" \
   -X POST \
   -H "Authorization: Bearer ${PLATFORM_ORCHESTRATOR_TOKEN}" \
   -H "Content-Type: application/json" \
@@ -103,7 +103,7 @@ curl "https://api.humanitec.dev/orgs/{orgId}/projects" \
 Refer to the [Orchestrator API]({{< relref "/platform-orchestrator/docs/reference/api-spec#/Deployment" >}})  of this endpoint for additional properties for controlling the deployment flow.
 
 ```bash
-curl "https://api.humanitec.dev/orgs/{orgId}/deployments" \
+curl "https://api.stellwerk.dev/orgs/{orgId}/deployments" \
   -X POST \
   -H "Authorization: Bearer ${PLATFORM_ORCHESTRATOR_TOKEN}" \
   -H "Content-Type: application/json" \

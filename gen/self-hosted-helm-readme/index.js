@@ -7,7 +7,7 @@ const END_MARKER = '<!-- END_HELM_README -->';
 
 const main = async () => {
   const rawReadme = execSync(
-    'gh api repos/humanitec/platform-orchestrator-helm-chart/contents/README.md --header "Accept: application/vnd.github.raw+json"',
+    'gh api repos/Platform-Orchestrator/platform-orchestrator-helm-chart/contents/README.md --header "Accept: application/vnd.github.raw+json"',
     { encoding: 'utf8' }
   );
 

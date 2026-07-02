@@ -64,7 +64,7 @@ This document provides regular updates on changes to the [Platform Orchestrator]
 - **New:** Added support for Sign in with Microsoft.
 - **New:** Added support for [single sign-on (SSO)]({{< relref "../security/authentication.md#single-sign-on-sso" >}}) via SAML/OIDC.
 - **New**: The [`humanitec-tf-modules` GitHub organization](https://github.com/humanitec-tf-modules) provides new modules to [provision score-workload resources on Kubernetes](https://github.com/humanitec-tf-modules/score-workload-kubernetes), and a [reusable module to set up an ECS runner for the Platform Orchestrator](https://github.com/humanitec-tf-modules/serverless-ecs-orchestrator-runner).
-- **New**: A collection of [Platform Orchestrator Use Cases](https://github.com/humanitec/platform-orchestrator-use-cases) are now available, as well.
+- **New**: A collection of [Platform Orchestrator Use Cases](https://github.com/Platform-Orchestrator/platform-orchestrator-use-cases) are now available, as well.
 
 #### Latest Terraform / OpenTofu providers:
 - [`humanitec/platform-orchestrator` Terraform provider 2.10.2](https://registry.terraform.io/providers/humanitec/platform-orchestrator/2.10.2)

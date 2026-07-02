@@ -20,7 +20,7 @@ You will also execute several deployments to understand how the Orchestrator wor
 To make sure you are able to understand all of the moving pieces, we will review the object system of the Orchestrator at the beginning.
 
 {{< alert context="info" >}}
-This tutorial focuses on Google Cloud, Amazon Web Services and Microsoft Azure as the deployment target and demonstrates deployments onto Kubernetes and VMs. The Platform Orchestrator itself is fully cloud- and compute-agnostic. Support for additional technologies and runtimes is continuously expanding. If you’d like to see the Orchestrator in action with technologies not covered here, [book a demo with us](https://humanitec.com/schedule-demo).
+This tutorial focuses on Google Cloud, Amazon Web Services and Microsoft Azure as the deployment target and demonstrates deployments onto Kubernetes and VMs. The Platform Orchestrator itself is fully cloud- and compute-agnostic. Support for additional technologies and runtimes is continuously expanding. If you’d like to see the Orchestrator in action with technologies not covered here, [book a demo with us](https://stellwerk.dev).
 {{< /alert >}}
 
 ## Prerequisites
@@ -30,7 +30,7 @@ To get started with this tutorial, you’ll need:
 - The [octl]({{< relref "/platform-orchestrator/docs/integrations/cli#installation" >}}) CLI installed locally
 - Either the [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) or the [OpenTofu CLI](https://opentofu.org/docs/intro/install/) installed locally
 - [Git](https://git-scm.com/downloads) installed locally
-- A Platform Orchestrator organization. To create one, please go [here](https://console.humanitec.dev/auth/register) and follow the instructions
+- A Platform Orchestrator organization. To create one, please go [here](https://console.stellwerk.dev/auth/register) and follow the instructions
 - (optional) The Kubernetes [kubectl](https://kubernetes.io/docs/tasks/tools/) CLI installed locally
 
 ### Amazon Web Services (AWS)
@@ -103,7 +103,7 @@ The code uses the appropriate providers for the cloud provider of your choice, a
 Clone the repository:
 
 ```bash
-git clone https://github.com/humanitec-tutorials/first-deployment
+git clone https://github.com/Platform-Orchestrator/first-deployment
 cd first-deployment
 ```
 ## Review the code
@@ -138,7 +138,7 @@ cp terraform.tfvars.template terraform.tfvars
 
 All requests to the Orchestrator must be authenticated. To this end, the Orchestrator lets you create "Service users" with an associated token that you can supply to code-based interactions such as the Platform Orchestrator Terraform/OpenTofu provider.
 
-- Open the Orchestrator web console at [https://console.humanitec.dev/](https://console.humanitec.dev/)
+- Open the Orchestrator web console at [https://console.stellwerk.dev/](https://console.stellwerk.dev/)
 - Select the **Service users** view
 - Click **Create service user**
 - Enter "`first-deployment-tutorial`" as the name and keep the default expiry
@@ -224,7 +224,7 @@ cd ../manifests
 
 We are using this empty `manifest.yaml` located in this folder:
 
-{{% github-file filename="/humanitec-tutorials/first-deployment/refs/heads/main/manifests/manifest.yaml" %}}
+{{% github-file filename="/Platform-Orchestrator/first-deployment/refs/heads/main/manifests/manifest.yaml" %}}
 
 The [deployment manifest]({{< relref "/platform-orchestrator/docs/deploy/manifests" >}}) format is purpose built to enable to deploy basically any application or resource. It provides the right abstraction level to create infrastructure with the "what" and leave the "how" to the platform engineer that encoded this concern into the module that the Orchestrator will be using. The next deployment steps will expand the manifest.
 
@@ -234,7 +234,7 @@ Perform a deployment into the `dev` environment of the newly created project:
 octl deploy ${PROJECT_ID} dev ./manifest.yaml
 ```
 
-To see the outcome, return to the Orchestrator console at [https://console.humanitec.dev/](https://console.humanitec.dev/) in your browser and open the **Projects** view. Select the `*-tutorial` project and open the `dev` environment.
+To see the outcome, return to the Orchestrator console at [https://console.stellwerk.dev/](https://console.stellwerk.dev/) in your browser and open the **Projects** view. Select the `*-tutorial` project and open the `dev` environment.
 
 As the deployment was empty, there is not much to see yet. Still, this first step shows that
 
@@ -251,7 +251,7 @@ In this step we are going to deploy a containerized application directly to the 
 
 We are using the `manifest2.yaml` file located in the current `manifests` folder:
 
-{{% github-file filename="/humanitec-tutorials/first-deployment/refs/heads/main/manifests/manifest2.yaml" %}}
+{{% github-file filename="/Platform-Orchestrator/first-deployment/refs/heads/main/manifests/manifest2.yaml" %}}
 
 This manifest defines a logical workload named `demo-app` made up out of two resources:
 
@@ -284,7 +284,7 @@ For the last deployment, we’re going to leave the cluster behind and deploy th
 
 You can create a `score.yaml` file with the following contents (or locate it in the manifests folder to save yourself from C&P)
 
-{{% github-file filename="/humanitec-tutorials/first-deployment/refs/heads/main/manifests/score.yaml" %}}
+{{% github-file filename="/Platform-Orchestrator/first-deployment/refs/heads/main/manifests/score.yaml" %}}
 
 and deploy it like this
 

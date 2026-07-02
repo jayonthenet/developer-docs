@@ -151,7 +151,7 @@ The `test/` directory contains a smoke test that provisions a minimal Platform O
 ### Prerequisites
 
 - [`terraform`](https://developer.hashicorp.com/terraform/install) installed
-- [`octl`](https://docs.humanitec.com/getting-started/cli) installed and authenticated
+- [`octl`](https://docs.stellwerk.dev/getting-started/cli) installed and authenticated
 - `kubectl` configured and pointing at the target cluster (used to pull cluster credentials)
 - Platform Orchestrator deployed and accessible
 

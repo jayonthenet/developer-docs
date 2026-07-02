@@ -81,7 +81,7 @@ Refer to the resource schema in the [Terraform](https://registry.terraform.io/pr
 
 {{% details "Extended example" %}}
 
-{{% github-file filename="/humanitec/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_runner_rule/resource.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_runner_rule/resource.tf" %}}
 
 {{% /details %}}
 

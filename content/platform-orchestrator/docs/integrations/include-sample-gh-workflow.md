@@ -9,14 +9,14 @@ jobs:
   example:
     runs-on: ubuntu-latest
     env:
-      HUMANITEC_ORG: ${{ vars.HUMANITEC_ORG }}
-      HUMANITEC_AUTH_TOKEN: ${{ secrets.HUMANITEC_AUTH_TOKEN }}
+      PO_ORG_ID: ${{ vars.PO_ORG_ID }}
+      PO_AUTH_TOKEN: ${{ secrets.PO_AUTH_TOKEN }}
     steps:
-    - name: Setup octl
-      uses: humanitec/setup-octl@v1
-      with:
-        version: "1"
-        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Install octl
+      run: |
+        curl -fLO https://github.com/Platform-Orchestrator/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_linux_amd64.tar.gz
+        tar xvzf octl_{{< param octlVersion >}}_linux_amd64.tar.gz
+        sudo install -o root -g root -m 0755 octl /usr/local/bin/octl
     - name: Deploy a manifest
       run: octl deploy my-project my-environment ./manifest.yaml
 ```

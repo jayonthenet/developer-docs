@@ -16,7 +16,7 @@ Organizations are identified by an **ID**.
 
 ## Register an Organization
 
-Follow [this link](https://console.humanitec.dev/auth/register) to register a free trial organization.
+Follow [this link](https://console.stellwerk.dev/auth/register) to register a free trial organization.
 
 ## Your Organization ID
 

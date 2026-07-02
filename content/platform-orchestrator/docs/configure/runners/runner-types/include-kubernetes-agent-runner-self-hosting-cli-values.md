@@ -15,7 +15,7 @@ export KUBERNETES_AGENT_RUNNER_CHART_REPOSITORY="oci://myregistry.example.com/ch
 # Runner Helm chart version (optional)
 export KUBERNETES_AGENT_RUNNER_CHART_VERSION="X.Y.Z"
 # Your internal OCI registry for the runner image
-export KUBERNETES_AGENT_RUNNER_IMAGE_REPOSITORY="myregistry.example.com/humanitec/humanitec-runner"
+export KUBERNETES_AGENT_RUNNER_IMAGE_REPOSITORY="myregistry.example.com/platform-orchestrator/platform-orchestrator-runner"
 # Runner image tag (optional)
 export KUBERNETES_AGENT_RUNNER_IMAGE_TAG="vX.Y.Z"
 # Your internal Orchestrator API endpoint

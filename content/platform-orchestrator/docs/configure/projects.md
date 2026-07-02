@@ -19,7 +19,7 @@ A project is mainly a container that holds a set of [environments]({{< relref "/
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-{{% github-file filename="/humanitec/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_project/resource.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_project/resource.tf" %}}
 
 {{% /tab %}}
 {{% tab name="CLI" %}}

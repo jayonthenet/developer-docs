@@ -22,7 +22,7 @@ All CLI commands shown on this page require the target [organization]({{< relref
 
 ```bash
 # Option 1: set target organization via environment variable
-export HUMANITEC_ORG=my-org
+export PO_ORG_ID=my-org
 # Option 2: set target organization via local config
 octl config set-org my-org
 ```
@@ -31,7 +31,7 @@ When [self-hosting]({{< relref "/platform-orchestrator/docs/architecture/self-ho
 
 ```bash
 # Option 1: set API URL via environment variable
-export HUMANITEC_API_URL=https://my-platform-orchestrator.example.com
+export PO_API_URL=https://my-platform-orchestrator.example.com
 # Option 2: set API URL via local config
 octl config set-url https://my-platform-orchestrator.example.com
 ```
@@ -82,11 +82,11 @@ octl get provider kubernetes default   # Get the provider of type "kubernetes" n
 
 ```bash
 # Create a runner named "default" of type "kubernetes" reading data from a local kubeconfig
-# running jobs in the "default" namespace using the "humanitec-runner" service account
+# running jobs in the "default" namespace using the "platform-orchestrator-runner" service account
 # and using "kubernetes" state storage
 octl create runner default \
   --set=runner_type=kubernetes \
-  --set=runner_configuration='{"cluster":{"cluster_data":{"certificate-authority-data": "'"$(kubectl config view -o jsonpath='{.clusters[?(@.name == "my-cluster")].cluster.certificate-authority-data}' --raw)"'","server":"https://kubernetes.default.svc.cluster.local"},"auth":'"$(kubectl config view -o jsonpath='{.users[?(@.name == "my-user")].user}' --raw)"'}, "job":{"namespace":"default","service_account":"humanitec-runner"}}' \
+  --set=runner_configuration='{"cluster":{"cluster_data":{"certificate-authority-data": "'"$(kubectl config view -o jsonpath='{.clusters[?(@.name == "my-cluster")].cluster.certificate-authority-data}' --raw)"'","server":"https://kubernetes.default.svc.cluster.local"},"auth":'"$(kubectl config view -o jsonpath='{.users[?(@.name == "my-user")].user}' --raw)"'}, "job":{"namespace":"default","service_account":"platform-orchestrator-runner"}}' \
   --set=state_storage_type=kubernetes \
   --set=state_storage_configuration='{"namespace":"default","secret_suffix":""}'
 

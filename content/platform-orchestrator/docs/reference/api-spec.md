@@ -14,12 +14,12 @@ aliases:
 
 The current [OpenAPI](https://www.openapis.org/) specification of the Platform Orchestrator configuration entities is shown below.
 
-The API endpoint is `https://api.humanitec.dev`.
+The API endpoint is `https://api.stellwerk.dev`.
 
 All requests to the API must be authenticated using an API token placed in the `Authorization` header as shown here using `curl`:
 
 ```bash
-curl https://api.humanitec.dev/orgs/{org_id}/projects \
+curl https://api.stellwerk.dev/orgs/{org_id}/projects \
   -H "Authorization: Bearer ${PLATFORM_ORCHESTRATOR_TOKEN}"
 ```
 

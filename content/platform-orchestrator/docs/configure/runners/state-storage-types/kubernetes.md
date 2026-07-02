@@ -27,7 +27,7 @@ resource "platform-orchestrator_kubernetes_agent_runner" "my_runner" {
   state_storage_configuration = {
     type = "kubernetes"
     kubernetes_configuration = {
-      namespace = "humanitec-runner"
+      namespace = "platform-orchestrator-runner"
     }
   }
 }
@@ -43,7 +43,7 @@ runner_configuration:
   ...
 state_storage_configuration:
   type: kubernetes
-  namespace: humanitec-runner
+  namespace: platform-orchestrator-runner
 ```
 
 {{% /tab %}}
@@ -68,7 +68,7 @@ state_storage_configuration:
   # Always set the type to "kubernetes" for this storage type
   type: kubernetes
   # Namespace to use for state storage. The runner will create Kubernetes secrets holding state here
-  namespace: humanitec-runner
+  namespace: platform-orchestrator-runner
 ```
 
 {{% /tab %}}
@@ -89,7 +89,7 @@ We recommend using the same namespace the runner is using to maintain the state 
 
 ```hcl
 locals {
-  state_storage_namespace = "humanitec-runner"
+  state_storage_namespace = "platform-orchestrator-runner"
 }
 
 # If the namespace does not exist yet, create it
@@ -106,7 +106,7 @@ resource "kubernetes_namespace" "humanitec_runner_state_storage" {
 1. Define the Kubernetes namespace where to store the state storage secrets
 
 ```bash
-export STATE_STORAGE_NAMESPACE=humanitec-runner
+export STATE_STORAGE_NAMESPACE=platform-orchestrator-runner
 ```
 
 2. If the namespace does not exist yet, create it
@@ -130,7 +130,7 @@ Prepare and assign the required permissions to the Kubernetes service account us
 ```hcl
 locals {
   # ...
-  runner_k8s_sa = "humanitec-runner"
+  runner_k8s_sa = "platform-orchestrator-runner"
 }
 ```
 
@@ -138,7 +138,7 @@ locals {
 {{% tab name="CLI" %}}
 
 ```bash
-export RUNNER_K8S_SA=humanitec-runner
+export RUNNER_K8S_SA=platform-orchestrator-runner
 ```
 
 {{% /tab %}}
@@ -152,9 +152,9 @@ Prepare a [Role](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#r
 {{% tab name="TF" %}}
 
 ```hcl
-resource "kubernetes_role" "humanitec-runner-kubernetes-stage-storage" {
+resource "kubernetes_role" "platform-orchestrator-runner-kubernetes-stage-storage" {
   metadata {
-    name      = "humanitec-runner-kubernetes-stage-storage"
+    name      = "platform-orchestrator-runner-kubernetes-stage-storage"
     namespace = kubernetes_namespace.humanitec_runner_state_storage.metadata[0].name
   }
   rule {
@@ -169,15 +169,15 @@ resource "kubernetes_role" "humanitec-runner-kubernetes-stage-storage" {
   }
 }
 
-resource "kubernetes_role_binding" "humanitec-runner-kubernetes-stage-storage" {
+resource "kubernetes_role_binding" "platform-orchestrator-runner-kubernetes-stage-storage" {
   metadata {
-    name      = "humanitec-runner-kubernetes-stage-storage"
+    name      = "platform-orchestrator-runner-kubernetes-stage-storage"
     namespace = kubernetes_namespace.humanitec_runner_state_storage.metadata[0].name
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "Role"
-    name      = kubernetes_role.humanitec-runner-kubernetes-stage-storage.metadata[0].name
+    name      = kubernetes_role.platform-orchestrator-runner-kubernetes-stage-storage.metadata[0].name
   }
   subject {
     kind = "ServiceAccount"
@@ -194,7 +194,7 @@ cat << EOF > kubernetes-state-storage-role-rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: humanitec-runner-kubernetes-stage-storage
+  name: platform-orchestrator-runner-kubernetes-stage-storage
   namespace: ${STATE_STORAGE_NAMESPACE}
 rules:
   - apiGroups: [""]
@@ -207,12 +207,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: humanitec-runner-kubernetes-stage-storage
+  name: platform-orchestrator-runner-kubernetes-stage-storage
   namespace: ${STATE_STORAGE_NAMESPACE}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: humanitec-runner-kubernetes-stage-storage
+  name: platform-orchestrator-runner-kubernetes-stage-storage
 subjects:
 - kind: ServiceAccount
   name: ${RUNNER_K8S_SA}
@@ -273,7 +273,7 @@ The secrets are named `tfstate-default-<environment-uuid>`.
 This pattern follows the [kubernetes backend configuration](https://developer.hashicorp.com/terraform/language/backend/kubernetes#configuration-variables) setting the `{workspace}` to `default` and the `{secret_suffix}` to the environment `uuid`.
 
 ```bash
-$ kubectl get secrets -n humanitec-runner
+$ kubectl get secrets -n platform-orchestrator-runner
 NAME                                                   TYPE     DATA   AGE
 tfstate-default-4b41bf32-b337-93a4-ad65-1d565c5e25be   Opaque   1      21h
 ```

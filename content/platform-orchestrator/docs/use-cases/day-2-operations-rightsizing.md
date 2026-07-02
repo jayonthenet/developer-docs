@@ -11,9 +11,9 @@ The Platform Orchestrator can assist in rightsizing infrastructure resources by 
 
 > ℹ️ **Note**
 > 
-> While we are preparing the full use case implementation, you can already see the Platform Orchestrator in action with your own technology stack. [Book a session with us here](https://humanitec.com/schedule-demo).
+> While we are preparing the full use case implementation, you can already see the Platform Orchestrator in action with your own technology stack. [Book a session with us here](https://stellwerk.dev).
 
-Organizations often encounter situations where infrastructure resources, such as databases, are over-provisioned relative to their actual workload requirements. This leads to unnecessary operational costs and inefficient resource utilization. The Humanitec Platform Orchestrator addresses this challenge by providing a centralized, rule-based orchestration layer that enables proactive rightsizing of resources for optimal cost control.
+Organizations often encounter situations where infrastructure resources, such as databases, are over-provisioned relative to their actual workload requirements. This leads to unnecessary operational costs and inefficient resource utilization. The Stellwerk Platform Orchestrator addresses this challenge by providing a centralized, rule-based orchestration layer that enables proactive rightsizing of resources for optimal cost control.
 
 Once underutilized or oversized resources are identified, teams can adjust resource parameters such as changing the size class of a database directly within the deployment manifest. The Orchestrator then enforces these changes across all relevant environments through the regular deployment cadence, ensuring that the updated configuration is applied consistently and securely.
 
@@ -21,7 +21,7 @@ This dynamic configuration management approach not only streamlines the process 
 
 ## References
 
-- [Platform Orchestrator Documentation](https://developer.humanitec.com)
+- [Platform Orchestrator Documentation](https://docs.stellwerk.dev)
 - [Platform Orchestrator Terraform Modules](https://github.com/humanitec-tf-modules)
 
 <!-- BEGIN_TF_DOCS -->

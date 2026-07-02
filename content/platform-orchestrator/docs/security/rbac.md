@@ -14,7 +14,7 @@ aliases:
 
 The Platform Orchestrator allows developers in your team or from across your Organization to collaborate on tasks related to delivering software. Users can be [invited as members]({{< relref "/platform-orchestrator/docs/security/members#inviting-users-to-an-organization" >}}) to join a Platform Orchestrator Organization. Tooling integration and automation is supported via [service users]({{< relref "/platform-orchestrator/docs/security/service-users" >}}).
 
-Both kinds of users require permissions to interact with the Orchestrator. Permissions are bound to **roles** and obtained by assigning a **role** to a **user** on a particular **scope**. You manage role assignments via the [Platform Orchestrator console](https://console.humanitec.dev).
+Both kinds of users require permissions to interact with the Orchestrator. Permissions are bound to **roles** and obtained by assigning a **role** to a **user** on a particular **scope**. You manage role assignments via the [Platform Orchestrator console](https://console.stellwerk.dev).
 
 Role assignments are additive. A member or service user has all the permissions obtained via all their role assigments on the respective scopes.
 
@@ -51,4 +51,4 @@ These assignable scopes exist. Assigning a role on a scope will give the user th
 
 ## Custom Roles
 
-If you need more granular control over permissions and you want to create custom roles, please contact [support](mailto:support@humanitec.com).
+If you need more granular control over permissions and you want to create custom roles, please contact [support](mailto:hello@stellwerk.dev).

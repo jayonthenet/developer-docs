@@ -28,7 +28,7 @@ resource "platform-orchestrator_kubernetes_eks_runner" "my_runner" {
       name   = "my-eks-cluster"
       region = "us-west-2"
       auth = {
-        role_arn = "arn:aws:iam::123456789012:role/humanitec-runner-eks-role"
+        role_arn = "arn:aws:iam::123456789012:role/platform-orchestrator-runner-eks-role"
       }
     }
     job = {
@@ -58,10 +58,10 @@ runner_configuration:
     name: my-eks-cluster
     region: us-west-2
     auth:
-      role_arn: arn:aws:iam::123456789012:role/humanitec-runner-eks-role
+      role_arn: arn:aws:iam::123456789012:role/platform-orchestrator-runner-eks-role
   job:
-    namespace: humanitec-runner
-    service_account: humanitec-runner
+    namespace: platform-orchestrator-runner
+    service_account: platform-orchestrator-runner
 state_storage_configuration:
   ...
 ```
@@ -78,7 +78,7 @@ Refer to the resource schema in the [Terraform](https://registry.terraform.io/pr
 
 {{% details "Extended example" %}}
 
-{{% github-file filename="/humanitec/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_eks_runner/resource.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_eks_runner/resource.tf" %}}
 
 {{% /details %}}
 
@@ -102,7 +102,7 @@ runner_configuration:
     # Authentication configuration
     auth:
       # ARN of the IAM role that the Orchestrator will assume to describe and access cluster
-      role_arn: arn:aws:iam::123456789012:role/humanitec-runner-eks-role
+      role_arn: arn:aws:iam::123456789012:role/platform-orchestrator-runner-eks-role
       # (optional, defaults to cluster region) AWS region for STS token requests
       sts_region: eu-center-1
       # (optional, defaults to "{humanitec-org-id}-{runner-id}") Custom session name for the assumed role
@@ -111,9 +111,9 @@ runner_configuration:
   # Kubernetes job configuration
   job:
     # Namespace where runner jobs will be created
-    namespace: humanitec-runner
+    namespace: platform-orchestrator-runner
     # Service account to use for the runner jobs
-    service_account: humanitec-runner
+    service_account: platform-orchestrator-runner
     # (optional) Pod template for customizing runner job pods
     pod_template:
       # Add custom pod specifications here
@@ -169,7 +169,7 @@ locals {
 export AWS_ACCOUNT_ID=<my-aws-account-id>
 export CLUSTER_NAME=<my-eks-cluster-name>
 export CLUSTER_REGION=<my-eks-cluster-region>
-export HUMANITEC_ORG=<my-org>
+export PO_ORG_ID=<my-org>
 ```
 
 {{% /tab %}}
@@ -182,7 +182,7 @@ export HUMANITEC_ORG=<my-org>
 
 ```hcl
 resource "aws_iam_openid_connect_provider" "humanitec_dev" {
-  url = "https://oidc.humanitec.dev"
+  url = "https://oidc.stellwerk.dev"
   client_id_list = [
     "sts.amazonaws.com",
   ]
@@ -194,7 +194,7 @@ resource "aws_iam_openid_connect_provider" "humanitec_dev" {
 
 ```bash
 aws iam create-open-id-connect-provider \
-  --url https://oidc.humanitec.dev \
+  --url https://oidc.stellwerk.dev \
   --client-id-list sts.amazonaws.com
 ```
 
@@ -210,7 +210,7 @@ aws iam create-open-id-connect-provider \
 locals {
   # ...
   kubernetes_eks_runner_id            = "kubernetes-eks-${local.cluster_name}-${local.cluster_region}"
-  kubernetes_eks_runner_iam_role_name = "humanitec-runner-eks-role"
+  kubernetes_eks_runner_iam_role_name = "platform-orchestrator-runner-eks-role"
 }
 
 data "aws_iam_policy_document" "runner_kubernetes_eks" {
@@ -224,12 +224,12 @@ data "aws_iam_policy_document" "runner_kubernetes_eks" {
     actions = ["sts:AssumeRoleWithWebIdentity"]
     condition {
       test     = "StringEquals"
-      variable = "oidc.humanitec.dev:aud"
+      variable = "oidc.stellwerk.dev:aud"
       values   = ["sts.amazonaws.com"]
     }
     condition {
       test     = "StringEquals"
-      variable = "oidc.humanitec.dev:sub"
+      variable = "oidc.stellwerk.dev:sub"
       values   = ["${local.humanitec_org}+${local.kubernetes_eks_runner_id}"]
     }
   }
@@ -247,22 +247,22 @@ resource "aws_iam_role" "runner_kubernetes_eks" {
 
 ```bash
 export RUNNER_ID=kubernetes-eks-${CLUSTER_NAME}-${CLUSTER_REGION}
-export IAM_ROLE_NAME=humanitec-runner-eks-role
+export IAM_ROLE_NAME=platform-orchestrator-runner-eks-role
 
-cat <<EOF > humanitec-runner-eks-trust-policy.json
+cat <<EOF > platform-orchestrator-runner-eks-trust-policy.json
 {
   "Version": "2012-10-17",
   "Statement": [
     {
       "Effect": "Allow",
       "Principal": {
-        "Federated": "arn:aws:iam::${AWS_ACCOUNT_ID}:oidc-provider/oidc.humanitec.dev"
+        "Federated": "arn:aws:iam::${AWS_ACCOUNT_ID}:oidc-provider/oidc.stellwerk.dev"
       },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
-          "oidc.humanitec.dev:aud": "sts.amazonaws.com",
-          "oidc.humanitec.dev:sub": "${HUMANITEC_ORG}+${RUNNER_ID}"
+          "oidc.stellwerk.dev:aud": "sts.amazonaws.com",
+          "oidc.stellwerk.dev:sub": "${PO_ORG_ID}+${RUNNER_ID}"
         }
       }
     }
@@ -272,7 +272,7 @@ EOF
 
 aws iam create-role \
   --role-name ${IAM_ROLE_NAME} \
-  --assume-role-policy-document file://humanitec-runner-eks-trust-policy.json \
+  --assume-role-policy-document file://platform-orchestrator-runner-eks-trust-policy.json \
   --description "Role for the Orchestrator to access EKS clusters for launching runners"
 ```
 
@@ -292,7 +292,7 @@ data "aws_eks_cluster" "my_cluster" {
 }
 
 resource "aws_iam_policy" "runner_kubernetes_eks" {
-  name        = "humanitec-runner-eks-policy"
+  name        = "platform-orchestrator-runner-eks-policy"
   description = "Minimal permissions for Orchestrator to access EKS clusters"
 
   policy = jsonencode({
@@ -314,9 +314,9 @@ resource "aws_iam_policy" "runner_kubernetes_eks" {
 {{% tab name="CLI" %}}
 
 ```bash
-export IAM_POLICY_NAME=humanitec-runner-eks-policy
+export IAM_POLICY_NAME=platform-orchestrator-runner-eks-policy
 
-cat <<EOF > humanitec-runner-eks-policy.json
+cat <<EOF > platform-orchestrator-runner-eks-policy.json
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -333,7 +333,7 @@ EOF
 
 aws iam create-policy \
   --policy-name ${IAM_POLICY_NAME} \
-  --policy-document file://humanitec-runner-eks-policy.json \
+  --policy-document file://platform-orchestrator-runner-eks-policy.json \
   --description "Minimal permissions for the Orchestrator to access EKS clusters"
 ```
 
@@ -402,7 +402,7 @@ Perform the following setup on the target EKS cluster for the runner.
 ```hcl
 locals {
   # ...
-  kubernetes_eks_runner_k8snamespace = "humanitec-runner"
+  kubernetes_eks_runner_k8snamespace = "platform-orchestrator-runner"
 }
 
 resource "kubernetes_namespace" "runner_kubernetes_eks" {
@@ -416,7 +416,7 @@ resource "kubernetes_namespace" "runner_kubernetes_eks" {
 {{% tab name="CLI" %}}
 
 ```bash
-export RUNNER_K8S_NAMESPACE=humanitec-runner
+export RUNNER_K8S_NAMESPACE=platform-orchestrator-runner
 
 kubectl create namespace ${RUNNER_K8S_NAMESPACE}
 ```
@@ -432,7 +432,7 @@ kubectl create namespace ${RUNNER_K8S_NAMESPACE}
 ```hcl
 locals {
   # ...
-  kubernetes_eks_runner_k8sserviceaccount = "humanitec-runner"
+  kubernetes_eks_runner_k8sserviceaccount = "platform-orchestrator-runner"
 }
 
 resource "kubernetes_service_account" "runner_kubernetes_eks" {
@@ -447,7 +447,7 @@ resource "kubernetes_service_account" "runner_kubernetes_eks" {
 {{% tab name="CLI" %}}
 
 ```bash
-export RUNNER_K8S_SA=humanitec-runner
+export RUNNER_K8S_SA=platform-orchestrator-runner
 
 kubectl create serviceaccount -n ${RUNNER_K8S_NAMESPACE} ${RUNNER_K8S_SA}
 ```
@@ -464,7 +464,7 @@ Prepare a [Role](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#r
 
 ```hcl
 locals {
-  kubernetes_eks_runner_k8srole_name = "humanitec-runner-orchestrator-access"
+  kubernetes_eks_runner_k8srole_name = "platform-orchestrator-runner-orchestrator-access"
 }
 
 data "aws_caller_identity" "current" {}
@@ -510,7 +510,7 @@ resource "kubernetes_role_binding" "runner_kubernetes_eks" {
 {{% tab name="CLI" %}}
 
 ```bash
-export SESSION_NAME=${HUMANITEC_ORG}-${RUNNER_ID}
+export SESSION_NAME=${PO_ORG_ID}-${RUNNER_ID}
 # Ensure session name doesn't exceed 64 characters
 export SESSION_NAME=${SESSION_NAME:0:64}
 
@@ -518,7 +518,7 @@ cat << EOF > kubernetes-eks-runner-k8s-role-rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: humanitec-runner-orchestrator-access
+  name: platform-orchestrator-runner-orchestrator-access
   namespace: ${RUNNER_K8S_NAMESPACE}
 rules:
   - apiGroups: ["batch"]
@@ -531,12 +531,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: humanitec-runner-orchestrator-access
+  name: platform-orchestrator-runner-orchestrator-access
   namespace: ${RUNNER_K8S_NAMESPACE}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: humanitec-runner-orchestrator-access
+  name: platform-orchestrator-runner-orchestrator-access
 subjects:
 - kind: User
   name: arn:aws:sts::${AWS_ACCOUNT_ID}:assumed-role/${IAM_ROLE_NAME}/${SESSION_NAME}

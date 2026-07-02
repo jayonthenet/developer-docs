@@ -24,7 +24,7 @@ You need to supply a Lambda deployment package and place it in an S3 bucket to r
 ## Prerequisites
 
 - A Platform Orchestrator organization
-- The [`octl` CLI](https://developer.humanitec.com/platform-orchestrator/docs/integrations/cli/) installed locally and authenticated (`octl login`)
+- The [`octl` CLI](https://docs.stellwerk.dev/platform-orchestrator/docs/integrations/cli/) installed locally and authenticated (`octl login`)
 - An AWS account with appropriate permissions to set up the objects named above
 - AWS credentials configured for the [AWS provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration)
   - E.g. Having the `aws` CLI installed locally and authenticated
@@ -34,7 +34,7 @@ You need to supply a Lambda deployment package and place it in an S3 bucket to r
 - (optional) An S3 bucket for Lambda deployment packages
 - (optional) A Lambda function deployment package of your choice
 
-The setup uses an [ECS runner](https://developer.humanitec.com/platform-orchestrator/docs/configure/runners/runner-types/serverless-ecs/) for the Orchestrator to execute deployments. The use case can create all required infrastructure for you, or you can bring your own. The examples below show all scenarios.
+The setup uses an [ECS runner](https://docs.stellwerk.dev/platform-orchestrator/docs/configure/runners/runner-types/serverless-ecs/) for the Orchestrator to execute deployments. The use case can create all required infrastructure for you, or you can bring your own. The examples below show all scenarios.
 
 ## Usage
 
@@ -54,7 +54,7 @@ This minimal prerequisites setup will create all AWS infrastructure and provide 
 ```hcl
 # main.tf
 module "lambda_serverless" {
-  source = "github.com/humanitec/platform-orchestrator-use-cases//serverless-targets/lambda"
+  source = "github.com/Platform-Orchestrator/platform-orchestrator-use-cases//serverless-targets/lambda"
 
   # Platform Orchestrator Configuration
   org_id = "your-org-id"
@@ -73,12 +73,12 @@ module "lambda_serverless" {
 <details>
 <summary>Example 2: Use existing OIDC provider</summary>
 
-If you already have an OIDC provider configured for `oidc.humanitec.dev`, configure it here:
+If you already have an OIDC provider configured for `oidc.stellwerk.dev`, configure it here:
 
 ```hcl
 # main.tf
 module "lambda_serverless" {
-  source = "github.com/humanitec/platform-orchestrator-use-cases//serverless-targets/lambda"
+  source = "github.com/Platform-Orchestrator/platform-orchestrator-use-cases//serverless-targets/lambda"
 
   # Platform Orchestrator Configuration
   org_id = "your-org-id"
@@ -90,7 +90,7 @@ module "lambda_serverless" {
   lambda_package_s3_bucket = "your-deployment-package-bucket-name"
 
   # OIDC configuration
-  existing_oidc_provider_arn = "arn:aws:iam::123456789012:oidc-provider/oidc.humanitec.dev"
+  existing_oidc_provider_arn = "arn:aws:iam::123456789012:oidc-provider/oidc.stellwerk.dev"
 }
 ```
 
@@ -104,7 +104,7 @@ If you are using your own deployment package, configure the proper Lambda runtim
 ```hcl
 # main.tf
 module "lambda_serverless" {
-  source = "github.com/humanitec/platform-orchestrator-use-cases//serverless-targets/lambda"
+  source = "github.com/Platform-Orchestrator/platform-orchestrator-use-cases//serverless-targets/lambda"
 
   # Platform Orchestrator Configuration
   org_id = "your-org-id"
@@ -125,7 +125,7 @@ module "lambda_serverless" {
 
 ```hcl
 module "lambda_serverless" {
-  source = "github.com/humanitec/platform-orchestrator-use-cases//serverless-targets/lambda"
+  source = "github.com/Platform-Orchestrator/platform-orchestrator-use-cases//serverless-targets/lambda"
 
   # Platform Orchestrator Configuration
   org_id             = "your-org-id"
@@ -246,7 +246,7 @@ tofu apply
 
 Upload a deployment package to the S3 bucket.
 
-A sample deployment package containing a simple Node.js application is available for download [here](https://github.com/humanitec/platform-orchestrator-use-cases/raw/refs/heads/main/serverless-targets/lambda/deployment_package/function.zip).
+A sample deployment package containing a simple Node.js application is available for download [here](https://github.com/Platform-Orchestrator/platform-orchestrator-use-cases/raw/refs/heads/main/serverless-targets/lambda/deployment_package/function.zip).
 
 If you are using your own deployment package, make sure the Lambda runtime is set correctly. Refer to the example above to see how to set a different runtime.
 
@@ -296,7 +296,7 @@ octl deploy $PROJECT_ID development manifest.yaml
 
 ### 5. Validate the result
 
-Once the deployment finished, open the [Orchestrator console](https://console.humanitec.dev) and find the project created for this use case in the "Projects" view. Use `echo $PROJECT_ID` to obtain the project ID.
+Once the deployment finished, open the [Orchestrator console](https://console.stellwerk.dev) and find the project created for this use case in the "Projects" view. Use `echo $PROJECT_ID` to obtain the project ID.
 
 Open the "development" environment. In the resource graph, select the `lambda-zip` resource representing the Lambda function.
 
@@ -368,7 +368,7 @@ The module creates an IAM policy that grants the ECS runner the following permis
 
 ## References
 
-- [Platform Orchestrator Documentation](https://developer.humanitec.com)
+- [Platform Orchestrator Documentation](https://docs.stellwerk.dev)
 - [Platform Orchestrator Terraform Modules](https://github.com/humanitec-tf-modules)
 
 <!-- BEGIN_TF_DOCS -->
@@ -446,7 +446,7 @@ The module creates an IAM policy that grants the ECS runner the following permis
 | <a name="input_lambda_package_s3_bucket"></a> [lambda\_package\_s3\_bucket](#input\_lambda\_package\_s3\_bucket) | S3 bucket name for Lambda deployment packages | `string` | n/a | yes |
 | <a name="input_lambda_runtime"></a> [lambda\_runtime](#input\_lambda\_runtime) | Lambda runtime environment | `string` | `"nodejs22.x"` | no |
 | <a name="input_lambda_timeout"></a> [lambda\_timeout](#input\_lambda\_timeout) | Default timeout for Lambda functions in seconds | `number` | `100` | no |
-| <a name="input_oidc_hostname"></a> [oidc\_hostname](#input\_oidc\_hostname) | OIDC hostname for authentication | `string` | `"oidc.humanitec.dev"` | no |
+| <a name="input_oidc_hostname"></a> [oidc\_hostname](#input\_oidc\_hostname) | OIDC hostname for authentication | `string` | `"oidc.stellwerk.dev"` | no |
 | <a name="input_org_id"></a> [org\_id](#input\_org\_id) | The Platform Orchestrator organization ID | `string` | n/a | yes |
 | <a name="input_project_id_prefix"></a> [project\_id\_prefix](#input\_project\_id\_prefix) | The Platform Orchestrator project ID prefix | `string` | `"lambda-project-"` | no |
 

@@ -13,5 +13,5 @@ Whether you're using Amazon Elastic Cloud Compute (EC2), Google Compute Engine, 
 
 ## Want to explore more right now?
 
-While we’re preparing the full documentation, you can already see the Platform Orchestrator in action with your own technology stack. [Book a session with us here](https://humanitec.com/schedule-demo).
+While we’re preparing the full documentation, you can already see the Platform Orchestrator in action with your own technology stack. [Book a session with us here](https://stellwerk.dev).
 

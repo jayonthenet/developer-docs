@@ -37,7 +37,7 @@ module "kubernetes_agent_runner" {
   pod_template = jsonencode({
     metadata = {
       labels = {
-        "app.kubernetes.io/name"    = "humanitec-runner"
+        "app.kubernetes.io/name"    = "platform-orchestrator-runner"
         "app.kubernetes.io/version" = local.kubernetes_agent_runner_image_tag
       }
     }

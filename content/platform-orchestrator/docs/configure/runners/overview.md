@@ -46,19 +46,19 @@ resource "platform-orchestrator_kubernetes_gke_runner" "my-gke-runner" {
       location    = "europe-west3"
       internal_ip = false
       auth = {
-        gcp_audience        = "//iam.googleapis.com/projects/123456789012/locations/global/workloadIdentityPools/my-wif-pool/providers/humanitec-runner"
+        gcp_audience        = "//iam.googleapis.com/projects/123456789012/locations/global/workloadIdentityPools/my-wif-pool/providers/platform-orchestrator-runner"
         gcp_service_account = "humanitec-orchestrator-runner@my-gcp-project.iam.gserviceaccount.com"
       }
     }
     job = {
-      namespace       = "humanitec-runner"
-      service_account = "humanitec-runner"
+      namespace       = "platform-orchestrator-runner"
+      service_account = "platform-orchestrator-runner"
     }
   }
   state_storage_configuration = {
     type = "kubernetes"
     kubernetes_configuration = {
-      namespace = "humanitec-runner"
+      namespace = "platform-orchestrator-runner"
     }
   }
 }
@@ -82,14 +82,14 @@ runner_configuration:
     project_id: my-gcp-project
     location: europe-west3
     auth:
-      gcp_audience: //iam.googleapis.com/projects/123456789012/locations/global/workloadIdentityPools/my-wif-pool/providers/humanitec-runner
+      gcp_audience: //iam.googleapis.com/projects/123456789012/locations/global/workloadIdentityPools/my-wif-pool/providers/platform-orchestrator-runner
       gcp_service_account: humanitec-orchestrator-runner@my-gcp-project.iam.gserviceaccount.com
   job:
-    namespace: humanitec-runner
-    service_account: humanitec-runner
+    namespace: platform-orchestrator-runner
+    service_account: platform-orchestrator-runner
 state_storage_configuration:
   type: kubernetes
-  namespace: humanitec-runner
+  namespace: platform-orchestrator-runner
 ```
 
 Create a runner using this configuration:
@@ -116,7 +116,7 @@ Refer to the resource schema of each individual `*-runner` resource in the [Terr
 
 {{% details "Extended example" %}}
 
-{{% github-file filename="/humanitec/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_agent_runner/resource.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_agent_runner/resource.tf" %}}
 
 {{% /details %}}
 
@@ -218,7 +218,7 @@ The container `name` must be set exactly as shown.
           containers = [
             {
               name            = "main"
-              image           = "my-own-registry.com/humanitec/humanitec-runner:vx.y.z"
+              image           = "my-own-registry.com/platform-orchestrator/platform-orchestrator-runner:vx.y.z"
               imagePullPolicy = "IfNotPresent"
             }
           ]
@@ -243,7 +243,7 @@ runner_configuration:
       spec:
         containers:
           - name: main
-            image: my-own-registry.com/humanitec/humanitec-runner:vx.y.z
+            image: my-own-registry.com/platform-orchestrator/platform-orchestrator-runner:vx.y.z
             imagePullPolicy: IfNotPresent
         imagePullSecrets:
           - name: regcred
@@ -265,7 +265,7 @@ This snippet shows how to configure the `image` source in the job configuration.
   runner_configuration = {
     job = {
       # Custom container image name
-      image = "my-own-registry.com/humanitec/humanitec-runner:vx.y.z"
+      image = "my-own-registry.com/platform-orchestrator/platform-orchestrator-runner:vx.y.z"
       # See other required properties in the ECS runner docs
     }
   }
@@ -279,7 +279,7 @@ runner_configuration:
   type: serverless-ecs
   job:
     # Custom container image name
-    image: my-own-registry.com/humanitec/humanitec-runner:vx.y.z
+    image: my-own-registry.com/platform-orchestrator/platform-orchestrator-runner:vx.y.z
     # See other required properties in the ECS runner docs
     ...
 ```
@@ -295,11 +295,11 @@ runner_configuration:
 
 **Minimal Docker image**
 
-Your custom image should inherit from the `humanitec-runner` image to ensure compatibility:
+Your custom image should inherit from the `platform-orchestrator-runner` image to ensure compatibility:
 
 ```dockerfile
 # Use a pinned version of the official Orchestrator runner
-FROM ghcr.io/humanitec/humanitec-runner:vx.y.z
+FROM ghcr.io/platform-orchestrator/platform-orchestrator-runner:vx.y.z
 
 
 # Add your customizations here (certificates, tools, or configurations as needed)

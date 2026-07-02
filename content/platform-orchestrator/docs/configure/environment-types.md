@@ -27,7 +27,7 @@ You can create and manage environment types using the [octl CLI]({{< relref "/pl
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-{{% github-file filename="/humanitec/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_environment_type/resource.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_environment_type/resource.tf" %}}
 
 {{% /tab %}}
 {{% tab name="CLI" %}}

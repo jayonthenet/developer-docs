@@ -11,7 +11,7 @@ The Platform Orchestrator can rollout infrastructure updates gradually across yo
 
 > ℹ️ **Note**
 > 
-> While we are preparing the full use case implementation, you can already see the Platform Orchestrator in action with your own technology stack. [Book a session with us here](https://humanitec.com/schedule-demo).
+> While we are preparing the full use case implementation, you can already see the Platform Orchestrator in action with your own technology stack. [Book a session with us here](https://stellwerk.dev).
 
 Platform teams need to evolve shared infrastructure components (such as database operators) without risking widespread outages. The Platform Orchestrator provides a controlled way to roll out new module versions across environments while limiting blast radius and preserving the ability to roll back quickly.
 
@@ -27,7 +27,7 @@ This pattern enables:
 
 ## References
 
-- [Platform Orchestrator Documentation](https://developer.humanitec.com)
+- [Platform Orchestrator Documentation](https://docs.stellwerk.dev)
 - [Platform Orchestrator Terraform Modules](https://github.com/humanitec-tf-modules)
 
 <!-- BEGIN_TF_DOCS -->

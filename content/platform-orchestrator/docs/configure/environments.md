@@ -23,7 +23,7 @@ An environment with a succesful deployment contains a [resource graph]({{< relre
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-{{% github-file filename="/humanitec/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_environment/resource.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_environment/resource.tf" %}}
 
 {{% /tab %}}
 {{% tab name="CLI" %}}

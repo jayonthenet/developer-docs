@@ -4,8 +4,8 @@
 title = "[Staging] Orchestrator"
 titleSeparator = "|"
 titleAddition = "Developer Docs"
-description = "Humanitec powers your enterprise-grade Internal Developer Platform. Our products let platform teams remove bottlenecks by letting them build golden paths for developers."
-baseURL = "https://staging-developer.humanitec.com"
+description = "Stellwerk powers your enterprise-grade Internal Developer Platform. Our products let platform teams remove bottlenecks by letting them build golden paths for developers."
+baseURL = "https://staging-docs.stellwerk.dev"
 alert = false
 alertText = ""
 
@@ -73,8 +73,8 @@ footer = ""
 # Edit Page
 # repoHost [Github | Gitea | GitLab | Bitbucket | BitbucketServer ] is used for building the edit link based on git hoster
 repoHost = "GitHub"
-# repoHost = "humanitec"
-docsRepo = "https://github.com/humanitec/developers-docs"
+# repoHost = "stellwerk-labs"
+docsRepo = "https://github.com/stellwerk-labs/developer-docs"
 docsRepoBranch = "main"
 docsRepoSubPath = ""
 editPage = false

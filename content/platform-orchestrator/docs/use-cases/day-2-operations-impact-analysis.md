@@ -11,9 +11,9 @@ The Platform Orchestrator can detect infrastructure drift on a resource level an
 
 > ℹ️ **Note**
 > 
-> While we are preparing the full use case implementation, you can already see the Platform Orchestrator in action with your own technology stack. [Book a session with us here](https://humanitec.com/schedule-demo).
+> While we are preparing the full use case implementation, you can already see the Platform Orchestrator in action with your own technology stack. [Book a session with us here](https://stellwerk.dev).
 
-Rollout management in the context of the Humanitec Platform Orchestrator enables platform teams to safely and efficiently propagate infrastructure changes, such as security patches or configuration updates, across multiple environments. When a misconfiguration is detected in a shared module (for example, a module provisioning S3 buckets with incorrect access controls), the Orchestrator provides the ability to immediately assess the scope and impact of the issue.
+Rollout management in the context of the Stellwerk Platform Orchestrator enables platform teams to safely and efficiently propagate infrastructure changes, such as security patches or configuration updates, across multiple environments. When a misconfiguration is detected in a shared module (for example, a module provisioning S3 buckets with incorrect access controls), the Orchestrator provides the ability to immediately assess the scope and impact of the issue.
 
 The Orchestrator’s impact analysis tools allow teams to visualize which workloads and environments are currently using the affected module version. This includes detailed insights into which environments are at risk, which are unaffected, and which teams are responsible for each workload. With this visibility, platform teams can:
 
@@ -26,7 +26,7 @@ By leveraging these capabilities, the Platform Orchestrator ensures that updates
 
 ## References
 
-- [Platform Orchestrator Documentation](https://developer.humanitec.com)
+- [Platform Orchestrator Documentation](https://docs.stellwerk.dev)
 - [Platform Orchestrator Terraform Modules](https://github.com/humanitec-tf-modules)
 
 <!-- BEGIN_TF_DOCS -->

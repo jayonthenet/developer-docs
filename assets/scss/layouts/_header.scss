@@ -298,6 +298,9 @@ button#doks-versions {
   padding-right: 4rem;
   border: 1px solid transparent;
   background: transparent;
+  color: var(--on-dark);
+  caret-color: var(--on-dark);
+  -webkit-text-fill-color: var(--on-dark);
 
   [data-dark-mode] body & {
     background: transparent;

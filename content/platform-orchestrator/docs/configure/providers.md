@@ -677,7 +677,7 @@ This example shows how to configure the [`hashicorp/google` provider](https://re
 
 ```hcl
 resource "google_service_account" "example_humanitec_runner" {
-  account_id   = "example-humanitec-runner"
+  account_id   = "example-platform-orchestrator-runner"
   display_name = "Example Runner"
   description  = "Service Account used by the Runner"
 }
@@ -687,7 +687,7 @@ resource "google_service_account" "example_humanitec_runner" {
 {{% tab name="CLI" %}}
 
 ```bash
-gcloud iam service-accounts create example-humanitec-runner \
+gcloud iam service-accounts create example-platform-orchestrator-runner \
   --project=my-gcp-project \
   --display-name="Example Runner" \
   --description="Service Account used by the Runner"
@@ -722,7 +722,7 @@ resource "kubernetes_secret_v1" "runner_gcp_credential" {
 ```bash
 gcloud iam service-accounts keys create - \
   --project=my-gcp-project \
-  --iam-account=example-humanitec-runner@my-gcp-project.iam.gserviceaccount.com | \
+  --iam-account=example-platform-orchestrator-runner@my-gcp-project.iam.gserviceaccount.com | \
   kubectl create secret generic runner-gcp-credential --namespace=my-runner-namespace --from-file=credentials.json=/dev/stdin
 ```
 

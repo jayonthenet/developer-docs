@@ -25,7 +25,7 @@ Duration: about 45min
 
 ## What is the Platform Orchestrator?
 
-Humanitec’s Platform Orchestrator unifies infrastructure management for humans and AI agents, streamlining operations, enforcing standards, and boosting developer productivity in complex environments.
+Stellwerk’s Platform Orchestrator unifies infrastructure management for humans and AI agents, streamlining operations, enforcing standards, and boosting developer productivity in complex environments.
 
 ## Prerequisites
 
@@ -75,9 +75,9 @@ Executing the tutorial will incur minor cloud cost for running resources in your
 
 {{% description "/platform-orchestrator/docs/configure/organizations" %}}
 
-If you already have an organization, you're good. Otherwise, [register](https://console.humanitec.dev/auth/register) for a free trial organization now.
+If you already have an organization, you're good. Otherwise, [register](https://console.stellwerk.dev/auth/register) for a free trial organization now.
 
-Once done, you will have access to the Orchestrator console at [https://console.humanitec.dev](https://console.humanitec.dev).
+Once done, you will have access to the Orchestrator console at [https://console.stellwerk.dev](https://console.stellwerk.dev).
 
 ## Install the octl CLI
 
@@ -114,7 +114,7 @@ We have prepared a public repository with Terraform/OpenTofu ("TF") code to set 
 Clone the repository and navigate to the `infra` directory:
 
 ```bash
-git clone https://github.com/humanitec-tutorials/get-started
+git clone https://github.com/Platform-Orchestrator/get-started
 cd get-started/infra
 ```
 
@@ -623,7 +623,7 @@ octl get deployment the-id-you-copied
 
 Inspect the result in the Orchestrator console:
 
-- Open the Orchestrator web console at [https://console.humanitec.dev/](https://console.humanitec.dev/)
+- Open the Orchestrator web console at [https://console.stellwerk.dev/](https://console.stellwerk.dev/)
 - In the **Projects** view, select the **get-started** project
 - Select the **development** environment
 
@@ -634,7 +634,7 @@ You will see a "Successful" status and a graph containing two nodes. This is the
 Click on the resources to explore their details. In particular, inspect the "Metadata" section of the `demo-workload` resource. By convention, the Orchestrator will display the content of a regular output named `platform_orchestrator_metadata` of the TF module being used for a resource. This is useful for conveying insights about the real-life object that has been provisioned via the Orchestrator.
 
 {{% details "Defining metadata output in the module source" %}}
-{{% github-file filename="/humanitec-tutorials/get-started/refs/heads/main/modules/workload/kubernetes/outputs.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/get-started/refs/heads/main/modules/workload/kubernetes/outputs.tf" %}}
 {{% /details %}}
 
 You now have:
@@ -745,7 +745,7 @@ resource "platform-orchestrator_module" "postgres_get_started" {
   id            = "postgres-get-started"
   description   = "Simple cloud-based Postgres instance"
   resource_type = platform-orchestrator_resource_type.postgres_get_started.id
-  module_source = "git::https://github.com/humanitec-tutorials/get-started//modules/postgres/${var.enabled_cloud_provider}"
+  module_source = "git::https://github.com/Platform-Orchestrator/get-started//modules/postgres/${var.enabled_cloud_provider}"
   provider_mapping = {
     aws = "${platform-orchestrator_provider.get_started.provider_type}.${platform-orchestrator_provider.get_started.id}"
   }
@@ -775,7 +775,7 @@ resource "platform-orchestrator_module" "postgres_get_started" {
   id            = "postgres-get-started"
   description   = "Simple cloud-based Postgres instance"
   resource_type = platform-orchestrator_resource_type.postgres_get_started.id
-  module_source = "git::https://github.com/humanitec-tutorials/get-started//modules/postgres/${var.enabled_cloud_provider}"
+  module_source = "git::https://github.com/Platform-Orchestrator/get-started//modules/postgres/${var.enabled_cloud_provider}"
   provider_mapping = {
     google = "${platform-orchestrator_provider.get_started.provider_type}.${platform-orchestrator_provider.get_started.id}"
   }
@@ -809,7 +809,7 @@ resource "platform-orchestrator_module" "postgres_get_started" {
   id            = "postgres-get-started"
   description   = "Simple cloud-based Postgres instance"
   resource_type = platform-orchestrator_resource_type.postgres_get_started.id
-  module_source = "git::https://github.com/humanitec-tutorials/get-started//modules/postgres/${var.enabled_cloud_provider}"
+  module_source = "git::https://github.com/Platform-Orchestrator/get-started//modules/postgres/${var.enabled_cloud_provider}"
   provider_mapping = {
     azurerm = "${platform-orchestrator_provider.get_started.provider_type}.${platform-orchestrator_provider.get_started.id}"
   }
@@ -895,25 +895,25 @@ Note that the module has a `required_providers` block but it does not include a 
 
 {{% details "Database module main code (AWS)" %}}
 
-{{% github-file filename="/humanitec-tutorials/get-started/refs/heads/main/modules/postgres/aws/main.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/get-started/refs/heads/main/modules/postgres/aws/main.tf" %}}
 
 {{% /details %}}
 
 {{% details "Database module main code (GCP)" %}}
 
-{{% github-file filename="/humanitec-tutorials/get-started/refs/heads/main/modules/postgres/gcp/main.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/get-started/refs/heads/main/modules/postgres/gcp/main.tf" %}}
 
 {{% /details %}}
 
 {{% details "Database module main code (Azure)" %}}
 
-{{% github-file filename="/humanitec-tutorials/get-started/refs/heads/main/modules/postgres/azure/main.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/get-started/refs/heads/main/modules/postgres/azure/main.tf" %}}
 
 {{% /details %}}
 
 Control over the providers and the authentication mechanisms they use therefore lies with the Orchestrator and is governed by the platform engineers.
 
-Once the deployment finished, return to the Orchestrator console at [https://console.humanitec.dev](https://console.humanitec.dev) and open the `development` environment of the `get-started` project.
+Once the deployment finished, return to the Orchestrator console at [https://console.stellwerk.dev](https://console.stellwerk.dev) and open the `development` environment of the `get-started` project.
 
 The resource graph now contains an additional active resource node for the PostgreSQL database. Click on the resource to explore its details. It exposes set of metadata on the real-world database resource, including a link to the cloud console or portal. Click the link to view it.
 

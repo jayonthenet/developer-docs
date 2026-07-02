@@ -19,8 +19,8 @@ The public endpoint IPs for accessing the Orchestrator are:
 - `34.128.156.4`
 
 This IP address resolves to:
-- `console.humanitec.dev` - The Orchestrator web console
-- `api.humanitec.dev` - The Orchestrator API endpoint
+- `console.stellwerk.dev` - The Orchestrator web console
+- `api.stellwerk.dev` - The Orchestrator API endpoint
 
 ### Source IPs
 

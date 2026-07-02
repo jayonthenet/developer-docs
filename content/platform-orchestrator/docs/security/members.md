@@ -36,7 +36,7 @@ An organization Admin can invite users to join an existing organization as a mem
 
 A user becomes a member of the inviting organization upon accepting the invite.
 
-Inviting users is currently supported via the Orchestrator console, in the `Members` section of your organization at [https://console.humanitec.dev](https://console.humanitec.dev).
+Inviting users is currently supported via the Orchestrator console, in the `Members` section of your organization at [https://console.stellwerk.dev](https://console.stellwerk.dev).
 
 {{< tabs >}}
 {{% tab name="Console" %}}

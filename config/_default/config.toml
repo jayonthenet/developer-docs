@@ -111,7 +111,7 @@ target = "layouts"
 [Params]
 octlVersion = "1.0.0"
 canyonRunnerImageVersion = "1.0.0"
-scoreHumanitecVersion = "0.10.2"
+scoreVersion = "0.10.2"
 GitHubBaseUrl = "https://github.com"
 GitHubRawBaseUrl = "https://raw.githubusercontent.com"
 [[Params.exampleFileTypes]]

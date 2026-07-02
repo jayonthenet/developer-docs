@@ -28,7 +28,7 @@ resource "platform-orchestrator_kubernetes_eks_runner" "my_runner" {
       name   = "my-eks-cluster"
       region = "us-west-2"
       auth = {
-        role_arn = "arn:aws:iam::123456789012:role/humanitec-runner-eks-role"
+        role_arn = "arn:aws:iam::123456789012:role/platform-orchestrator-runner-eks-role"
       }
     }
     job = {
@@ -59,11 +59,11 @@ runner_configuration:
     project_id: my-gcp-project
     location: europe-west3
     auth:
-      gcp_audience: //iam.googleapis.com/projects/123456789012/locations/global/workloadIdentityPools/my-wif-pool/providers/humanitec-runner
+      gcp_audience: //iam.googleapis.com/projects/123456789012/locations/global/workloadIdentityPools/my-wif-pool/providers/platform-orchestrator-runner
       gcp_service_account: humanitec-orchestrator-runner@my-gcp-project.iam.gserviceaccount.com
   job:
-    namespace: humanitec-runner
-    service_account: humanitec-runner
+    namespace: platform-orchestrator-runner
+    service_account: platform-orchestrator-runner
 state_storage_configuration:
   ...
 ```
@@ -80,7 +80,7 @@ Refer to the resource schema in the [Terraform](https://registry.terraform.io/pr
 
 {{% details "Extended example" %}}
 
-{{% github-file filename="/humanitec/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_gke_runner/resource.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_gke_runner/resource.tf" %}}
 
 {{% /details %}}
 
@@ -113,14 +113,14 @@ runner_configuration:
       # The URL of the workload identity pool provider used as an audience for OIDC token
       gcp_audience: https://iam.googleapis.com/projects/123456789012/locations/global/workloadIdentityPools/humanitec-wif-pool/providers/humanitec-wif
       # The Google service account to impersonate
-      gcp_service_account: humanitec-runner-k8s-gke
+      gcp_service_account: platform-orchestrator-runner-k8s-gke
 
   # Kubernetes job configuration
   job:
     # Namespace where runner jobs will be created
-    namespace: humanitec-runner
+    namespace: platform-orchestrator-runner
     # Service account to use for the runner jobs
-    service_account: humanitec-runner
+    service_account: platform-orchestrator-runner
     # (optional) Pod template for customizing runner job pods
     pod_template:
       # Add custom pod specifications here
@@ -175,7 +175,7 @@ locals {
 {{% tab name="CLI" %}}
 
 ```bash
-export HUMANITEC_ORG=<my-org>
+export PO_ORG_ID=<my-org>
 export GCP_PROJECT_ID=<my-gcp-project-id>
 export CLUSTER_NAME=<my-cluster-name>
 export CLUSTER_LOCATION=<my-cluster-region>
@@ -200,7 +200,7 @@ You may use an existing workload identity pool instead of creating a new one. To
 ```hcl
 locals {
   # ...
-  wip_name = "humanitec-runner-pool"
+  wip_name = "platform-orchestrator-runner-pool"
 }
 
 resource "google_iam_workload_identity_pool" "humanitec-wif-pool" {
@@ -215,7 +215,7 @@ resource "google_iam_workload_identity_pool" "humanitec-wif-pool" {
 {{% tab name="CLI" %}}
 
 ```bash
-export WIP_NAME=humanitec-runner-pool
+export WIP_NAME=platform-orchestrator-runner-pool
 
 gcloud iam workload-identity-pools create ${WIP_NAME} \
 --location="global" \
@@ -234,14 +234,14 @@ gcloud iam workload-identity-pools create ${WIP_NAME} \
 ```hcl
 resource "google_iam_workload_identity_pool_provider" "humanitec-wif" {
   workload_identity_pool_id          = google_iam_workload_identity_pool.humanitec-wif-pool.workload_identity_pool_id
-  workload_identity_pool_provider_id = "humanitec-runner"
-  display_name                       = "humanitec-runner"
+  workload_identity_pool_provider_id = "platform-orchestrator-runner"
+  display_name                       = "platform-orchestrator-runner"
 
   attribute_mapping = {
     "google.subject" = "assertion.sub"
   }
   oidc {
-    issuer_uri = "https://oidc.humanitec.dev"
+    issuer_uri = "https://oidc.stellwerk.dev"
   }
 }
 ```
@@ -250,10 +250,10 @@ resource "google_iam_workload_identity_pool_provider" "humanitec-wif" {
 {{% tab name="CLI" %}}
 
 ```bash
-gcloud iam workload-identity-pools providers create-oidc humanitec-runner \
+gcloud iam workload-identity-pools providers create-oidc platform-orchestrator-runner \
     --location="global" \
     --workload-identity-pool=${WIP_NAME} \
-    --issuer-uri="https://oidc.humanitec.dev" \
+    --issuer-uri="https://oidc.stellwerk.dev" \
     --attribute-mapping="google.subject=assertion.sub" \
     --project=${GCP_PROJECT_ID}
 ```
@@ -269,10 +269,10 @@ gcloud iam workload-identity-pools providers create-oidc humanitec-runner \
 ```hcl
 locals {
   # ...
-  gcp_service_account_name = "humanitec-runner-k8s-gke"
+  gcp_service_account_name = "platform-orchestrator-runner-k8s-gke"
 }
 
-resource "google_service_account" "humanitec-runner-k8s-gke" {
+resource "google_service_account" "platform-orchestrator-runner-k8s-gke" {
   account_id   = local.gcp_service_account_name
   display_name = local.gcp_service_account_name
   description  = "Used by the Orchestrator to access GKE clusters for launching runners"
@@ -284,7 +284,7 @@ resource "google_service_account" "humanitec-runner-k8s-gke" {
 {{% tab name="CLI" %}}
 
 ```bash
-export GCP_SERVICE_ACCOUNT_NAME=humanitec-runner-k8s-gke
+export GCP_SERVICE_ACCOUNT_NAME=platform-orchestrator-runner-k8s-gke
 
 gcloud iam service-accounts create ${GCP_SERVICE_ACCOUNT_NAME} \
     --description="Used by the Orchestrator to access GKE clusters for launching runners" \
@@ -328,8 +328,8 @@ data "google_project" "project" {
   project_id = local.gcp_project_id
 }
 
-resource "google_service_account_iam_member" "humanitec-runner-k8s-gke-workload-identity" {
-  service_account_id = google_service_account.humanitec-runner-k8s-gke.id
+resource "google_service_account_iam_member" "platform-orchestrator-runner-k8s-gke-workload-identity" {
+  service_account_id = google_service_account.platform-orchestrator-runner-k8s-gke.id
   member             = "principal://iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/${google_iam_workload_identity_pool.humanitec-wif-pool.workload_identity_pool_id}/subject/${local.humanitec_org}+${local.runner_id}"
   role               = "roles/iam.workloadIdentityUser"
 }
@@ -344,7 +344,7 @@ export GCP_SERVICE_ACCOUNT_EMAIL=${GCP_SERVICE_ACCOUNT_NAME}@${GCP_PROJECT_ID}.i
 export GCP_PROJECT_NUMBER=$(gcloud projects describe ${GCP_PROJECT_ID} --format='get(projectNumber)')
 
 gcloud iam service-accounts add-iam-policy-binding ${GCP_SERVICE_ACCOUNT_EMAIL} \
-    --member=principal://iam.googleapis.com/projects/${GCP_PROJECT_NUMBER}/locations/global/workloadIdentityPools/${WIP_NAME}/subject/${HUMANITEC_ORG}+${RUNNER_ID} \
+    --member=principal://iam.googleapis.com/projects/${GCP_PROJECT_NUMBER}/locations/global/workloadIdentityPools/${WIP_NAME}/subject/${PO_ORG_ID}+${RUNNER_ID} \
     --role=roles/iam.workloadIdentityUser \
     --format=json
 ```
@@ -364,7 +364,7 @@ Perform the following setup on the target GKE cluster for the runner.
 ```hcl
 locals {
   # ...
-  kubernetes_gke_runner_k8snamespace = "humanitec-runner"
+  kubernetes_gke_runner_k8snamespace = "platform-orchestrator-runner"
 }
 
 resource "kubernetes_namespace" "runner_kubernetes_gke" {
@@ -378,7 +378,7 @@ resource "kubernetes_namespace" "runner_kubernetes_gke" {
 {{% tab name="CLI" %}}
 
 ```bash
-export RUNNER_K8S_NAMESPACE=humanitec-runner
+export RUNNER_K8S_NAMESPACE=platform-orchestrator-runner
 
 kubectl create namespace ${RUNNER_K8S_NAMESPACE}
 ```
@@ -394,7 +394,7 @@ kubectl create namespace ${RUNNER_K8S_NAMESPACE}
 ```hcl
 locals {
   # ...
-  kubernetes_gke_runner_k8sserviceaccount = "humanitec-runner"
+  kubernetes_gke_runner_k8sserviceaccount = "platform-orchestrator-runner"
 }
 
 resource "kubernetes_service_account" "runner_kubernetes_gke" {
@@ -402,7 +402,7 @@ resource "kubernetes_service_account" "runner_kubernetes_gke" {
     name      = local.kubernetes_gke_runner_k8sserviceaccount
     namespace = kubernetes_namespace.runner_kubernetes_gke.metadata[0].name
     annotations = {
-      "iam.gke.io/gcp-service-account" = google_service_account.humanitec-runner-k8s-gke.email
+      "iam.gke.io/gcp-service-account" = google_service_account.platform-orchestrator-runner-k8s-gke.email
     }
   }
 }
@@ -412,7 +412,7 @@ resource "kubernetes_service_account" "runner_kubernetes_gke" {
 {{% tab name="CLI" %}}
 
 ```bash
-export RUNNER_K8S_SA=humanitec-runner
+export RUNNER_K8S_SA=platform-orchestrator-runner
 
 kubectl create serviceaccount -n ${RUNNER_K8S_NAMESPACE} ${RUNNER_K8S_SA}
 
@@ -485,7 +485,7 @@ See [Create a custom role](https://cloud.google.com/iam/docs/creating-custom-rol
 resource "google_project_iam_member" "humanitec_runner_kubernetes_gke" {
   project = local.gcp_project_id
   role    = "projects/${local.gcp_project_id}/roles/${google_project_iam_custom_role.humanitec_runner_kubernetes_gke.role_id}"
-  member = "serviceAccount:${google_service_account.humanitec-runner-k8s-gke.email}"
+  member = "serviceAccount:${google_service_account.platform-orchestrator-runner-k8s-gke.email}"
 }
 ```
 
@@ -512,7 +512,7 @@ Prepare a [Role](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#r
 
 ```hcl
 locals {
-  kubernetes_gke_runner_k8srole_name = "humanitec-runner-orchestrator-access"
+  kubernetes_gke_runner_k8srole_name = "platform-orchestrator-runner-orchestrator-access"
 }
 
 resource "kubernetes_role" "runner_kubernetes_gke" {
@@ -545,7 +545,7 @@ resource "kubernetes_role_binding" "runner_kubernetes_gke" {
   }
   subject {
     kind      = "User"
-    name      = google_service_account.humanitec-runner-k8s-gke.email
+    name      = google_service_account.platform-orchestrator-runner-k8s-gke.email
     namespace = ""
   }
 }
@@ -559,7 +559,7 @@ cat << EOF > kubernetes-gke-runner-k8s-role-rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: humanitec-runner-orchestrator-access
+  name: platform-orchestrator-runner-orchestrator-access
   namespace: ${RUNNER_K8S_NAMESPACE}
 rules:
   - apiGroups: ["batch"]
@@ -572,12 +572,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: humanitec-runner-orchestrator-access
+  name: platform-orchestrator-runner-orchestrator-access
   namespace: ${RUNNER_K8S_NAMESPACE}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: humanitec-runner-orchestrator-access
+  name: platform-orchestrator-runner-orchestrator-access
 subjects:
 - kind: User
   name: ${GCP_SERVICE_ACCOUNT_EMAIL}
@@ -611,7 +611,7 @@ Prepare the GCP audience for Workload Identity:
 ```hcl
 locals {
   # ...
-  gcp_audience = "//iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/${google_iam_workload_identity_pool.humanitec-wif-pool.workload_identity_pool_id}/providers/humanitec-runner"
+  gcp_audience = "//iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/${google_iam_workload_identity_pool.humanitec-wif-pool.workload_identity_pool_id}/providers/platform-orchestrator-runner"
 }
 ```
 
@@ -619,7 +619,7 @@ locals {
 {{% tab name="CLI" %}}
 
 ```bash
-export GCP_AUDIENCE=//iam.googleapis.com/projects/${GCP_PROJECT_NUMBER}/locations/global/workloadIdentityPools/${WIP_NAME}/providers/humanitec-runner
+export GCP_AUDIENCE=//iam.googleapis.com/projects/${GCP_PROJECT_NUMBER}/locations/global/workloadIdentityPools/${WIP_NAME}/providers/platform-orchestrator-runner
 ```
 
 {{% /tab %}}
@@ -641,7 +641,7 @@ resource "platform-orchestrator_kubernetes_gke_runner" "kubernetes_gke" {
       location   = local.cluster_location
       auth = {
         gcp_audience        = local.gcp_audience
-        gcp_service_account = google_service_account.humanitec-runner-k8s-gke.email
+        gcp_service_account = google_service_account.platform-orchestrator-runner-k8s-gke.email
       }
     }
     job = {

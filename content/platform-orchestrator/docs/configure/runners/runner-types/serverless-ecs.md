@@ -24,7 +24,7 @@ Although you can use most state storage backends with the ECS runner, we recomme
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-{{% github-file filename="/humanitec/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_serverless_ecs_runner/resource.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_serverless_ecs_runner/resource.tf" %}}
 
 {{% /tab %}}
 {{% tab name="CLI" %}}
@@ -61,7 +61,7 @@ Refer to the resource schema in the [Terraform](https://registry.terraform.io/pr
 
 {{% details "Extended example" %}}
 
-{{% github-file filename="/humanitec/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_serverless_ecs_runner/resource.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_serverless_ecs_runner/resource.tf" %}}
 
 {{% /details %}}
 
@@ -110,7 +110,7 @@ runner_configuration:
       SECRET_ENVIRONMENT_VARIABLE: "arn:aws:secretsmanager:eu-central-1:123456789012:secret:myapp/api-key-XyZ9Qw"
       PROPERTY_ENVIRONMENT_VARIABLE: "arn:aws:ssm:eu-central-1:123456789012:parameter/app/config/api-endpoint"
 
-    # An optional custom container image to use instead of the default humanitec-runner image.
+    # An optional custom container image to use instead of the default platform-orchestrator-runner image.
     image: your-registry.com/your-custom-runner:v1.0.0
 
 state_storage_configuration:
@@ -203,7 +203,7 @@ For a [self-hosted]({{< relref "/platform-orchestrator/docs/architecture/self-ho
 
 The Platform Orchestrator will assume this role using OIDC and use it to manage ECS task definitions and execute one-off tasks. Therefore it needs:
 
-1. OIDC federation to allow the `oidc.humanitec.dev` provider to assume the role where the `sub` (subject) claim is `${HUMANITEC_ORG_ID}+${RUNNER_ID}`
+1. OIDC federation to allow the `oidc.stellwerk.dev` provider to assume the role where the `sub` (subject) claim is `${PO_ORG_ID}+${RUNNER_ID}`
 2. A policy allowing it to be passed to the ecs-tasks service
 3. Permissions to List, Register, Deregister, and Delete ECS task definitions in the account
 4. Permissions to List, Describe, Run, and Tag ECS tasks within the target ECS cluster
@@ -268,7 +268,7 @@ export AWS_ACCOUNT_ID=<my-aws-account-id>
 export AWS_REGION=<my-aws-region>
 export ECS_CLUSTER=<my-ecs-cluster-name>
 export SUBNET_ID=<my-subnet-id>
-export HUMANITEC_ORG=<my-org>
+export PO_ORG_ID=<my-org>
 ```
 
 {{% /tab %}}
@@ -285,13 +285,13 @@ locals {
 }
 
 resource "aws_iam_openid_connect_provider" "provider" {
-  url = "https://oidc.humanitec.dev"
+  url = "https://oidc.stellwerk.dev"
   client_id_list = [
     "sts.amazonaws.com",
   ]
 }
 
-data "aws_iam_policy_document" "ecs_runner_humanitec_role" {
+data "aws_iam_policy_document" "ecs_runner_orchestrator_role" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
 
@@ -302,21 +302,21 @@ data "aws_iam_policy_document" "ecs_runner_humanitec_role" {
 
     condition {
       test     = "StringEquals"
-      variable = "oidc.humanitec.dev:aud"
+      variable = "oidc.stellwerk.dev:aud"
       values   = ["sts.amazonaws.com"]
     }
 
     condition {
       test     = "StringEquals"
-      variable = "oidc.humanitec.dev:sub"
+      variable = "oidc.stellwerk.dev:sub"
       values   = ["${local.humanitec_org}+${local.ecs_runner_id}"]
     }
   }
 }
 
-resource "aws_iam_role" "ecs_runner_humanitec_role" {
-  name_prefix        = "ecs_humanitec"
-  assume_role_policy = data.aws_iam_policy_document.ecs_runner_humanitec_role.json
+resource "aws_iam_role" "ecs_runner_orchestrator_role" {
+  name_prefix        = "ecs_orchestrator"
+  assume_role_policy = data.aws_iam_policy_document.ecs_runner_orchestrator_role.json
   description        = "Role for the Orchestrator to access ECS clusters for launching runners"
 }
 ```
@@ -326,25 +326,25 @@ resource "aws_iam_role" "ecs_runner_humanitec_role" {
 
 ```bash
 aws iam create-open-id-connect-provider \
-  --url https://oidc.humanitec.dev \
+  --url https://oidc.stellwerk.dev \
   --client-id-list sts.amazonaws.com
 
 export RUNNER_ID=ecs-${ECS_CLUSTER}-${AWS_REGION}
 
-cat <<EOF > humanitec-runner-trust-policy.json
+cat <<EOF > platform-orchestrator-runner-trust-policy.json
 {
   "Version": "2012-10-17",
   "Statement": [
     {
       "Effect": "Allow",
       "Principal": {
-        "Federated": "arn:aws:iam::${AWS_ACCOUNT_ID}:oidc-provider/oidc.humanitec.dev"
+        "Federated": "arn:aws:iam::${AWS_ACCOUNT_ID}:oidc-provider/oidc.stellwerk.dev"
       },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
-          "oidc.humanitec.dev:aud": "sts.amazonaws.com",
-          "oidc.humanitec.dev:sub": "${HUMANITEC_ORG}+${RUNNER_ID}"
+          "oidc.stellwerk.dev:aud": "sts.amazonaws.com",
+          "oidc.stellwerk.dev:sub": "${PO_ORG_ID}+${RUNNER_ID}"
         }
       }
     }
@@ -352,11 +352,11 @@ cat <<EOF > humanitec-runner-trust-policy.json
 }
 EOF
 
-export HUMANITEC_IAM_ROLE=ecs-runner-humanitec-role
+export ORCHESTRATOR_IAM_ROLE=ecs-runner-orchestrator-role
 
 aws iam create-role \
-  --role-name ${HUMANITEC_IAM_ROLE} \
-  --assume-role-policy-document file://humanitec-runner-trust-policy.json \
+  --role-name ${ORCHESTRATOR_IAM_ROLE} \
+  --assume-role-policy-document file://platform-orchestrator-runner-trust-policy.json \
   --description "Role for the Orchestrator to access ECS clusters for launching runners"
 ```
 
@@ -369,9 +369,9 @@ aws iam create-role \
 {{% tab name="TF" %}}
 
 ```terraform
-resource "aws_iam_role_policy" "ecs_runner_humanitec_role" {
-  name_prefix = "ecs_humanitec"
-  role = aws_iam_role.ecs_runner_humanitec_role.id
+resource "aws_iam_role_policy" "ecs_runner_orchestrator_role" {
+  name_prefix = "ecs_orchestrator"
+  role = aws_iam_role.ecs_runner_orchestrator_role.id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -479,8 +479,8 @@ cat <<EOF > humanitec-role-policy.json
 EOF
 
 aws iam put-role-policy \
-  --role-name ${HUMANITEC_IAM_ROLE} \
-  --policy-name ecs-runner-humanitec-role-policy \
+  --role-name ${ORCHESTRATOR_IAM_ROLE} \
+  --policy-name ecs-runner-orchestrator-role-policy \
   --policy-document file://humanitec-role-policy.json
 ```
 
@@ -613,7 +613,7 @@ resource "platform-orchestrator_serverless_ecs_runner" "runner" {
   id = local.ecs_runner_id
   runner_configuration = {
     auth = {
-      role_arn = aws_iam_role.ecs_runner_humanitec_role.arn
+      role_arn = aws_iam_role.ecs_runner_orchestrator_role.arn
     }
     job = {
       region = local.aws_region
@@ -639,7 +639,7 @@ cat <<EOF > runner-config.yaml
 runner_configuration:
   type: serverless-ecs
   auth:
-    role_arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/${HUMANITEC_IAM_ROLE}
+    role_arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/${ORCHESTRATOR_IAM_ROLE}
   job:
     region: ${AWS_REGION}
     cluster: ${ECS_CLUSTER}

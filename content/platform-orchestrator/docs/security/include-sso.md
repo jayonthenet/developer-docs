@@ -26,7 +26,7 @@ To streamline integration with multiple IdPs, we use [WorkOS](https://workos.com
 
 ### Using Admin Portal to configure SSO
 
-To enable SSO for your organization, please contact [Support](https://humanitec.com/support). You need to provide your _organization ID_, _domain_ and _the email of the SSO administrator_, who will set up SSO for your organization.
+To enable SSO for your organization, please contact [Support](https://stellwerk.dev). You need to provide your _organization ID_, _domain_ and _the email of the SSO administrator_, who will set up SSO for your organization.
 
 We send you a link to Admin Portal where you can choose your identity provider and follow instructions to configure SSO.
 
@@ -44,7 +44,7 @@ Only one SSO provider connection can be configured for an organization.
 
 ### Signing in
 
-Use your organization's SSO sign-in page for authenticating: `https://console.humanitec.dev/sso/<your-org-id>`:
+Use your organization's SSO sign-in page for authenticating: `https://console.stellwerk.dev/sso/<your-org-id>`:
 
 ![SSO Sign-In](/images/sso-sign-in.png "SSO Sign-In")
 

@@ -135,8 +135,8 @@ If the GCP service account used by the runner is different from the one used by 
 
 ```hcl
 resource "google_service_account" "runner_gcs" {
-  account_id   = "humanitec-runner-gcs"
-  display_name = "humanitec-runner-gcs"
+  account_id   = "platform-orchestrator-runner-gcs"
+  display_name = "platform-orchestrator-runner-gcs"
   description  = "Used by Orchestrator runner pods to access GCS state storage"
   project      = local.gcp_project_id
 }
@@ -164,7 +164,7 @@ resource "kubernetes_service_account" "runner_kubernetes_gke" {
 {{% tab name="CLI" %}}
 
 ```bash
-export GCS_SERVICE_ACCOUNT_NAME=humanitec-runner-gcs
+export GCS_SERVICE_ACCOUNT_NAME=platform-orchestrator-runner-gcs
 
 gcloud iam service-accounts create ${GCS_SERVICE_ACCOUNT_NAME} \
     --description="Used by Orchestrator runner pods to access GCS state storage" \

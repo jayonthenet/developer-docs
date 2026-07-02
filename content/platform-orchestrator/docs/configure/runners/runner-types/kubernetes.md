@@ -36,14 +36,14 @@ resource "platform-orchestrator_kubernetes_runner" "my_runner" {
       }
     }
     job = {
-      namespace       = "humanitec-runner"
-      service_account = "humanitec-runner"
+      namespace       = "platform-orchestrator-runner"
+      service_account = "platform-orchestrator-runner"
     }
   }
   state_storage_configuration = {
     type = "kubernetes"
     kubernetes_configuration = {
-      namespace = "humanitec-runner"
+      namespace = "platform-orchestrator-runner"
     }
   }
 }
@@ -69,11 +69,11 @@ runner_configuration:
       client_certificate_data: LS9nLS1FRUdJTiBDRVKLQ...
       client_key_data: LS0tLS1CRUdJTiBSU0EgUFJJ...
   job:
-    namespace: humanitec-runner
-    service_account: humanitec-runner
+    namespace: platform-orchestrator-runner
+    service_account: platform-orchestrator-runner
 state_storage_configuration:
   type: kubernetes
-  namespace: humanitec-runner
+  namespace: platform-orchestrator-runner
 ```
 
 {{% /tab %}}
@@ -88,7 +88,7 @@ Refer to the resource schema in the [Terraform](https://registry.terraform.io/pr
 
 {{% details "Extended example" %}}
 
-{{% github-file filename="/humanitec/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_runner/resource.tf" %}}
+{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_runner/resource.tf" %}}
 
 {{% /details %}}
 
@@ -117,8 +117,8 @@ runner_configuration:
       service_account_token: ...
   # Data for the Kubernetes jobs launched by the runner
   job:
-    namespace: humanitec-runner
-    service_account: humanitec-runner
+    namespace: platform-orchestrator-runner
+    service_account: platform-orchestrator-runner
     # Optional pod template snippet for the Kubernetes Runner job
     # See the Kubernetes PodSpec documentation for available options
     pod_template:
@@ -163,8 +163,8 @@ Perform the following setup for defining the target cluster.
 locals {
   cluster_name         = "<my-cluster-name>"
   runner_id            = "kubernetes-${local.cluster_name}"
-  runner_k8s_namespace = "humanitec-runner"
-  runner_k8s_sa        = "humanitec-runner"
+  runner_k8s_namespace = "platform-orchestrator-runner"
+  runner_k8s_sa        = "platform-orchestrator-runner"
 }
 ```
 
@@ -214,7 +214,7 @@ resource "kubernetes_service_account" "humanitec_runner" {
 1. Create a Kubernetes namespace where your runner will run
 
 ```bash
-export RUNNER_K8S_NAMESPACE=humanitec-runner
+export RUNNER_K8S_NAMESPACE=platform-orchestrator-runner
 
 kubectl create namespace ${RUNNER_K8S_NAMESPACE}
 ```
@@ -222,7 +222,7 @@ kubectl create namespace ${RUNNER_K8S_NAMESPACE}
 2. Create a Kubernetes service account for the runner
 
 ```bash
-export RUNNER_K8S_SA=humanitec-runner
+export RUNNER_K8S_SA=platform-orchestrator-runner
 
 kubectl create serviceaccount -n ${RUNNER_K8S_NAMESPACE} ${RUNNER_K8S_SA}
 ```
@@ -242,7 +242,7 @@ Prepare a [Role](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#r
 ```hcl
 resource "kubernetes_role" "humanitec_runner_orchestrator_access" {
   metadata {
-    name      = "humanitec-runner-orchestrator-access"
+    name      = "platform-orchestrator-runner-orchestrator-access"
     namespace = kubernetes_namespace.humanitec_runner.metadata[0].name
   }
   rule {
@@ -254,7 +254,7 @@ resource "kubernetes_role" "humanitec_runner_orchestrator_access" {
 
 resource "kubernetes_role_binding" "humanitec_runner_orchestrator_access" {
   metadata {
-    name      = "humanitec-runner-orchestrator-access"
+    name      = "platform-orchestrator-runner-orchestrator-access"
     namespace = kubernetes_namespace.humanitec_runner.metadata[0].name
   }
   role_ref {
@@ -277,7 +277,7 @@ cat << EOF > kubernetes-runner-k8s-role-rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: humanitec-runner-orchestrator-access
+  name: platform-orchestrator-runner-orchestrator-access
   namespace: ${RUNNER_K8S_NAMESPACE}
 rules:
   - apiGroups: ["batch"]
@@ -287,12 +287,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: humanitec-runner-orchestrator-access
+  name: platform-orchestrator-runner-orchestrator-access
   namespace: ${RUNNER_K8S_NAMESPACE}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: humanitec-runner-orchestrator-access
+  name: platform-orchestrator-runner-orchestrator-access
 subjects:
 - kind: ServiceAccount
   name: ${RUNNER_K8S_SA}

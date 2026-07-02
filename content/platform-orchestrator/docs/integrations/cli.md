@@ -24,7 +24,7 @@ Current CLI version: `{{< param octlVersion >}}`
    {{% tab name="x64-86" %}}
 
    ```shell
-   curl -fLO https://github.com/humanitec/octl/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_linux_amd64.tar.gz
+   curl -fLO https://github.com/Platform-Orchestrator/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_linux_amd64.tar.gz
    tar xvzf octl_{{< param octlVersion >}}_linux_amd64.tar.gz
    rm octl_{{< param octlVersion >}}_linux_amd64.tar.gz README.md
    ```
@@ -33,7 +33,7 @@ Current CLI version: `{{< param octlVersion >}}`
    {{% tab name="ARM64" %}}
 
    ```shell
-   curl -fLO https://github.com/humanitec/octl/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_linux_arm64.tar.gz
+   curl -fLO https://github.com/Platform-Orchestrator/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_linux_arm64.tar.gz
    tar xvzf octl_{{< param octlVersion >}}_linux_arm64.tar.gz
    rm octl_{{< param octlVersion >}}_linux_arm64.tar.gz README.md
    ```
@@ -63,25 +63,13 @@ Current CLI version: `{{< param octlVersion >}}`
 
 ### Install octl on macOS
 
-#### Homebrew
-
-If you are on macOS and using the [Homebrew](https://brew.sh/) package manager, you can install octl with Homebrew.
-
-1. Run the installation command:
-
-   ```shell
-   brew install humanitec/tap/octl
-   ```
-
-#### Manually
-
 1. Download the latest release with the command
 
    {{< tabs >}}
    {{% tab name="Intel" %}}
 
    ```shell
-   curl -fLO https://github.com/humanitec/octl/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_darwin_amd64.tar.gz
+   curl -fLO https://github.com/Platform-Orchestrator/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_darwin_amd64.tar.gz
    tar xvzf octl_{{< param octlVersion >}}_darwin_amd64.tar.gz
    rm octl_{{< param octlVersion >}}_darwin_amd64.tar.gz README.md
    ```
@@ -90,7 +78,7 @@ If you are on macOS and using the [Homebrew](https://brew.sh/) package manager, 
    {{% tab name="Apple Silicon" %}}
 
    ```shell
-   curl -fLO https://github.com/humanitec/octl/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_darwin_arm64.tar.gz
+   curl -fLO https://github.com/Platform-Orchestrator/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_darwin_arm64.tar.gz
    tar xvzf octl_{{< param octlVersion >}}_darwin_arm64.tar.gz
    rm octl_{{< param octlVersion >}}_darwin_arm64.tar.gz README.md
    ```
@@ -108,39 +96,18 @@ If you are on macOS and using the [Homebrew](https://brew.sh/) package manager, 
 
 ### Install octl on Windows
 
-#### Scoop
-
-If you are on Windows and using the [Scoop](https://scoop.sh/) package manager, you can install octl with Scoop.
-
-1. Run the installation command:
-
-   ```pwsh
-   scoop bucket add humanitec https://github.com/humanitec/scoop-bucket
-   scoop install humanitec/octl
-   ```
-
-#### Manually
-
-1. Download the [latest release](https://github.com/humanitec/octl/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_windows_amd64.zip).
+1. Download the [latest release](https://github.com/Platform-Orchestrator/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_windows_amd64.zip).
 
 2. Decompress the zip file, and move the binary to your PATH.
 
 ### Available as Docker Image
 
-octl is also published as [Docker Image](https://github.com/humanitec/octl/pkgs/container/octl), which can be used like `docker run --rm -it ghcr.io/humanitec/octl:{{< param octlVersion >}}`.
-
-## Install octl in GitHub Actions
-
-A GitHub action is available in the [GitHub Marketplace](https://github.com/marketplace/actions/set-up-octl-platform-orchestrator-cli) to install the octl binary and add it to the `$PATH`.
-
-{{< include "content/platform-orchestrator/docs/integrations/include-sample-gh-workflow.md" >}}
-
-The `version` field can be an exact version such as "1.36.7" or a range such as "1", "1.36", "^1.36.0".
+octl is also published as [Docker Image](https://github.com/Platform-Orchestrator/platform-orchestrator-cli/pkgs/container/octl), which can be used like `docker run --rm -it ghcr.io/platform-orchestrator/platform-orchestrator-cli:{{< param octlVersion >}}`.
 
 ## Validate your installation
 
 Run `octl --version` to ensure `octl` is in your path. Expected output, matching your installed version:
-`octl version github.com/humanitec/octl <version XX.YY.ZZ> <commit-hash> <commit-date>`
+`octl version github.com/Platform-Orchestrator/platform-orchestrator-cli <version XX.YY.ZZ> <commit-hash> <commit-date>`
 
 ## CLI cheat sheet
 
@@ -160,9 +127,9 @@ The command `octl config show` displays the _effective_ configuration, taking an
 
 | Config item      | Environment variable   | CLI command             | Description                                                                                                                                                                      | Default | Mandatory |
 | ---------------- | ---------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --------- |
-| `default_org_id` | `HUMANITEC_ORG`        | `octl config set-org`   | The id of the Organization in which to run commands                                                                                                                              | ""      | Yes       |
-| `api_url`        | `HUMANITEC_API_URL`    | `octl config set-url`   | The base URL of the Orchestrator API. Set to your internal endpoint when [self-hosting]({{< relref "/platform-orchestrator/docs/architecture/self-hosting" >}}) the Orchestrator | ""      | Yes       |
-| `token`          | `HUMANITEC_AUTH_TOKEN` | `octl config set-token` | An authentication token. The session token obtained via `octl login` will be written into this property                                                                          | ""      | Yes       |
+| `default_org_id` | `PO_ORG_ID`        | `octl config set-org`   | The id of the Organization in which to run commands                                                                                                                              | ""      | Yes       |
+| `api_url`        | `PO_API_URL`    | `octl config set-url`   | The base URL of the Orchestrator API. Set to your internal endpoint when [self-hosting]({{< relref "/platform-orchestrator/docs/architecture/self-hosting" >}}) the Orchestrator | ""      | Yes       |
+| `token`          | `PO_AUTH_TOKEN` | `octl config set-token` | An authentication token. The session token obtained via `octl login` will be written into this property                                                                          | ""      | Yes       |
 
 ## Commands
 
