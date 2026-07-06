@@ -33,7 +33,7 @@ const activateFirstTab = () => {
   const activeTabs = document.querySelectorAll('.nav-tabs');
   activeTabs.forEach((activeTab) => {
     const hasActiveTab = activeTab.querySelector(
-      "button[aria-selected='true']"
+      'button[aria-selected=\'true\']'
     );
     if (!hasActiveTab) {
       const firstTab = activeTab.querySelector('button');

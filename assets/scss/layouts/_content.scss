@@ -162,6 +162,35 @@ body.guides {
     }
   }
 
+  pre code,
+  pre code.hljs,
+  p pre code,
+  p pre code.hljs {
+    background: var(--midnight);
+    color: var(--on-dark);
+  }
+
+  pre .btn-copy {
+    color: var(--on-dark);
+    border-color: var(--line-on-dark);
+    background: rgba(255, 255, 255, 0.08);
+
+    .copy-icon {
+      display: none;
+    }
+
+    .copy-icon-dark {
+      display: flex;
+    }
+  }
+
+  pre .btn-copy::after,
+  pre .btn-copy:hover::after,
+  pre .btn-copy:focus::after,
+  pre .btn-copy:active::after {
+    color: var(--on-dark);
+  }
+
   .docs-navigation a:hover {
     text-decoration: none;
   }

@@ -1,4 +1,3 @@
-/* eslint-disable quotes */
 import mermaid from 'mermaid';
 import data from './data/mermaid.json';
 
