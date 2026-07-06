@@ -103,7 +103,7 @@ The code uses the appropriate providers for the cloud provider of your choice, a
 Clone the repository:
 
 ```bash
-git clone https://github.com/Platform-Orchestrator/first-deployment
+git clone https://github.com/stellwerk-labs/first-deployment
 cd first-deployment
 ```
 ## Review the code
@@ -224,7 +224,7 @@ cd ../manifests
 
 We are using this empty `manifest.yaml` located in this folder:
 
-{{% github-file filename="/Platform-Orchestrator/first-deployment/refs/heads/main/manifests/manifest.yaml" %}}
+{{% github-file filename="/stellwerk-labs/first-deployment/refs/heads/main/manifests/manifest.yaml" %}}
 
 The [deployment manifest]({{< relref "/platform-orchestrator/docs/deploy/manifests" >}}) format is purpose built to enable to deploy basically any application or resource. It provides the right abstraction level to create infrastructure with the "what" and leave the "how" to the platform engineer that encoded this concern into the module that the Orchestrator will be using. The next deployment steps will expand the manifest.
 
@@ -251,7 +251,7 @@ In this step we are going to deploy a containerized application directly to the 
 
 We are using the `manifest2.yaml` file located in the current `manifests` folder:
 
-{{% github-file filename="/Platform-Orchestrator/first-deployment/refs/heads/main/manifests/manifest2.yaml" %}}
+{{% github-file filename="/stellwerk-labs/first-deployment/refs/heads/main/manifests/manifest2.yaml" %}}
 
 This manifest defines a logical workload named `demo-app` made up out of two resources:
 
@@ -284,7 +284,7 @@ For the last deployment, we’re going to leave the cluster behind and deploy th
 
 You can create a `score.yaml` file with the following contents (or locate it in the manifests folder to save yourself from C&P)
 
-{{% github-file filename="/Platform-Orchestrator/first-deployment/refs/heads/main/manifests/score.yaml" %}}
+{{% github-file filename="/stellwerk-labs/first-deployment/refs/heads/main/manifests/score.yaml" %}}
 
 and deploy it like this
 

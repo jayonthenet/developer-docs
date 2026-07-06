@@ -92,7 +92,7 @@ Doks uses npm (included with Node.js) to centralize dependency management, makin
 Download the repo.
 
 ```bash
-git clone https://github.com/humanitec/developers-docs.git
+git clone https://github.com/stellwerk-labs/developer-docs.git
 ```
 
 ### 2. Install dependencies

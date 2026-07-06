@@ -114,7 +114,7 @@ We have prepared a public repository with Terraform/OpenTofu ("TF") code to set 
 Clone the repository and navigate to the `infra` directory:
 
 ```bash
-git clone https://github.com/Platform-Orchestrator/get-started
+git clone https://github.com/stellwerk-labs/get-started
 cd get-started/infra
 ```
 
@@ -634,7 +634,7 @@ You will see a "Successful" status and a graph containing two nodes. This is the
 Click on the resources to explore their details. In particular, inspect the "Metadata" section of the `demo-workload` resource. By convention, the Orchestrator will display the content of a regular output named `platform_orchestrator_metadata` of the TF module being used for a resource. This is useful for conveying insights about the real-life object that has been provisioned via the Orchestrator.
 
 {{% details "Defining metadata output in the module source" %}}
-{{% github-file filename="/Platform-Orchestrator/get-started/refs/heads/main/modules/workload/kubernetes/outputs.tf" %}}
+{{% github-file filename="/stellwerk-labs/get-started/refs/heads/main/modules/workload/kubernetes/outputs.tf" %}}
 {{% /details %}}
 
 You now have:
@@ -745,7 +745,7 @@ resource "platform-orchestrator_module" "postgres_get_started" {
   id            = "postgres-get-started"
   description   = "Simple cloud-based Postgres instance"
   resource_type = platform-orchestrator_resource_type.postgres_get_started.id
-  module_source = "git::https://github.com/Platform-Orchestrator/get-started//modules/postgres/${var.enabled_cloud_provider}"
+  module_source = "git::https://github.com/stellwerk-labs/get-started//modules/postgres/${var.enabled_cloud_provider}"
   provider_mapping = {
     aws = "${platform-orchestrator_provider.get_started.provider_type}.${platform-orchestrator_provider.get_started.id}"
   }
@@ -775,7 +775,7 @@ resource "platform-orchestrator_module" "postgres_get_started" {
   id            = "postgres-get-started"
   description   = "Simple cloud-based Postgres instance"
   resource_type = platform-orchestrator_resource_type.postgres_get_started.id
-  module_source = "git::https://github.com/Platform-Orchestrator/get-started//modules/postgres/${var.enabled_cloud_provider}"
+  module_source = "git::https://github.com/stellwerk-labs/get-started//modules/postgres/${var.enabled_cloud_provider}"
   provider_mapping = {
     google = "${platform-orchestrator_provider.get_started.provider_type}.${platform-orchestrator_provider.get_started.id}"
   }
@@ -809,7 +809,7 @@ resource "platform-orchestrator_module" "postgres_get_started" {
   id            = "postgres-get-started"
   description   = "Simple cloud-based Postgres instance"
   resource_type = platform-orchestrator_resource_type.postgres_get_started.id
-  module_source = "git::https://github.com/Platform-Orchestrator/get-started//modules/postgres/${var.enabled_cloud_provider}"
+  module_source = "git::https://github.com/stellwerk-labs/get-started//modules/postgres/${var.enabled_cloud_provider}"
   provider_mapping = {
     azurerm = "${platform-orchestrator_provider.get_started.provider_type}.${platform-orchestrator_provider.get_started.id}"
   }
@@ -895,19 +895,19 @@ Note that the module has a `required_providers` block but it does not include a 
 
 {{% details "Database module main code (AWS)" %}}
 
-{{% github-file filename="/Platform-Orchestrator/get-started/refs/heads/main/modules/postgres/aws/main.tf" %}}
+{{% github-file filename="/stellwerk-labs/get-started/refs/heads/main/modules/postgres/aws/main.tf" %}}
 
 {{% /details %}}
 
 {{% details "Database module main code (GCP)" %}}
 
-{{% github-file filename="/Platform-Orchestrator/get-started/refs/heads/main/modules/postgres/gcp/main.tf" %}}
+{{% github-file filename="/stellwerk-labs/get-started/refs/heads/main/modules/postgres/gcp/main.tf" %}}
 
 {{% /details %}}
 
 {{% details "Database module main code (Azure)" %}}
 
-{{% github-file filename="/Platform-Orchestrator/get-started/refs/heads/main/modules/postgres/azure/main.tf" %}}
+{{% github-file filename="/stellwerk-labs/get-started/refs/heads/main/modules/postgres/azure/main.tf" %}}
 
 {{% /details %}}
 
