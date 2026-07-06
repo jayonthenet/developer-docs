@@ -139,15 +139,17 @@ body.guides {
     margin-bottom: 1rem;
   }
 
-  p code,
-  li code,
-  h1 code,
-  h2 code,
-  h3 code,
-  h4 code,
-  h5 code,
-  h6 code,
-  .alert code,
+  p > code,
+  li > code,
+  h1 > code,
+  h2 > code,
+  h3 > code,
+  h4 > code,
+  h5 > code,
+  h6 > code,
+  .alert > code,
+  .alert p > code,
+  .alert li > code,
   .alert-doks {
     background-color: var(--teal-veil);
     font-family: var(--font-mono);
@@ -163,9 +165,7 @@ body.guides {
   }
 
   pre code,
-  pre code.hljs,
-  p pre code,
-  p pre code.hljs {
+  pre code.hljs {
     background: var(--midnight);
     color: var(--on-dark);
   }
