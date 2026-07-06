@@ -155,10 +155,23 @@ body.guides {
     font-family: var(--font-mono);
     font-size: 14px;
     line-height: 150%;
-    letter-spacing: -0.03em;
+    letter-spacing: 0;
     color: var(--midnight);
+  }
 
-    [data-dark-mode] & {
+  [data-dark-mode] & {
+    p > code,
+    li > code,
+    h1 > code,
+    h2 > code,
+    h3 > code,
+    h4 > code,
+    h5 > code,
+    h6 > code,
+    .alert > code,
+    .alert p > code,
+    .alert li > code,
+    .alert-doks {
       background-color: var(--teal-veil);
       color: var(--midnight);
     }
