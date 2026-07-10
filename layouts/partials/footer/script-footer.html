@@ -14,31 +14,31 @@
 
 {{ $slice := slice $app -}}
 
-{{ if .Site.Params.options.lazySizes -}}
+{{ if .Site.Params.options.lazysizes -}}
   {{ $lazySizes := resources.Get "js/lazysizes.js" -}}
   {{ $lazySizes := $lazySizes | js.Build -}}
   {{ $slice = $slice | append $lazySizes -}}
 {{ end -}}
 
-{{ if .Site.Params.options.clipBoard -}}
+{{ if .Site.Params.options.clipboard -}}
   {{ $clipBoard := resources.Get "js/clipboard.js" -}}
   {{ $clipBoard := $clipBoard | js.Build -}}
   {{ $slice = $slice | append $clipBoard -}}
 {{ end -}}
 
-{{ if .Site.Params.options.instantPage -}}
+{{ if .Site.Params.options.instantpage -}}
   {{ $instantPage := resources.Get "js/instant.page.js" -}}
   {{ $instantPage := $instantPage | js.Build -}}
   {{ $slice = $slice | append $instantPage -}}
 {{ end -}}
 
-{{ $showFlexSearch := .Site.Params.options.flexSearch }}
+{{ $showFlexSearch := .Site.Params.options.flexsearch }}
 
 {{ if $showFlexSearch -}}
   {{ $flexSearch := resources.Get "js/vendor/flexsearch/dist/flexsearch.bundle.min.js" -}}
   {{ $slice = $slice | append $flexSearch -}}
-  {{ if and (isset .Site.Params.options "searchsectionsshow") (not (eq .Site.Params.options.searchSectionsShow "ALL")) -}}
-  {{ $showFlexSearch = or (eq (len .Site.Params.options.searchSectionsShow) 0) (in .Site.Params.options.searchSectionsShow .Section) (and .IsHome (in .Site.Params.options.searchSectionsShow "HomePage")) -}}
+  {{ if and (isset .Site.Params.options "searchsectionsshow") (not (eq .Site.Params.options.searchsectionsshow "ALL")) -}}
+  {{ $showFlexSearch = or (eq (len .Site.Params.options.searchsectionsshow) 0) (in .Site.Params.options.searchsectionsshow .Section) (and .IsHome (in .Site.Params.options.searchsectionsshow "HomePage")) -}}
   {{ end -}}
 {{ end -}}
 
@@ -48,7 +48,7 @@
   {{ $slice = $slice | append $alert -}}
 {{ end -}}
 
-{{ if .Site.Params.options.kaTex -}}
+{{ if .Site.Params.options.katex -}}
   {{ $katexConfig := resources.Get "js/katex.js" -}}
   {{ $katexConfig := $katexConfig | js.Build -}}
   {{ $slice = $slice | append $katexConfig -}}
@@ -62,7 +62,7 @@
 
 
 
-{{ if .Site.Params.options.toTopButton -}}
+{{ if .Site.Params.options.totopbutton -}}
   {{ $toTopButton := resources.Get "js/to-top.js" -}}
   {{ $toTopButton := $toTopButton | js.Build -}}
   {{ $slice = $slice | append $toTopButton -}}
@@ -71,13 +71,13 @@
 {{ $js := $slice | resources.Concat "main.js" -}}
 
 {{ if eq (hugo.Environment) "development" -}}
-  {{ if .Site.Params.options.bootStrapJs -}}
+  {{ if .Site.Params.options.bootstrapjs -}}
     <script src="{{ $bs.RelPermalink }}" defer></script>
   {{ end -}}
-  {{ if .Site.Params.options.highLight -}}
+  {{ if .Site.Params.options.highlight -}}
     <script src="{{ $highlight.RelPermalink }}" defer></script>
   {{ end -}}
-  {{ if .Site.Params.options.kaTex -}}
+  {{ if .Site.Params.options.katex -}}
     <script src="{{ $katex.RelPermalink }}" defer></script>
     <script src="{{ $katexAutoRender.RelPermalink }}" onload="renderMathInElement(document.body);" defer></script>
   {{ end -}}
@@ -92,13 +92,13 @@
   {{ $highlight := $highlight | minify | fingerprint "sha512" -}}
   {{ $katex := $katex | minify | fingerprint "sha512" -}}
   {{ $katexAutoRender := $katexAutoRender | minify | fingerprint "sha512" -}}
-  {{ if .Site.Params.options.bootStrapJs -}}
+  {{ if .Site.Params.options.bootstrapjs -}}
     <script src="{{ $bs.RelPermalink }}" integrity="{{ $bs.Data.Integrity }}" crossorigin="anonymous" defer></script>
   {{ end -}}
-  {{ if .Site.Params.options.highLight -}}
+  {{ if .Site.Params.options.highlight -}}
     <script src="{{ $highlight.RelPermalink }}" integrity="{{ $highlight.Data.Integrity }}" crossorigin="anonymous" defer></script>
   {{ end -}}
-  {{ if .Site.Params.options.kaTex -}}
+  {{ if .Site.Params.options.katex -}}
     <script src="{{ $katex.RelPermalink }}" integrity="{{ $katex.Data.Integrity }}" crossorigin="anonymous" defer></script>
     <script src="{{ $katexAutoRender.RelPermalink }}" integrity="{{ $katexAutoRender.Data.Integrity }}" crossorigin="anonymous" defer></script>
   {{ end -}}

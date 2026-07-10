@@ -12,7 +12,7 @@
     {{ .Scratch.Set "class" .Type -}}
     {{ .Scratch.Add "class" " list" -}}
   {{ end -}}
-  <body class="{{ .Scratch.Get "class" }}"{{ if eq .Site.Params.options.scrollSpy true }} data-bs-spy="scroll" data-bs-target="#toc" data-bs-root-margin="0px 0px -30%" data-bs-smooth-scroll="true" tabindex="0"{{ end }}>
+  <body class="{{ .Scratch.Get "class" }}"{{ if eq .Site.Params.options.scrollspy true }} data-bs-spy="scroll" data-bs-target="#toc" data-bs-root-margin="0px 0px -30%" data-bs-smooth-scroll="true" tabindex="0"{{ end }}>
     {{ partial "header/header.html" . }}
     {{ if eq .Type "guides" }}
       {{ partial "content/guides/navigation" . }}
@@ -23,7 +23,7 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {{ end }}
     <!-- End Google Tag Manager (noscript) -->
-    <div class="wrap container-{{ if .Site.Params.options.fullWidth }}fluid{{ else }}xxl{{ end }}" role="document">
+    <div class="wrap container-{{ if .Site.Params.options.fullwidth }}fluid{{ else }}xxl{{ end }}" role="document">
       <div class="content">
         {{ block "main" . }}{{ end }}
       </div>
@@ -32,7 +32,7 @@
     {{ block "sidebar-footer" . }}{{ end }}
     {{ partial "footer/footer.html" . }}
     {{ partial "footer/script-footer.html" . }}
-    {{ if eq .Site.Params.options.toTopButton true -}}
+    {{ if eq .Site.Params.options.totopbutton true -}}
     <div class="d-flex to-top-button">
       <a id="toTop" href="#" class="btn btn-outline-primary rounded-circle ms-auto p-2"><span class="visually-hidden">Top</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg></a>
     </div>

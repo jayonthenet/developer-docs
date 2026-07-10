@@ -37,12 +37,12 @@
   // https://discourse.gohugo.io/t/range-length-or-last-element/3803/2
 
   {{ $list := slice }}
-  {{- if and (isset .Site.Params.options "searchsectionsindex") (not (eq (len .Site.Params.options.searchSectionsIndex) 0)) }}
-  {{- if eq .Site.Params.options.searchSectionsIndex "ALL" }}
+  {{- if and (isset .Site.Params.options "searchsectionsindex") (not (eq (len .Site.Params.options.searchsectionsindex) 0)) }}
+  {{- if eq .Site.Params.options.searchsectionsindex "ALL" }}
   {{- $list = .Site.Pages }}
   {{- else }}
-  {{- $list = (where .Site.Pages "Type" "in" .Site.Params.options.searchSectionsIndex) }}
-  {{- if (in .Site.Params.options.searchSectionsIndex "HomePage") }}
+  {{- $list = (where .Site.Pages "Type" "in" .Site.Params.options.searchsectionsindex) }}
+  {{- if (in .Site.Params.options.searchsectionsindex "HomePage") }}
   {{ $list = $list | append .Site.Home }}
   {{- end }}
   {{- end }}

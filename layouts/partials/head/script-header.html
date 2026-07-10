@@ -9,7 +9,7 @@
 </script>
 {{- end -}}
 
-{{ if site.Params.options.darkMode -}}
+{{ if site.Params.options.darkmode -}}
   {{ $darkmode := resources.Get "js/darkmode.js" | js.Build -}}
   {{ $darkmodeSecureJS := $darkmode | resources.Fingerprint "sha512" }}
   <script src="{{ $darkmodeSecureJS.RelPermalink }}" integrity="{{ $darkmodeSecureJS.Data.Integrity }}" crossorigin="anonymous"></script>
