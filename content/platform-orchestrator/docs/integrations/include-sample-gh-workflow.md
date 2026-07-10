@@ -14,8 +14,8 @@ jobs:
     steps:
     - name: Install octl
       run: |
-        curl -fLO https://github.com/Platform-Orchestrator/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_linux_amd64.tar.gz
-        tar xvzf octl_{{< param octlVersion >}}_linux_amd64.tar.gz
+        curl -fLO https://github.com/stellwerk-labs/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/platform-orchestrator-cli_{{< param octlVersion >}}_linux_amd64.tar.gz
+        tar xvzf platform-orchestrator-cli_{{< param octlVersion >}}_linux_amd64.tar.gz
         sudo install -o root -g root -m 0755 octl /usr/local/bin/octl
     - name: Deploy a manifest
       run: octl deploy my-project my-environment ./manifest.yaml

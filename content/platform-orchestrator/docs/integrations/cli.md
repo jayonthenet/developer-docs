@@ -24,18 +24,18 @@ Current CLI version: `{{< param octlVersion >}}`
    {{% tab name="x64-86" %}}
 
    ```shell
-   curl -fLO https://github.com/Platform-Orchestrator/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_linux_amd64.tar.gz
-   tar xvzf octl_{{< param octlVersion >}}_linux_amd64.tar.gz
-   rm octl_{{< param octlVersion >}}_linux_amd64.tar.gz README.md
+   curl -fLO https://github.com/stellwerk-labs/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/platform-orchestrator-cli_{{< param octlVersion >}}_linux_amd64.tar.gz
+   tar xvzf platform-orchestrator-cli_{{< param octlVersion >}}_linux_amd64.tar.gz
+   rm platform-orchestrator-cli_{{< param octlVersion >}}_linux_amd64.tar.gz README.md
    ```
 
    {{< /tab >}}
    {{% tab name="ARM64" %}}
 
    ```shell
-   curl -fLO https://github.com/Platform-Orchestrator/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_linux_arm64.tar.gz
-   tar xvzf octl_{{< param octlVersion >}}_linux_arm64.tar.gz
-   rm octl_{{< param octlVersion >}}_linux_arm64.tar.gz README.md
+   curl -fLO https://github.com/stellwerk-labs/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/platform-orchestrator-cli_{{< param octlVersion >}}_linux_arm64.tar.gz
+   tar xvzf platform-orchestrator-cli_{{< param octlVersion >}}_linux_arm64.tar.gz
+   rm platform-orchestrator-cli_{{< param octlVersion >}}_linux_arm64.tar.gz README.md
    ```
 
    {{< /tab >}}
@@ -69,18 +69,18 @@ Current CLI version: `{{< param octlVersion >}}`
    {{% tab name="Intel" %}}
 
    ```shell
-   curl -fLO https://github.com/Platform-Orchestrator/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_darwin_amd64.tar.gz
-   tar xvzf octl_{{< param octlVersion >}}_darwin_amd64.tar.gz
-   rm octl_{{< param octlVersion >}}_darwin_amd64.tar.gz README.md
+   curl -fLO https://github.com/stellwerk-labs/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/platform-orchestrator-cli_{{< param octlVersion >}}_darwin_amd64.tar.gz
+   tar xvzf platform-orchestrator-cli_{{< param octlVersion >}}_darwin_amd64.tar.gz
+   rm platform-orchestrator-cli_{{< param octlVersion >}}_darwin_amd64.tar.gz README.md
    ```
 
    {{< /tab >}}
    {{% tab name="Apple Silicon" %}}
 
    ```shell
-   curl -fLO https://github.com/Platform-Orchestrator/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_darwin_arm64.tar.gz
-   tar xvzf octl_{{< param octlVersion >}}_darwin_arm64.tar.gz
-   rm octl_{{< param octlVersion >}}_darwin_arm64.tar.gz README.md
+   curl -fLO https://github.com/stellwerk-labs/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/platform-orchestrator-cli_{{< param octlVersion >}}_darwin_arm64.tar.gz
+   tar xvzf platform-orchestrator-cli_{{< param octlVersion >}}_darwin_arm64.tar.gz
+   rm platform-orchestrator-cli_{{< param octlVersion >}}_darwin_arm64.tar.gz README.md
    ```
 
    {{< /tab >}}
@@ -96,18 +96,18 @@ Current CLI version: `{{< param octlVersion >}}`
 
 ### Install octl on Windows
 
-1. Download the [latest release](https://github.com/Platform-Orchestrator/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/octl_{{< param octlVersion >}}_windows_amd64.zip).
+1. Download the [latest release](https://github.com/stellwerk-labs/platform-orchestrator-cli/releases/download/v{{< param octlVersion >}}/platform-orchestrator-cli_{{< param octlVersion >}}_windows_amd64.zip).
 
 2. Decompress the zip file, and move the binary to your PATH.
 
 ### Available as Docker Image
 
-octl is also published as [Docker Image](https://github.com/Platform-Orchestrator/platform-orchestrator-cli/pkgs/container/octl), which can be used like `docker run --rm -it ghcr.io/platform-orchestrator/platform-orchestrator-cli:{{< param octlVersion >}}`.
+octl is also published as a [Docker image](https://github.com/stellwerk-labs/platform-orchestrator-cli/pkgs/container/octl), which can be used like `docker run --rm -it ghcr.io/stellwerk-labs/octl:{{< param octlVersion >}}`.
 
 ## Validate your installation
 
 Run `octl --version` to ensure `octl` is in your path. Expected output, matching your installed version:
-`octl version github.com/Platform-Orchestrator/platform-orchestrator-cli <version XX.YY.ZZ> <commit-hash> <commit-date>`
+`octl version github.com/stellwerk-labs/platform-orchestrator-cli <version XX.YY.ZZ> <commit-hash> <commit-date>`
 
 ## CLI cheat sheet
 
