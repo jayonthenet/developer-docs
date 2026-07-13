@@ -112,11 +112,11 @@ A runner configuration consists of these elements:
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-Refer to the resource schema of each individual `*-runner` resource in the [Terraform](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs) or [OpenTofu](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/) provider documentation.
+Refer to the resource schema of each individual `*-runner` resource in the [Terraform](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs) or [OpenTofu](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/) provider documentation.
 
 {{% details "Extended example" %}}
 
-{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_agent_runner/resource.tf" %}}
+{{% github-file filename="/stellwerk-labs/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_agent_runner/resource.tf" %}}
 
 {{% /details %}}
 

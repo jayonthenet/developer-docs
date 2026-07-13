@@ -22,7 +22,7 @@ The Orchestrator’s drift detection ensures that infrastructure remains aligned
 ## References
 
 - [Platform Orchestrator Documentation](https://docs.stellwerk.dev)
-- [Platform Orchestrator Terraform Modules](https://github.com/humanitec-tf-modules)
+- [Platform Orchestrator Terraform Modules](https://github.com/stellwerk-tf-modules)
 
 <!-- BEGIN_TF_DOCS -->
 

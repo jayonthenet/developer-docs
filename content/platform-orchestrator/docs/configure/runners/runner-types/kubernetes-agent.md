@@ -20,7 +20,7 @@ Follow the steps below to configure a runner of type `kubernetes-agent`.
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_agent_runner/resource.tf" %}}
+{{% github-file filename="/stellwerk-labs/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_agent_runner/resource.tf" %}}
 
 {{% /tab %}}
 {{% tab name="CLI" %}}
@@ -63,11 +63,11 @@ The following configuration shows all available options for the `kubernetes-agen
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/kubernetes_runner#schema) or [OpenTofu](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/kubernetes_runner#schema) provider documentation.
+Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/kubernetes_runner#schema) or [OpenTofu](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/docs/resources/kubernetes_runner#schema) provider documentation.
 
 {{% details "Extended example" %}}
 
-{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_agent_runner/resource.tf" %}}
+{{% github-file filename="/stellwerk-labs/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_agent_runner/resource.tf" %}}
 
 {{% /details %}}
 
@@ -146,14 +146,14 @@ Obtain the Orchestrator API endpoint out of your [self-hosting]({{< relref "/pla
 
 ### TF module
 
-Make the public [`kubernetes-agent-orchestrator-runner` TF module](https://github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner) repository available in a private Git service within your infrastructure.
+Make the public [`kubernetes-agent-orchestrator-runner` TF module](https://github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner) repository available in a private Git service within your infrastructure.
 
 ```bash
 # Clone the repository (latest)
-git clone https://github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner.git
+git clone https://github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner.git
 
 # Or use a ref to clone a particular release
-# git clone --branch vX.Y.Z --single-branch https://github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner.git
+# git clone --branch vX.Y.Z --single-branch https://github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner.git
 
 # Use git mechanisms at your discretion to create a new repo and push the contents
 # ...
@@ -232,7 +232,7 @@ terraform {
       version = "~> 2"
     }
     platform-orchestrator = {
-      source  = "humanitec/platform-orchestrator"
+      source  = "stellwerk-labs/platform-orchestrator"
       version = "~> 2"
     }
     helm = {
@@ -336,9 +336,9 @@ export CLUSTER_RUNNER_JOB_SERVICEACCOUNT="humanitec-kubernetes-agent-runner-job"
 
 ```hcl
 module "kubernetes_agent_runner" {
-  source = "github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner"
+  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner"
   # To pin a specific module release, use this notation:
-  # source = "github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
+  # source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
 
   humanitec_org_id             = local.humanitec_org
   runner_id                    = local.runner_id
@@ -491,7 +491,7 @@ terraform {
       version = "~> 2"
     }
     platform-orchestrator = {
-      source  = "humanitec/platform-orchestrator"
+      source  = "stellwerk-labs/platform-orchestrator"
       version = "~> 2"
     }
     helm = {
@@ -722,9 +722,9 @@ eksctl utils associate-iam-oidc-provider --cluster $CLUSTER_NAME --approve
 
 ```hcl
 module "kubernetes_agent_runner" {
-  source = "github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner"
+  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner"
   # To pin a specific module release, use this notation:
-  # source = "github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
+  # source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
 
   humanitec_org_id             = local.humanitec_org
   runner_id                    = local.runner_id
@@ -893,7 +893,7 @@ terraform {
       version = "~> 2"
     }
     platform-orchestrator = {
-      source  = "humanitec/platform-orchestrator"
+      source  = "stellwerk-labs/platform-orchestrator"
       version = "~> 2"
     }
     helm = {
@@ -1071,9 +1071,9 @@ gcloud iam service-accounts add-iam-policy-binding ${GCP_SERVICE_ACCOUNT_NAME}@$
 
 ```hcl
 module "kubernetes_agent_runner" {
-  source = "github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner"
+  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner"
   # To pin a specific module release, use this notation:
-  # source = "github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
+  # source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
 
   humanitec_org_id             = local.humanitec_org
   runner_id                    = local.runner_id
@@ -1238,7 +1238,7 @@ terraform {
       version = "~> 2"
     }
     platform-orchestrator = {
-      source  = "humanitec/platform-orchestrator"
+      source  = "stellwerk-labs/platform-orchestrator"
       version = "~> 2"
     }
     helm = {
@@ -1422,9 +1422,9 @@ az identity federated-credential create \
 
 ```hcl
 module "kubernetes_agent_runner" {
-  source = "github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner"
+  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner"
   # To pin a specific module release, use this notation:
-  # source = "github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
+  # source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
 
   humanitec_org_id             = local.humanitec_org
   runner_id                    = local.runner_id
@@ -1599,7 +1599,7 @@ Consult your Kubernetes runtime environment and TF `providers` to determine the 
 - Providing environment variables
 - Modifying the runner Pod template in any other custom way to make data available to the runner
 
-The [`kubernetes-agent` runner TF module](https://github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner/) shows examples for all these cases.
+The [`kubernetes-agent` runner TF module](https://github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner/) shows examples for all these cases.
 
 ## Setting sensitive environment variables
 

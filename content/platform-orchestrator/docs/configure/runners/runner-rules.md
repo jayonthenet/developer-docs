@@ -45,7 +45,7 @@ octl create runner-rule --set=runner_id=my-runner --set=project_id=my-project
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-Use the resource and data source `platform-orchestrator_runner_rule` in [Terraform](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/runner_rule#schema) or [OpenTofu](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/runner_rule#schema) to manage runner rules.
+Use the resource and data source `platform-orchestrator_runner_rule` in [Terraform](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/runner_rule#schema) or [OpenTofu](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/docs/resources/runner_rule#schema) to manage runner rules.
 
 You cannot update a runner rule. Changing one of its properties forces replacement.
 
@@ -77,11 +77,11 @@ A runner rule configuration consists of these elements:
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/runner_rule#schema) or [OpenTofu](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/runner_rule#schema) provider documentation.
+Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/runner_rule#schema) or [OpenTofu](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/docs/resources/runner_rule#schema) provider documentation.
 
 {{% details "Extended example" %}}
 
-{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_runner_rule/resource.tf" %}}
+{{% github-file filename="/stellwerk-labs/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_runner_rule/resource.tf" %}}
 
 {{% /details %}}
 

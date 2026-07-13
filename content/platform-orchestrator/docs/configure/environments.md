@@ -23,7 +23,7 @@ An environment with a succesful deployment contains a [resource graph]({{< relre
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_environment/resource.tf" %}}
+{{% github-file filename="/stellwerk-labs/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_environment/resource.tf" %}}
 
 {{% /tab %}}
 {{% tab name="CLI" %}}
@@ -50,7 +50,7 @@ An environment configuration consists of these elements:
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/environment#schema) or [OpenTofu](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/environment#schema) provider documentation.
+Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/environment#schema) or [OpenTofu](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/docs/resources/environment#schema) provider documentation.
 
 {{% /tab %}}
 {{% tab name="CLI" %}}

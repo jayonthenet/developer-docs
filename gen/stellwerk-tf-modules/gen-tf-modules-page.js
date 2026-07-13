@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const yaml = require('yaml');
 
-const ORG = 'humanitec-tf-modules';
+const ORG = 'stellwerk-tf-modules';
 const TEMPLATE = path.join(__dirname, 'public-tf-modules.md');
 const CONFIG = path.join(__dirname, 'repos.yaml');
 const OUTPUT = path.join(__dirname, '../../content/platform-orchestrator/docs/integrations/public-tf-modules.md');
@@ -30,7 +30,7 @@ function loadConfig() {
   const seen = new Set();
   for (const name of allEntries) {
     if (seen.has(name)) {
-      console.error(`Could not render list of humanitec-tf-modules: repo "${name}" appears more than once in repos.yaml`);
+      console.error(`Could not render list of stellwerk-tf-modules: repo "${name}" appears more than once in repos.yaml`);
       process.exit(1);
     }
     seen.add(name);
@@ -49,7 +49,9 @@ function buildTable(repos) {
   const rows = sorted.map(({ name, description }) => {
     const url = `https://github.com/${ORG}/${name}`;
     const link = `[${name}](${url})`;
-    const about = (description || '').replace(/\|/g, '\\|');
+    const about = (description || '')
+      .replace(/Humanitec/g, 'Stellwerk')
+      .replace(/\|/g, '\\|');
     return `| ${link} | ${about} |`;
   });
 
@@ -66,7 +68,7 @@ const { orchestratorConfig, moduleSources, ignored } = loadConfig();
 const fetchedNames = new Set(allRepos.map(r => r.name));
 const unknown = [...orchestratorConfig, ...moduleSources].filter(name => !fetchedNames.has(name));
 if (unknown.length > 0) {
-  console.error(`Could not render list of humanitec-tf-modules: repos.yaml references repos not found in the GitHub org: ${unknown.join(', ')}`);
+  console.error(`Could not render list of stellwerk-tf-modules: repos.yaml references repos not found in the GitHub org: ${unknown.join(', ')}`);
   process.exit(1);
 }
 
@@ -81,7 +83,7 @@ for (const repo of allRepos) {
   } else if (moduleSources.has(repo.name)) {
     moduleSourceRepos.push(repo);
   } else {
-    console.error(`Could not render list of humanitec-tf-modules: repo "${repo.name}" found but not configured`);
+    console.error(`Could not render list of stellwerk-tf-modules: repo "${repo.name}" found but not configured`);
     process.exit(1);
   }
 }

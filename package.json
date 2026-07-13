@@ -37,7 +37,7 @@
     "gen-octl-version": "node ./gen/octl-version/index.js $(gh release list -R stellwerk-labs/platform-orchestrator-cli --exclude-drafts --exclude-pre-releases -L 1 --json tagName  | jq -r '.[0].tagName')",
     "gen-platform-orchestrator-runner-version": "node ./gen/platform-orchestrator-runner-version/index.js $(gh api /orgs/Platform-Orchestrator/packages/container/platform-orchestrator-runner/versions | jq -r .[0].metadata.container.tags[0])",
     "gen-use-cases": "find ./content/platform-orchestrator/docs/use-cases ! -name '_index.md' -type f -exec rm -f {} + && rm -rf ./gen/use-cases/platform-orchestrator-use-cases && git clone --depth 1 https://x-access-token:${GITHUB_TOKEN}@github.com/Platform-Orchestrator/platform-orchestrator-use-cases.git ./gen/use-cases/platform-orchestrator-use-cases && node ./gen/use-cases/index.js && rm -rf ./gen/use-cases/platform-orchestrator-use-cases",
-    "gen-tf-modules-page": "node gen/humanitec-tf-modules/gen-tf-modules-page.js",
+    "gen-tf-modules-page": "node gen/stellwerk-tf-modules/gen-tf-modules-page.js",
     "gen-self-hosted-helm-readme": "node gen/self-hosted-helm-readme/index.js",
     "precheck": "npm version",
     "check": "exec-bin node_modules/.bin/hugo/hugo version",

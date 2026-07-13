@@ -19,7 +19,7 @@ A project is mainly a container that holds a set of [environments]({{< relref "/
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_project/resource.tf" %}}
+{{% github-file filename="/stellwerk-labs/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_project/resource.tf" %}}
 
 {{% /tab %}}
 {{% tab name="CLI" %}}
@@ -46,7 +46,7 @@ A project configuration consists of these elements:
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/project#schema) or [OpenTofu](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/project#schema) provider documentation.
+Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/project#schema) or [OpenTofu](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/docs/resources/project#schema) provider documentation.
 
 {{% /tab %}}
 {{% tab name="CLI" %}}

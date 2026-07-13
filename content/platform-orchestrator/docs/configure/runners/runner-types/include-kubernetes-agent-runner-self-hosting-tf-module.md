@@ -4,14 +4,14 @@ description: "Common kubernetes-agent runner snippet on TF module for self hosti
 draft: true # This page is made for being included in other pages, not standalone
 ---
 
-Visit the [module documentation](https://github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner) to see further configuration options and available releases.
+Visit the [module documentation](https://github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner) to see further configuration options and available releases.
 
 In a [self-hosting](#self-hosting-requirements) setup only, apply these additional changes to the `module`. Remove those that do not apply:
 
 ```hcl
 module "kubernetes_agent_runner" {
   # Use an internally hosted registry for the TF module. Append "?ref=vX.Y.Z" to pin a specific release
-  source = "mygitservice.example.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner"
+  source = "mygitservice.example.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner"
   #
   # Existing properties ...
   #

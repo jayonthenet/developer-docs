@@ -76,11 +76,11 @@ state_storage_configuration:
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/kubernetes_gke_runner#schema) or [OpenTofu](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/kubernetes_gke_runner#schema) Kubernetes GKE runner documentation.
+Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/kubernetes_gke_runner#schema) or [OpenTofu](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/docs/resources/kubernetes_gke_runner#schema) Kubernetes GKE runner documentation.
 
 {{% details "Extended example" %}}
 
-{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_gke_runner/resource.tf" %}}
+{{% github-file filename="/stellwerk-labs/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_kubernetes_gke_runner/resource.tf" %}}
 
 {{% /details %}}
 

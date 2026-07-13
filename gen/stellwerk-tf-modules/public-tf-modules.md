@@ -12,7 +12,7 @@ toc: true
 
 {{< include "content/platform-orchestrator/docs/tutorial/include-terraform-opentofu-tf.md" >}}
 
-We maintain all modules in the [humanitec-tf-modules](https://github.com/humanitec-tf-modules) GitHub organization. We provide them on a best-effort basis.
+We maintain all modules in the [stellwerk-tf-modules](https://github.com/stellwerk-tf-modules) GitHub organization. We provide them on a best-effort basis.
 
 There are two categories of modules:
 

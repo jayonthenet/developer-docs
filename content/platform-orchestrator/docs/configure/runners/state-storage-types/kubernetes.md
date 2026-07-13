@@ -56,7 +56,7 @@ Set the state storage configuration as part of a runner configuration:
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-Refer to the resource schema of any `runner` resource, e.g. the `kubernetes_agent_runner` in the [Terraform](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/kubernetes_agent_runner#nested-schema-for-state_storage_configuration) or [OpenTofu](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/kubernetes_agent_runner#nested-schema-for-state_storage_configuration) Kubernetes runner documentation.
+Refer to the resource schema of any `runner` resource, e.g. the `kubernetes_agent_runner` in the [Terraform](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/kubernetes_agent_runner#nested-schema-for-state_storage_configuration) or [OpenTofu](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/docs/resources/kubernetes_agent_runner#nested-schema-for-state_storage_configuration) Kubernetes runner documentation.
 
 {{% /tab %}}
 {{% tab name="CLI" %}}

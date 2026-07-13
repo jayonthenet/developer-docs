@@ -116,7 +116,7 @@ You can find more examples in the [examples](#examples) section.
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/provider#schema) or [OpenTofu](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/provider#schema) provider documentation.
+Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/provider#schema) or [OpenTofu](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/docs/resources/provider#schema) provider documentation.
 
 {{% /tab %}}
 {{% tab name="CLI" %}}
@@ -402,7 +402,7 @@ configuration:
 
 ## Lifecycle
 
-You can create and manage providers using the [octl CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}), [Terraform provider](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/provider), [OpenTofu provider](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/provider), or [API]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}).
+You can create and manage providers using the [octl CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}), [Terraform provider](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/provider), [OpenTofu provider](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/docs/resources/provider), or [API]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}).
 
 {{% include "/platform-orchestrator/docs/configure/include-providers-lifecycle.md" %}}
 

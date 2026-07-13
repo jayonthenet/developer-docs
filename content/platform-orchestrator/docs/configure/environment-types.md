@@ -20,14 +20,14 @@ There are however different requirements with each organization and you could al
 
 There are no strict rules and you can create as many environment types as you need to fulfill your requirements.
 
-You can create and manage environment types using the [octl CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}), [Terraform provider](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/environment_type), [OpenTofu provider](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/environment_type), or [API]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}).
+You can create and manage environment types using the [octl CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}), [Terraform provider](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/environment_type), [OpenTofu provider](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/docs/resources/environment_type), or [API]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}).
 
 ## Basic Example
 
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_environment_type/resource.tf" %}}
+{{% github-file filename="/stellwerk-labs/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_environment_type/resource.tf" %}}
 
 {{% /tab %}}
 {{% tab name="CLI" %}}

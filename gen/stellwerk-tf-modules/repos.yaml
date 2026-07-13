@@ -1,4 +1,4 @@
-# Classifies each public repo in the humanitec-tf-modules GitHub org.
+# Classifies each public repo in the stellwerk-tf-modules GitHub org.
 # Every repo (except those on the ignore list, see the script) must appear in exactly one section.
 
 orchestrator-configuration:

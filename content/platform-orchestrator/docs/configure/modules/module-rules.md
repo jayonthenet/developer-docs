@@ -24,7 +24,7 @@ A module with no module rules will not be considered for selection.
 
 ## Manage module rules
 
-You can manage module rules using either the [Terraform provider](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/module_rule), [OpenTofu provider](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/module_rule), or the [`octl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}).
+You can manage module rules using either the [Terraform provider](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/module_rule), [OpenTofu provider](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/docs/resources/module_rule), or the [`octl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}).
 
 {{< tabs >}}
 {{% tab name="TF" %}}
@@ -74,7 +74,7 @@ A module rule configuration consists of these elements:
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/module_rule#schema) or [OpenTofu](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/module_rule#schema) provider documentation.
+Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/module_rule#schema) or [OpenTofu](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/docs/resources/module_rule#schema) provider documentation.
 
 {{% /tab %}}
 {{% tab name="CLI" %}}

@@ -222,7 +222,7 @@ terraform {
   required_providers {
     # Provider for managing Orchestrator objects
     platform-orchestrator = {
-      source  = "humanitec/platform-orchestrator"
+      source  = "stellwerk-labs/platform-orchestrator"
       version = "~> 2"
     }
   }
@@ -355,7 +355,7 @@ provider "helm" {
 
 # Install the Kubernetes agent runner Helm chart and its prerequisites and register the runner with the Orchestrator
 module "kubernetes_agent_runner" {
-  source = "github.com/humanitec-tf-modules/kubernetes-agent-orchestrator-runner"
+  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner"
 
   humanitec_org_id = var.orchestrator_org
   private_key_path = "./runner_private_key.pem"
@@ -515,7 +515,7 @@ resource "platform-orchestrator_module" "k8s_workload_get_started" {
   id            = "k8s-workload-get-started"
   description   = "Simple Kubernetes Deployment in default namespace"
   resource_type = platform-orchestrator_resource_type.k8s_workload_get_started.id
-  module_source = "git::https://github.com/humanitec-tf-modules/k8s-workload-kubernetes?ref=v1.0.0"
+  module_source = "git::https://github.com/stellwerk-tf-modules/k8s-workload-kubernetes?ref=v1.0.0"
 
   module_params = {
     image = {
@@ -546,7 +546,7 @@ resource "platform-orchestrator_module_rule" "k8s_workload_get_started" {
 
 {{% include "/platform-orchestrator/docs/tutorial/include-get-started-perform-tf-apply.md" %}}
 
-To inspect the TF module code referenced by the module, go to the [GitHub source](https://github.com/humanitec-tf-modules/k8s-workload-kubernetes).
+To inspect the TF module code referenced by the module, go to the [GitHub source](https://github.com/stellwerk-tf-modules/k8s-workload-kubernetes).
 
 The Orchestrator is now configured to deploy resources of the new type `k8s-workload-get-started`. Verify it by querying the available resource types for the target project environment:
 

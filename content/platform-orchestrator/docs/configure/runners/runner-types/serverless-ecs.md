@@ -24,7 +24,7 @@ Although you can use most state storage backends with the ECS runner, we recomme
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_serverless_ecs_runner/resource.tf" %}}
+{{% github-file filename="/stellwerk-labs/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_serverless_ecs_runner/resource.tf" %}}
 
 {{% /tab %}}
 {{% tab name="CLI" %}}
@@ -57,11 +57,11 @@ The following configuration shows all available options for the `serverless-ecs`
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/serverless_ecs_runner#schema) or [OpenTofu](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/serverless_ecs_runner#schema) provider documentation.
+Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/serverless_ecs_runner#schema) or [OpenTofu](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/docs/resources/serverless_ecs_runner#schema) provider documentation.
 
 {{% details "Extended example" %}}
 
-{{% github-file filename="/Platform-Orchestrator/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_serverless_ecs_runner/resource.tf" %}}
+{{% github-file filename="/stellwerk-labs/terraform-provider-platform-orchestrator/refs/heads/main/examples/resources/platform-orchestrator_serverless_ecs_runner/resource.tf" %}}
 
 {{% /details %}}
 
@@ -238,7 +238,7 @@ The steps below serve as a general guide of the steps to configure the runner us
   - CLI: The [`octl` CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}) installed and authenticated against your Orchestrator organization
 
 {{< alert context="info" >}}
-A [public Terraform/OpenTofu module](https://github.com/humanitec-tf-modules/serverless-ecs-orchestrator-runner) is available for the ECS runner. Instead of creating the TF code manually as shown below, we recommend you use the module for greater convenience. Refer to the module description for usage instructions.
+A [public Terraform/OpenTofu module](https://github.com/stellwerk-tf-modules/serverless-ecs-orchestrator-runner) is available for the ECS runner. Instead of creating the TF code manually as shown below, we recommend you use the module for greater convenience. Refer to the module description for usage instructions.
 {{< /alert >}}
 
 ### Prepare the cloud environment

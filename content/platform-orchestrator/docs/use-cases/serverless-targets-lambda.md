@@ -28,7 +28,7 @@ You need to supply a Lambda deployment package and place it in an S3 bucket to r
 - An AWS account with appropriate permissions to set up the objects named above
 - AWS credentials configured for the [AWS provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration)
   - E.g. Having the `aws` CLI installed locally and authenticated
-- Platform Orchestrator credentials configured for the [platform-orchestrator provider](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs)
+- Platform Orchestrator credentials configured for the [platform-orchestrator provider](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs)
   - E.g. Having the `htcl` CLI installed locally and authenticated
 - Either the [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) or the [OpenTofu CLI](https://opentofu.org/docs/intro/install/) installed locally
 - (optional) An S3 bucket for Lambda deployment packages
@@ -369,7 +369,7 @@ The module creates an IAM policy that grants the ECS runner the following permis
 ## References
 
 - [Platform Orchestrator Documentation](https://docs.stellwerk.dev)
-- [Platform Orchestrator Terraform Modules](https://github.com/humanitec-tf-modules)
+- [Platform Orchestrator Terraform Modules](https://github.com/stellwerk-tf-modules)
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -393,7 +393,7 @@ The module creates an IAM policy that grants the ECS runner the following permis
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ecs_runner"></a> [ecs\_runner](#module\_ecs\_runner) | github.com/humanitec-tf-modules/serverless-ecs-orchestrator-runner | v1.1.0 |
+| <a name="module_ecs_runner"></a> [ecs\_runner](#module\_ecs\_runner) | github.com/stellwerk-tf-modules/serverless-ecs-orchestrator-runner | v1.1.0 |
 
 ## Resources
 
@@ -401,13 +401,13 @@ The module creates an IAM policy that grants the ECS runner the following permis
 |------|------|
 | [aws_iam_policy.lambda_deployment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_role_policy_attachment.ecs_runner_lambda_deployment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-| [platform-orchestrator_environment.this](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/environment) | resource |
-| [platform-orchestrator_environment_type.this](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/environment_type) | resource |
-| [platform-orchestrator_module.lambda_zip](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/module) | resource |
-| [platform-orchestrator_module_rule.lambda_zip](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/module_rule) | resource |
-| [platform-orchestrator_project.this](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/project) | resource |
-| [platform-orchestrator_resource_type.lambda_zip](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/resource_type) | resource |
-| [platform-orchestrator_runner_rule.this](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/runner_rule) | resource |
+| [platform-orchestrator_environment.this](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/environment) | resource |
+| [platform-orchestrator_environment_type.this](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/environment_type) | resource |
+| [platform-orchestrator_module.lambda_zip](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/module) | resource |
+| [platform-orchestrator_module_rule.lambda_zip](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/module_rule) | resource |
+| [platform-orchestrator_project.this](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/project) | resource |
+| [platform-orchestrator_resource_type.lambda_zip](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/resource_type) | resource |
+| [platform-orchestrator_runner_rule.this](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/runner_rule) | resource |
 | [random_id.env_type_id](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [random_id.lambda_module_id](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [random_id.project_id](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |

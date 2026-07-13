@@ -18,7 +18,7 @@ Developers order resources of a certain type and can expect the defined outputs 
 
 Resource types allow for a clear separation of concerns and responsibilities that is facilitated by the Orchestrator.
 
-You can create and manage resource types using the [octl CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}), [Terraform provider](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/resource_type), [OpenTofu provider](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/resource_type), or [API]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}).
+You can create and manage resource types using the [octl CLI]({{< relref "/platform-orchestrator/docs/integrations/cli" >}}), [Terraform provider](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/resource_type), [OpenTofu provider](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/docs/resources/resource_type), or [API]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}).
 
 ## Basic Example
 
@@ -105,7 +105,7 @@ A resource type has these fields:
 {{< tabs >}}
 {{% tab name="TF" %}}
 
-Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/humanitec/platform-orchestrator/latest/docs/resources/resource_type#schema) or [OpenTofu](https://search.opentofu.org/provider/humanitec/platform-orchestrator/latest/docs/resources/resource_type#schema) provider documentation.
+Refer to the resource schema in the [Terraform](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/resource_type#schema) or [OpenTofu](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest/docs/resources/resource_type#schema) provider documentation.
 
 {{% /tab %}}
 {{% tab name="CLI" %}}
