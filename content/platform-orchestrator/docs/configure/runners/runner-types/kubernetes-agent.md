@@ -47,7 +47,7 @@ runner_configuration:
           app.kubernetes.io/name: platform-orchestrator-runner
 state_storage_configuration:
   type: kubernetes
-  namespace: humanitec
+  namespace: platform-orchestrator
   ...
 ```
 
@@ -165,20 +165,20 @@ If your private Git service requires authentication, you need to configure the r
 
 ### Helm chart
 
-Make the public `humanitec-kubernetes-agent-runner` Helm chart available in an OCI registry within your infrastructure.
+Make the public `platform-orchestrator-kubernetes-agent-runner` Helm chart available in an OCI registry within your infrastructure.
 
 ```bash
 # Pull the Helm chart
-helm pull oci://ghcr.io/humanitec/charts/humanitec-kubernetes-agent-runner
+helm pull oci://ghcr.io/stellwerk-labs/charts/platform-orchestrator-kubernetes-agent-runner
 # Or pull a particular chart version
-# helm pull oci://ghcr.io/humanitec/charts/humanitec-kubernetes-agent-runner --version X.Y.Z
+# helm pull oci://ghcr.io/stellwerk-labs/charts/platform-orchestrator-kubernetes-agent-runner --version X.Y.Z
 
 # Push the Helm chart to your internal registry
 # Adjust your registry domain and charts path according to your setup
-helm push humanitec-kubernetes-agent-runner-X.Y.Z.tgz oci://myregistry.example.com/charts
+helm push platform-orchestrator-kubernetes-agent-runner-X.Y.Z.tgz oci://myregistry.example.com/charts
 ```
 
-The chart must be named `humanitec-kubernetes-agent-runner` in your registry.
+The chart must be named `platform-orchestrator-kubernetes-agent-runner` in your registry.
 
 If your registry requires authentication, refer to the [`helm push` command](https://helm.sh/docs/helm/helm_push) for details on pushing the chart using credentials, or execute a [`helm registry login` command](https://helm.sh/docs/helm/helm_registry_login).
 
@@ -251,21 +251,21 @@ terraform {
 
 ```hcl
 locals {
-  kubeconfig_context = "<context-in-your-kubeconfig>"
-  humanitec_org      = "<my-org>"
-  runner_id          = "kubernetes-agent-${local.kubeconfig_context}" # Adjust the ID at your discretion
+  kubeconfig_context        = "<context-in-your-kubeconfig>"
+  platform_orchestrator_org = "<my-org>"
+  runner_id                 = "kubernetes-agent-${local.kubeconfig_context}" # Adjust the ID at your discretion
 
   # The Kubernetes namespace where the kubernetes-agent runner should run
-  cluster_runner_namespace = "humanitec-kubernetes-agent-runner-ns"
+  cluster_runner_namespace = "platform-orchestrator-kubernetes-agent-runner-ns"
 
   # The name of the Kubernetes service account to be assumed by the kubernetes-agent runner
-  cluster_runner_serviceaccount = "humanitec-kubernetes-agent-runner"
+  cluster_runner_serviceaccount = "platform-orchestrator-kubernetes-agent-runner"
 
   # The Kubernetes namespace where the deployment jobs should run
-  cluster_runner_job_namespace = "humanitec-kubernetes-agent-runner-job-ns"
+  cluster_runner_job_namespace = "platform-orchestrator-kubernetes-agent-runner-job-ns"
 
   # The name of the Kubernetes service account to be assumed by the deployment jobs created by the kubernetes-agent runner
-  cluster_runner_job_serviceaccount = "humanitec-kubernetes-agent-runner-job"
+  cluster_runner_job_serviceaccount = "platform-orchestrator-kubernetes-agent-runner-job"
 }
 ```
 
@@ -278,7 +278,7 @@ Use TF variables of your module instead of placing the raw values in the `locals
 ```json
 # Platform Orchestrator provider. Authentication taken from local "octl" CLI
 provider "platform-orchestrator" {
-  org_id = local.humanitec_org
+  org_id = local.platform_orchestrator_org
 }
 
 # Kubernetes provider. Authentication taken from local kubeconfig context
@@ -307,19 +307,19 @@ provider "helm" {
 
 ```bash
 export PO_ORG_ID=<my-org>
-export KUBERNETES_AGENT_RUNNER_CHART_REPOSITORY="oci://ghcr.io/humanitec/charts"
+export KUBERNETES_AGENT_RUNNER_CHART_REPOSITORY="oci://ghcr.io/stellwerk-labs/charts"
 
 # The Kubernetes namespace where the kubernetes-agent runner should run
-export CLUSTER_RUNNER_NAMESPACE="humanitec-kubernetes-agent-runner-ns"
+export CLUSTER_RUNNER_NAMESPACE="platform-orchestrator-kubernetes-agent-runner-ns"
 
 # The name of the Kubernetes service account to be assumed by the kubernetes-agent runner
-export CLUSTER_RUNNER_SERVICEACCOUNT="humanitec-kubernetes-agent-runner"
+export CLUSTER_RUNNER_SERVICEACCOUNT="platform-orchestrator-kubernetes-agent-runner"
 
 # The Kubernetes namespace where the deployment jobs should run
-export CLUSTER_RUNNER_JOB_NAMESPACE="humanitec-kubernetes-agent-runner-job-ns"
+export CLUSTER_RUNNER_JOB_NAMESPACE="platform-orchestrator-kubernetes-agent-runner-job-ns"
 
 # The name of the Kubernetes service account to be assumed by the deployment jobs created by the kubernetes-agent runner
-export CLUSTER_RUNNER_JOB_SERVICEACCOUNT="humanitec-kubernetes-agent-runner-job"
+export CLUSTER_RUNNER_JOB_SERVICEACCOUNT="platform-orchestrator-kubernetes-agent-runner-job"
 ```
 
 {{% include "/platform-orchestrator/docs/configure/runners/runner-types/include-kubernetes-agent-runner-self-hosting-cli-values.md" %}}
@@ -340,7 +340,7 @@ module "kubernetes_agent_runner" {
   # To pin a specific module release, use this notation:
   # source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
 
-  humanitec_org_id             = local.humanitec_org
+  humanitec_org_id             = local.platform_orchestrator_org
   runner_id                    = local.runner_id
   private_key_path             = "./runner_private_key.pem"
   public_key_path              = "./runner_public_key.pem"
@@ -408,7 +408,7 @@ export RUNNER_ID=kubernetes-agent-${KUBECONFIG_CONTEXT}  # Adjust the ID at your
 ```bash
 kubectl create namespace ${CLUSTER_RUNNER_NAMESPACE}
 
-kubectl create secret generic humanitec-kubernetes-agent-runner \
+kubectl create secret generic platform-orchestrator-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
   --from-literal=private_key="$(cat runner_private_key.pem)"
 ```
@@ -430,12 +430,12 @@ octl create runner ${RUNNER_ID} \
 7. Install the runner Helm chart onto the cluster, providing required values:
 
 ```bash
-helm install humanitec-kubernetes-agent-runner \
-  ${KUBERNETES_AGENT_RUNNER_CHART_REPOSITORY}/humanitec-kubernetes-agent-runner \
+helm install platform-orchestrator-kubernetes-agent-runner \
+  ${KUBERNETES_AGENT_RUNNER_CHART_REPOSITORY}/platform-orchestrator-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
-  --set humanitec.orgId=${PO_ORG_ID} \
-  --set humanitec.runnerId=${RUNNER_ID} \
-  --set humanitec.existingSecret=humanitec-kubernetes-agent-runner \
+  --set platformOrchestrator.orgId=${PO_ORG_ID} \
+  --set platformOrchestrator.runnerId=${RUNNER_ID} \
+  --set platformOrchestrator.existingSecret=platform-orchestrator-kubernetes-agent-runner \
   --set namespaceOverride=${CLUSTER_RUNNER_NAMESPACE} \
   --set serviceAccount.name=${CLUSTER_RUNNER_SERVICEACCOUNT} \
   --set jobsRbac.namespace=${CLUSTER_RUNNER_JOB_NAMESPACE} \
@@ -510,23 +510,23 @@ terraform {
 
 ```hcl
 locals {
-  aws_account_id = "<my-aws-account-id>"
-  aws_region     = "<my-aws-region>"
-  cluster_name   = "<my-eks-cluster-name>"
-  humanitec_org  = "<my-org>"
-  runner_id      = "kubernetes-agent-${local.cluster_name}" # Adjust the ID at your discretion
+  aws_account_id            = "<my-aws-account-id>"
+  aws_region                = "<my-aws-region>"
+  cluster_name              = "<my-eks-cluster-name>"
+  platform_orchestrator_org = "<my-org>"
+  runner_id                 = "kubernetes-agent-${local.cluster_name}" # Adjust the ID at your discretion
 
   # The Kubernetes namespace where the kubernetes-agent runner should run
-  cluster_runner_namespace = "humanitec-kubernetes-agent-runner-ns"
+  cluster_runner_namespace = "platform-orchestrator-kubernetes-agent-runner-ns"
 
   # The name of the Kubernetes service account to be assumed by the kubernetes-agent runner
-  cluster_runner_serviceaccount = "humanitec-kubernetes-agent-runner"
+  cluster_runner_serviceaccount = "platform-orchestrator-kubernetes-agent-runner"
 
   # The Kubernetes namespace where the deployment jobs should run
-  cluster_runner_job_namespace = "humanitec-kubernetes-agent-runner-job-ns"
+  cluster_runner_job_namespace = "platform-orchestrator-kubernetes-agent-runner-job-ns"
 
   # The name of the Kubernetes service account to be assumed by the deployment jobs created by the kubernetes-agent runner
-  cluster_runner_job_serviceaccount = "humanitec-kubernetes-agent-runner-job"
+  cluster_runner_job_serviceaccount = "platform-orchestrator-kubernetes-agent-runner-job"
 }
 ```
 
@@ -561,7 +561,7 @@ provider "aws" {
 
 # Platform Orchestrator provider. Authentication taken from local "octl" CLI
 provider "platform-orchestrator" {
-  org_id = local.humanitec_org
+  org_id = local.platform_orchestrator_org
 }
 
 # Kubernetes provider. Authentication taken from local "aws" CLI
@@ -624,7 +624,7 @@ data "aws_iam_policy_document" "assume_role" {
 
 # This role will be assumed by the runner jobs
 resource "aws_iam_role" "agent_runner_irsa_role" {
-  name               = "humanitec-kubernetes-agent-runner-${local.cluster_name}"
+  name               = "platform-orchestrator-kubernetes-agent-runner-${local.cluster_name}"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 ```
@@ -653,16 +653,16 @@ export AWS_REGION=<my-aws-region>
 export CLUSTER_NAME=<my-eks-cluster-name>
 
 # The Kubernetes namespace where the kubernetes-agent runner should run
-export CLUSTER_RUNNER_NAMESPACE="humanitec-kubernetes-agent-runner-ns"
+export CLUSTER_RUNNER_NAMESPACE="platform-orchestrator-kubernetes-agent-runner-ns"
 
 # The name of the Kubernetes service account to be assumed by the kubernetes-agent runner
-export CLUSTER_RUNNER_SERVICEACCOUNT="humanitec-kubernetes-agent-runner"
+export CLUSTER_RUNNER_SERVICEACCOUNT="platform-orchestrator-kubernetes-agent-runner"
 
 # The Kubernetes namespace where the deployment jobs should run
-export CLUSTER_RUNNER_JOB_NAMESPACE="humanitec-kubernetes-agent-runner-job-ns"
+export CLUSTER_RUNNER_JOB_NAMESPACE="platform-orchestrator-kubernetes-agent-runner-job-ns"
 
 # The name of the Kubernetes service account to be assumed by the deployment jobs created by the kubernetes-agent runner
-export CLUSTER_RUNNER_JOB_SERVICEACCOUNT="humanitec-kubernetes-agent-runner-job"
+export CLUSTER_RUNNER_JOB_SERVICEACCOUNT="platform-orchestrator-kubernetes-agent-runner-job"
 ```
 
 {{% include "/platform-orchestrator/docs/configure/runners/runner-types/include-kubernetes-agent-runner-self-hosting-cli-values.md" %}}
@@ -678,7 +678,7 @@ echo $CLUSTER_OIDC_ISSUER
 3. Create an IAM role for IRSA that allows the Kubernetes service account used by the runner jobs to assume it:
 
 ```bash
-export RUNNER_ROLE_NAME=humanitec-kubernetes-agent-runner-${CLUSTER_NAME}
+export RUNNER_ROLE_NAME=platform-orchestrator-kubernetes-agent-runner-${CLUSTER_NAME}
 
 aws iam create-role \
   --role-name ${RUNNER_ROLE_NAME} \
@@ -726,7 +726,7 @@ module "kubernetes_agent_runner" {
   # To pin a specific module release, use this notation:
   # source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
 
-  humanitec_org_id             = local.humanitec_org
+  humanitec_org_id             = local.platform_orchestrator_org
   runner_id                    = local.runner_id
   private_key_path             = "./runner_private_key.pem"
   public_key_path              = "./runner_public_key.pem"
@@ -806,7 +806,7 @@ export RUNNER_ID=kubernetes-agent-${CLUSTER_NAME}
 ```bash
 kubectl create namespace ${CLUSTER_RUNNER_NAMESPACE}
 
-kubectl create secret generic humanitec-kubernetes-agent-runner \
+kubectl create secret generic platform-orchestrator-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
   --from-literal=private_key="$(cat runner_private_key.pem)"
 ```
@@ -820,12 +820,12 @@ kubectl create namespace ${CLUSTER_RUNNER_JOB_NAMESPACE}
 9. Install the runner Helm chart onto the cluster, providing required values:
 
 ```bash
-helm install humanitec-kubernetes-agent-runner \
-  oci://ghcr.io/humanitec/charts/humanitec-kubernetes-agent-runner \
+helm install platform-orchestrator-kubernetes-agent-runner \
+  oci://ghcr.io/stellwerk-labs/charts/platform-orchestrator-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
-  --set humanitec.orgId=${PO_ORG_ID} \
-  --set humanitec.runnerId=${RUNNER_ID} \
-  --set humanitec.existingSecret=humanitec-kubernetes-agent-runner \
+  --set platformOrchestrator.orgId=${PO_ORG_ID} \
+  --set platformOrchestrator.runnerId=${RUNNER_ID} \
+  --set platformOrchestrator.existingSecret=platform-orchestrator-kubernetes-agent-runner \
   --set namespaceOverride=${CLUSTER_RUNNER_NAMESPACE} \
   --set serviceAccount.name=${CLUSTER_RUNNER_SERVICEACCOUNT} \
   --set jobsRbac.namespace=${CLUSTER_RUNNER_JOB_NAMESPACE} \
@@ -912,23 +912,23 @@ terraform {
 
 ```hcl
 locals {
-  gcp_project_id = "<my-gcp-project-id>"
-  gcp_region     = "<my-gcp-region>"
-  cluster_name   = "<my-gke-cluster-name>"
-  humanitec_org  = "<my-org>"
-  runner_id      = "kubernetes-agent-${local.cluster_name}" # Adjust the ID at your discretion
+  gcp_project_id           = "<my-gcp-project-id>"
+  gcp_region               = "<my-gcp-region>"
+  cluster_name             = "<my-gke-cluster-name>"
+  platform_orchestrator_org = "<my-org>"
+  runner_id                = "kubernetes-agent-${local.cluster_name}" # Adjust the ID at your discretion
 
   # The Kubernetes namespace where the kubernetes-agent runner should run
-  cluster_runner_namespace = "humanitec-kubernetes-agent-runner-ns"
+  cluster_runner_namespace = "platform-orchestrator-kubernetes-agent-runner-ns"
 
   # The name of the Kubernetes service account to be assumed by the kubernetes-agent runner
-  cluster_runner_serviceaccount = "humanitec-kubernetes-agent-runner"
+  cluster_runner_serviceaccount = "platform-orchestrator-kubernetes-agent-runner"
 
   # The Kubernetes namespace where the deployment jobs should run
-  cluster_runner_job_namespace = "humanitec-kubernetes-agent-runner-job-ns"
+  cluster_runner_job_namespace = "platform-orchestrator-kubernetes-agent-runner-job-ns"
 
   # The name of the Kubernetes service account to be assumed by the deployment jobs created by the kubernetes-agent runner
-  cluster_runner_job_serviceaccount = "humanitec-kubernetes-agent-runner-job"
+  cluster_runner_job_serviceaccount = "platform-orchestrator-kubernetes-agent-runner-job"
 }
 ```
 
@@ -964,7 +964,7 @@ provider "google" {
 
 # Platform Orchestrator provider. Authentication taken from local "octl" CLI
 provider "platform-orchestrator" {
-  org_id = local.humanitec_org
+  org_id = local.platform_orchestrator_org
 }
 
 # Kubernetes provider. Authentication taken from local "gke-gcloud-auth-plugin" CLI
@@ -996,13 +996,13 @@ provider "helm" {
 
 ```json
 # This GCP service account will be used by the runner
-resource "google_service_account" "humanitec_kubernetes_agent" {
+resource "google_service_account" "platform_orchestrator_kubernetes_agent" {
   account_id   = "runner-${local.cluster_name}"
   display_name = "Orchestrator Kubernetes agent runner on cluster ${local.cluster_name}"
 }
 
 resource "google_service_account_iam_member" "workload_identity_binding" {
-  service_account_id = google_service_account.humanitec_kubernetes_agent.id
+  service_account_id = google_service_account.platform_orchestrator_kubernetes_agent.id
   role               = "roles/iam.workloadIdentityUser"
   member             = "serviceAccount:${local.gcp_project_id}.svc.id.goog[${local.cluster_runner_job_namespace}/${local.cluster_runner_job_serviceaccount}]"
 }
@@ -1019,16 +1019,16 @@ export CLUSTER_LOCATION=<my-cluster-region>
 export CLUSTER_NAME=<my-cluster-name>
 
 # The Kubernetes namespace where the kubernetes-agent runner should run
-export CLUSTER_RUNNER_NAMESPACE="humanitec-kubernetes-agent-runner-ns"
+export CLUSTER_RUNNER_NAMESPACE="platform-orchestrator-kubernetes-agent-runner-ns"
 
 # The name of the Kubernetes service account to be assumed by the kubernetes-agent runner
-export CLUSTER_RUNNER_SERVICEACCOUNT="humanitec-kubernetes-agent-runner"
+export CLUSTER_RUNNER_SERVICEACCOUNT="platform-orchestrator-kubernetes-agent-runner"
 
 # The Kubernetes namespace where the deployment jobs should run
-export CLUSTER_RUNNER_JOB_NAMESPACE="humanitec-kubernetes-agent-runner-job-ns"
+export CLUSTER_RUNNER_JOB_NAMESPACE="platform-orchestrator-kubernetes-agent-runner-job-ns"
 
 # The name of the Kubernetes service account to be assumed by the deployment jobs created by the kubernetes-agent runner
-export CLUSTER_RUNNER_JOB_SERVICEACCOUNT="humanitec-kubernetes-agent-runner-job"
+export CLUSTER_RUNNER_JOB_SERVICEACCOUNT="platform-orchestrator-kubernetes-agent-runner-job"
 ```
 
 {{% include "/platform-orchestrator/docs/configure/runners/runner-types/include-kubernetes-agent-runner-self-hosting-cli-values.md" %}}
@@ -1075,7 +1075,7 @@ module "kubernetes_agent_runner" {
   # To pin a specific module release, use this notation:
   # source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
 
-  humanitec_org_id             = local.humanitec_org
+  humanitec_org_id             = local.platform_orchestrator_org
   runner_id                    = local.runner_id
   private_key_path             = "./runner_private_key.pem"
   public_key_path              = "./runner_public_key.pem"
@@ -1086,7 +1086,7 @@ module "kubernetes_agent_runner" {
 
   # GKE Workload Identity configuration - link to the GCP service account created above
   service_account_annotations = {
-    "iam.gke.io/gcp-service-account" = google_service_account.humanitec_kubernetes_agent.email
+    "iam.gke.io/gcp-service-account" = google_service_account.platform_orchestrator_kubernetes_agent.email
   }
 }
 
@@ -1104,7 +1104,7 @@ output "runner_id" {
 resource "google_project_iam_member" "agent_runner_cloudsql_admin" {
   project = local.gcp_project_id
   role    = "roles/cloudsql.admin"
-  member  = "serviceAccount:${google_service_account.humanitec_kubernetes_agent.email}"
+  member  = "serviceAccount:${google_service_account.platform_orchestrator_kubernetes_agent.email}"
 }
 ```
 
@@ -1154,7 +1154,7 @@ export RUNNER_ID=kubernetes-agent-${CLUSTER_NAME}
 ```bash
 kubectl create namespace ${CLUSTER_RUNNER_NAMESPACE}
 
-kubectl create secret generic humanitec-kubernetes-agent-runner \
+kubectl create secret generic platform-orchestrator-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
   --from-literal=private_key="$(cat runner_private_key.pem)"
 ```
@@ -1168,12 +1168,12 @@ kubectl create namespace ${CLUSTER_RUNNER_JOB_NAMESPACE}
 9. Install the runner Helm chart onto the cluster, providing required values:
 
 ```bash
-helm install humanitec-kubernetes-agent-runner \
-  oci://ghcr.io/humanitec/charts/humanitec-kubernetes-agent-runner \
+helm install platform-orchestrator-kubernetes-agent-runner \
+  oci://ghcr.io/stellwerk-labs/charts/platform-orchestrator-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
-  --set humanitec.orgId=${PO_ORG_ID} \
-  --set humanitec.runnerId=${RUNNER_ID} \
-  --set humanitec.existingSecret=humanitec-kubernetes-agent-runner \
+  --set platformOrchestrator.orgId=${PO_ORG_ID} \
+  --set platformOrchestrator.runnerId=${RUNNER_ID} \
+  --set platformOrchestrator.existingSecret=platform-orchestrator-kubernetes-agent-runner \
   --set namespaceOverride=${CLUSTER_RUNNER_NAMESPACE} \
   --set serviceAccount.name=${CLUSTER_RUNNER_SERVICEACCOUNT} \
   --set jobsRbac.namespace=${CLUSTER_RUNNER_JOB_NAMESPACE} \
@@ -1257,23 +1257,23 @@ terraform {
 
 ```hcl
 locals {
-  azure_subscription_id = "<my-azure-subscription-id>"
-  azure_resource_group  = "<my-azure-resource-group>"
-  cluster_name          = "<my-aks-cluster-name>"
-  humanitec_org         = "<my-org>"
-  runner_id             = "kubernetes-agent-${local.cluster_name}" # Adjust the ID at your discretion
+  azure_subscription_id      = "<my-azure-subscription-id>"
+  azure_resource_group       = "<my-azure-resource-group>"
+  cluster_name               = "<my-aks-cluster-name>"
+  platform_orchestrator_org  = "<my-org>"
+  runner_id                  = "kubernetes-agent-${local.cluster_name}" # Adjust the ID at your discretion
 
   # The Kubernetes namespace where the kubernetes-agent runner should run
-  cluster_runner_namespace = "humanitec-kubernetes-agent-runner-ns"
+  cluster_runner_namespace = "platform-orchestrator-kubernetes-agent-runner-ns"
 
   # The name of the Kubernetes service account to be assumed by the kubernetes-agent runner
-  cluster_runner_serviceaccount = "humanitec-kubernetes-agent-runner"
+  cluster_runner_serviceaccount = "platform-orchestrator-kubernetes-agent-runner"
 
   # The Kubernetes namespace where the deployment jobs should run
-  cluster_runner_job_namespace = "humanitec-kubernetes-agent-runner-job-ns"
+  cluster_runner_job_namespace = "platform-orchestrator-kubernetes-agent-runner-job-ns"
 
   # The name of the Kubernetes service account to be assumed by the deployment jobs created by the kubernetes-agent runner
-  cluster_runner_job_serviceaccount = "humanitec-kubernetes-agent-runner-job"
+  cluster_runner_job_serviceaccount = "platform-orchestrator-kubernetes-agent-runner-job"
 }
 ```
 
@@ -1307,7 +1307,7 @@ provider "azurerm" {
 
 # Platform Orchestrator provider. Authentication taken from local "octl" CLI
 provider "platform-orchestrator" {
-  org_id = local.humanitec_org
+  org_id = local.platform_orchestrator_org
 }
 
 # Kubernetes provider. Authentication taken from local kubeconfig context
@@ -1334,16 +1334,16 @@ provider "helm" {
 
 ```hcl
 # This managed identity will be assumed by the runner jobs
-resource "azurerm_user_assigned_identity" "humanitec_kubernetes_agent" {
-  name                = "humanitec-kubernetes-agent-runner-${local.cluster_name}"
+resource "azurerm_user_assigned_identity" "platform_orchestrator_kubernetes_agent" {
+  name                = "platform-orchestrator-kubernetes-agent-runner-${local.cluster_name}"
   resource_group_name = local.azure_resource_group
   location            = data.azurerm_kubernetes_cluster.cluster.location
 }
 
 # Allow the Kubernetes service account used by the runner jobs to assume the managed identity
-resource "azurerm_federated_identity_credential" "humanitec_kubernetes_agent" {
-  name                = "humanitec-kubernetes-agent-runner"
-  parent_id           = azurerm_user_assigned_identity.humanitec_kubernetes_agent.id
+resource "azurerm_federated_identity_credential" "platform_orchestrator_kubernetes_agent" {
+  name                = "platform-orchestrator-kubernetes-agent-runner"
+  parent_id           = azurerm_user_assigned_identity.platform_orchestrator_kubernetes_agent.id
   issuer              = local.cluster_oidc_issuer_url
   subject             = "system:serviceaccount:${local.cluster_runner_job_namespace}:${local.cluster_runner_job_serviceaccount}"
   audience            = ["api://AzureADTokenExchange"]
@@ -1361,16 +1361,16 @@ export AZURE_RESOURCE_GROUP=<my-azure-resource-group>
 export CLUSTER_NAME=<my-aks-cluster-name>
 
 # The Kubernetes namespace where the kubernetes-agent runner should run
-export CLUSTER_RUNNER_NAMESPACE="humanitec-kubernetes-agent-runner-ns"
+export CLUSTER_RUNNER_NAMESPACE="platform-orchestrator-kubernetes-agent-runner-ns"
 
 # The name of the Kubernetes service account to be assumed by the kubernetes-agent runner
-export CLUSTER_RUNNER_SERVICEACCOUNT="humanitec-kubernetes-agent-runner"
+export CLUSTER_RUNNER_SERVICEACCOUNT="platform-orchestrator-kubernetes-agent-runner"
 
 # The Kubernetes namespace where the deployment jobs should run
-export CLUSTER_RUNNER_JOB_NAMESPACE="humanitec-kubernetes-agent-runner-job-ns"
+export CLUSTER_RUNNER_JOB_NAMESPACE="platform-orchestrator-kubernetes-agent-runner-job-ns"
 
 # The name of the Kubernetes service account to be assumed by the deployment jobs created by the kubernetes-agent runner
-export CLUSTER_RUNNER_JOB_SERVICEACCOUNT="humanitec-kubernetes-agent-runner-job"
+export CLUSTER_RUNNER_JOB_SERVICEACCOUNT="platform-orchestrator-kubernetes-agent-runner-job"
 ```
 
 {{% include "/platform-orchestrator/docs/configure/runners/runner-types/include-kubernetes-agent-runner-self-hosting-cli-values.md" %}}
@@ -1390,7 +1390,7 @@ echo $CLUSTER_OIDC_ISSUER
 3. Create a User Assigned Managed Identity for the runner jobs:
 
 ```bash
-export MANAGED_IDENTITY_NAME=humanitec-kubernetes-agent-runner-${CLUSTER_NAME}
+export MANAGED_IDENTITY_NAME=platform-orchestrator-kubernetes-agent-runner-${CLUSTER_NAME}
 
 az identity create \
   --name ${MANAGED_IDENTITY_NAME} \
@@ -1402,7 +1402,7 @@ az identity create \
 
 ```bash
 az identity federated-credential create \
-  --name humanitec-kubernetes-agent-runner \
+  --name platform-orchestrator-kubernetes-agent-runner \
   --identity-name ${MANAGED_IDENTITY_NAME} \
   --resource-group ${AZURE_RESOURCE_GROUP} \
   --issuer ${CLUSTER_OIDC_ISSUER} \
@@ -1426,7 +1426,7 @@ module "kubernetes_agent_runner" {
   # To pin a specific module release, use this notation:
   # source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
 
-  humanitec_org_id             = local.humanitec_org
+  humanitec_org_id             = local.platform_orchestrator_org
   runner_id                    = local.runner_id
   private_key_path             = "./runner_private_key.pem"
   public_key_path              = "./runner_public_key.pem"
@@ -1439,7 +1439,7 @@ module "kubernetes_agent_runner" {
   # - the service account annotation identifies the managed identity to use
   # - the pod label triggers token injection by the AKS Workload Identity webhook
   service_account_annotations = {
-    "azure.workload.identity/client-id" = azurerm_user_assigned_identity.humanitec_kubernetes_agent.client_id
+    "azure.workload.identity/client-id" = azurerm_user_assigned_identity.platform_orchestrator_kubernetes_agent.client_id
   }
   pod_template = jsonencode({
     metadata = {
@@ -1464,7 +1464,7 @@ output "runner_id" {
 resource "azurerm_role_assignment" "agent_runner_sql_contributor" {
   scope                = "/subscriptions/${local.azure_subscription_id}/resourceGroups/${local.azure_resource_group}"
   role_definition_name = "SQL Server Contributor"
-  principal_id         = azurerm_user_assigned_identity.humanitec_kubernetes_agent.principal_id
+  principal_id         = azurerm_user_assigned_identity.platform_orchestrator_kubernetes_agent.principal_id
 }
 ```
 
@@ -1518,7 +1518,7 @@ export RUNNER_ID=kubernetes-agent-${CLUSTER_NAME}
 ```bash
 kubectl create namespace ${CLUSTER_RUNNER_NAMESPACE}
 
-kubectl create secret generic humanitec-kubernetes-agent-runner \
+kubectl create secret generic platform-orchestrator-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
   --from-literal=private_key="$(cat runner_private_key.pem)"
 ```
@@ -1537,12 +1537,12 @@ export MANAGED_IDENTITY_CLIENT_ID=$(az identity show \
   --resource-group ${AZURE_RESOURCE_GROUP} \
   --query clientId -o tsv)
 
-helm install humanitec-kubernetes-agent-runner \
-  oci://ghcr.io/humanitec/charts/humanitec-kubernetes-agent-runner \
+helm install platform-orchestrator-kubernetes-agent-runner \
+  oci://ghcr.io/stellwerk-labs/charts/platform-orchestrator-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
-  --set humanitec.orgId=${PO_ORG_ID} \
-  --set humanitec.runnerId=${RUNNER_ID} \
-  --set humanitec.existingSecret=humanitec-kubernetes-agent-runner \
+  --set platformOrchestrator.orgId=${PO_ORG_ID} \
+  --set platformOrchestrator.runnerId=${RUNNER_ID} \
+  --set platformOrchestrator.existingSecret=platform-orchestrator-kubernetes-agent-runner \
   --set namespaceOverride=${CLUSTER_RUNNER_NAMESPACE} \
   --set serviceAccount.name=${CLUSTER_RUNNER_SERVICEACCOUNT} \
   --set jobsRbac.namespace=${CLUSTER_RUNNER_JOB_NAMESPACE} \

@@ -10,6 +10,6 @@ In a [self-hosting](#self-hosting-requirements) setup only, append these setting
   --version ${KUBERNETES_AGENT_RUNNER_CHART_VERSION} \
   --set image.repository=${KUBERNETES_AGENT_RUNNER_IMAGE_REPOSITORY} \
   --set image.tag=${KUBERNETES_AGENT_RUNNER_IMAGE_TAG} \
-  --set-json humanitec.extraEnvVars='[{"name":"REMOTE_URL","value":"'${ORCHESTRATOR_API_URL}'"}]' \
+  --set-json platformOrchestrator.extraEnvVars='[{"name":"REMOTE_URL","value":"'${ORCHESTRATOR_API_URL}'"}]' \
   # ... use all other values as shown above
 ```
