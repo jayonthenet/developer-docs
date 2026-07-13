@@ -14,3 +14,26 @@ To continuously manage your Platform Orchestrator configuration following an IaC
 - [OpenTofu](https://search.opentofu.org/provider/stellwerk-labs/platform-orchestrator/latest)
 
 Refer to the provider documentation in the respective registry for all usage details.
+
+The same provider declaration works with Terraform and OpenTofu:
+
+```hcl
+terraform {
+  required_providers {
+    platform-orchestrator = {
+      source  = "stellwerk-labs/platform-orchestrator"
+      version = "~> 1.0"
+    }
+  }
+}
+```
+
+Initialize it with either CLI:
+
+```bash
+terraform init
+# or
+tofu init
+```
+
+OpenTofu resolves the provider through `registry.opentofu.org` and verifies its published signature.

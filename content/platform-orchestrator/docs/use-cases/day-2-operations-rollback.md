@@ -10,8 +10,8 @@ toc: true
 The Platform Orchestrator can remediate application or infrastructure issues introduced by faulty deployments by executing a rollback to a previous, stable configuration.
 
 > ℹ️ **Note**
-> 
-> While we are preparing the full use case implementation, you can already see the Platform Orchestrator in action with your own technology stack. [Book a session with us here](https://stellwerk.dev).
+>
+> This use case is planned but not implemented yet.
 
 When a deployment causes instability in an application or its dependencies, the Platform Orchestrator allows teams to rapidly restore a previously known good state without manual reconstruction of configs or infrastructure.
 
@@ -21,7 +21,7 @@ The rollback is executed like any other deployment and supports dry run and plan
 
 ## References
 
-- [Platform Orchestrator Documentation](https://docs.stellwerk.dev)
+- [Platform Orchestrator Documentation](https://docs.stellwerk.dev/platform-orchestrator/)
 - [Platform Orchestrator Terraform Modules](https://github.com/stellwerk-tf-modules)
 
 <!-- BEGIN_TF_DOCS -->

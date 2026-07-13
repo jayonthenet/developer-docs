@@ -10,8 +10,8 @@ toc: true
 The Platform Orchestrator can detect infrastructure drift on a resource level and pinpoint the impacted environments for a complete situation assessment.
 
 > ℹ️ **Note**
-> 
-> While we are preparing the full use case implementation, you can already see the Platform Orchestrator in action with your own technology stack. [Book a session with us here](https://stellwerk.dev).
+>
+> This use case is planned but not implemented yet.
 
 Rollout management in the context of the Stellwerk Platform Orchestrator enables platform teams to safely and efficiently propagate infrastructure changes, such as security patches or configuration updates, across multiple environments. When a misconfiguration is detected in a shared module (for example, a module provisioning S3 buckets with incorrect access controls), the Orchestrator provides the ability to immediately assess the scope and impact of the issue.
 
@@ -26,7 +26,7 @@ By leveraging these capabilities, the Platform Orchestrator ensures that updates
 
 ## References
 
-- [Platform Orchestrator Documentation](https://docs.stellwerk.dev)
+- [Platform Orchestrator Documentation](https://docs.stellwerk.dev/platform-orchestrator/)
 - [Platform Orchestrator Terraform Modules](https://github.com/stellwerk-tf-modules)
 
 <!-- BEGIN_TF_DOCS -->

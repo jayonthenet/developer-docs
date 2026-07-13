@@ -10,8 +10,8 @@ toc: true
 The Platform Orchestrator can assist in rightsizing infrastructure resources by applying more cost efficient configurations.
 
 > ℹ️ **Note**
-> 
-> While we are preparing the full use case implementation, you can already see the Platform Orchestrator in action with your own technology stack. [Book a session with us here](https://stellwerk.dev).
+>
+> This use case is planned but not implemented yet.
 
 Organizations often encounter situations where infrastructure resources, such as databases, are over-provisioned relative to their actual workload requirements. This leads to unnecessary operational costs and inefficient resource utilization. The Stellwerk Platform Orchestrator addresses this challenge by providing a centralized, rule-based orchestration layer that enables proactive rightsizing of resources for optimal cost control.
 
@@ -21,7 +21,7 @@ This dynamic configuration management approach not only streamlines the process 
 
 ## References
 
-- [Platform Orchestrator Documentation](https://docs.stellwerk.dev)
+- [Platform Orchestrator Documentation](https://docs.stellwerk.dev/platform-orchestrator/)
 - [Platform Orchestrator Terraform Modules](https://github.com/stellwerk-tf-modules)
 
 <!-- BEGIN_TF_DOCS -->

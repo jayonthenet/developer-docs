@@ -10,8 +10,8 @@ toc: true
 The Platform Orchestrator can remediate infrastructure drift by detecting resources having drift and re-aligning them with the desired state through a re-deployment.
 
 > ℹ️ **Note**
-> 
-> While we are preparing the full use case implementation, you can already see the Platform Orchestrator in action with your own technology stack. [Book a session with us here](https://stellwerk.dev).
+>
+> This use case is planned but not implemented yet.
 
 Infrastructure drift occurs when the actual state of infrastructure resources diverges from the intended, declared configuration. This can result from manual changes, failed deployments, or external modifications. The Stellwerk Platform Orchestrator is being developed to provide drift detection capabilities that continuously monitor infrastructure and help alert platform teams when such divergence is detected.
 
@@ -21,7 +21,7 @@ The Orchestrator’s drift detection ensures that infrastructure remains aligned
 
 ## References
 
-- [Platform Orchestrator Documentation](https://docs.stellwerk.dev)
+- [Platform Orchestrator Documentation](https://docs.stellwerk.dev/platform-orchestrator/)
 - [Platform Orchestrator Terraform Modules](https://github.com/stellwerk-tf-modules)
 
 <!-- BEGIN_TF_DOCS -->

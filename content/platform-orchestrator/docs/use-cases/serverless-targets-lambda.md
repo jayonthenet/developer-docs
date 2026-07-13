@@ -29,7 +29,7 @@ You need to supply a Lambda deployment package and place it in an S3 bucket to r
 - AWS credentials configured for the [AWS provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration)
   - E.g. Having the `aws` CLI installed locally and authenticated
 - Platform Orchestrator credentials configured for the [platform-orchestrator provider](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs)
-  - E.g. Having the `htcl` CLI installed locally and authenticated
+  - For example, by authenticating locally with `octl login`
 - Either the [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) or the [OpenTofu CLI](https://opentofu.org/docs/intro/install/) installed locally
 - (optional) An S3 bucket for Lambda deployment packages
 - (optional) A Lambda function deployment package of your choice
@@ -54,7 +54,7 @@ This minimal prerequisites setup will create all AWS infrastructure and provide 
 ```hcl
 # main.tf
 module "lambda_serverless" {
-  source = "github.com/Platform-Orchestrator/platform-orchestrator-use-cases//serverless-targets/lambda"
+  source = "github.com/stellwerk-labs/platform-orchestrator-use-cases//serverless-targets/lambda"
 
   # Platform Orchestrator Configuration
   org_id = "your-org-id"
@@ -78,7 +78,7 @@ If you already have an OIDC provider configured for `oidc.stellwerk.dev`, config
 ```hcl
 # main.tf
 module "lambda_serverless" {
-  source = "github.com/Platform-Orchestrator/platform-orchestrator-use-cases//serverless-targets/lambda"
+  source = "github.com/stellwerk-labs/platform-orchestrator-use-cases//serverless-targets/lambda"
 
   # Platform Orchestrator Configuration
   org_id = "your-org-id"
@@ -104,7 +104,7 @@ If you are using your own deployment package, configure the proper Lambda runtim
 ```hcl
 # main.tf
 module "lambda_serverless" {
-  source = "github.com/Platform-Orchestrator/platform-orchestrator-use-cases//serverless-targets/lambda"
+  source = "github.com/stellwerk-labs/platform-orchestrator-use-cases//serverless-targets/lambda"
 
   # Platform Orchestrator Configuration
   org_id = "your-org-id"
@@ -125,7 +125,7 @@ module "lambda_serverless" {
 
 ```hcl
 module "lambda_serverless" {
-  source = "github.com/Platform-Orchestrator/platform-orchestrator-use-cases//serverless-targets/lambda"
+  source = "github.com/stellwerk-labs/platform-orchestrator-use-cases//serverless-targets/lambda"
 
   # Platform Orchestrator Configuration
   org_id             = "your-org-id"
@@ -246,7 +246,7 @@ tofu apply
 
 Upload a deployment package to the S3 bucket.
 
-A sample deployment package containing a simple Node.js application is available for download [here](https://github.com/Platform-Orchestrator/platform-orchestrator-use-cases/raw/refs/heads/main/serverless-targets/lambda/deployment_package/function.zip).
+A sample deployment package containing a simple Node.js application is available for download [here](https://github.com/stellwerk-labs/platform-orchestrator-use-cases/raw/refs/heads/main/serverless-targets/lambda/deployment_package/function.zip).
 
 If you are using your own deployment package, make sure the Lambda runtime is set correctly. Refer to the example above to see how to set a different runtime.
 
@@ -368,37 +368,37 @@ The module creates an IAM policy that grants the ECS runner the following permis
 
 ## References
 
-- [Platform Orchestrator Documentation](https://docs.stellwerk.dev)
+- [Platform Orchestrator Documentation](https://docs.stellwerk.dev/platform-orchestrator/)
 - [Platform Orchestrator Terraform Modules](https://github.com/stellwerk-tf-modules)
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.0 |
-| <a name="requirement_platform-orchestrator"></a> [platform-orchestrator](#requirement\_platform-orchestrator) | ~> 2.0 |
+| <a name="requirement_platform-orchestrator"></a> [platform-orchestrator](#requirement\_platform-orchestrator) | ~> 1.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 3.0 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.21.0 |
-| <a name="provider_platform-orchestrator"></a> [platform-orchestrator](#provider\_platform-orchestrator) | 2.10.1 |
-| <a name="provider_random"></a> [random](#provider\_random) | 3.7.2 |
+| ---- | ------- |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.54.0 |
+| <a name="provider_platform-orchestrator"></a> [platform-orchestrator](#provider\_platform-orchestrator) | 1.0.1 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.9.0 |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
-| <a name="module_ecs_runner"></a> [ecs\_runner](#module\_ecs\_runner) | github.com/stellwerk-tf-modules/serverless-ecs-orchestrator-runner | v1.1.0 |
+| ---- | ------ | ------- |
+| <a name="module_ecs_runner"></a> [ecs\_runner](#module\_ecs\_runner) | github.com/stellwerk-tf-modules/serverless-ecs-orchestrator-runner | v2.0.0 |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_iam_policy.lambda_deployment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_role_policy_attachment.ecs_runner_lambda_deployment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [platform-orchestrator_environment.this](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/environment) | resource |
@@ -416,12 +416,12 @@ The module creates an IAM policy that grants the ECS runner the following permis
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_additional_tags"></a> [additional\_tags](#input\_additional\_tags) | Additional tags to apply to resources | `map(string)` | `{}` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region where resources will be deployed | `string` | `"eu-central-1"` | no |
 | <a name="input_ecs_runner_cluster_name"></a> [ecs\_runner\_cluster\_name](#input\_ecs\_runner\_cluster\_name) | Name of the existing ECS cluster for the runner | `string` | `null` | no |
 | <a name="input_ecs_runner_environment"></a> [ecs\_runner\_environment](#input\_ecs\_runner\_environment) | Plain text environment variables to expose in the ECS runner | `map(string)` | `{}` | no |
-| <a name="input_ecs_runner_force_delete_s3"></a> [ecs\_runner\_force\_delete\_s3](#input\_ecs\_runner\_force\_delete\_s3) | Force delete the ECS runner S3 state files bucket on destroy even if it's not empty | `bool` | `false` | no |
+| <a name="input_ecs_runner_force_delete_s3"></a> [ecs\_runner\_force\_delete\_s3](#input\_ecs\_runner\_force\_delete\_s3) | Force delete the ECS runner S3 state files bucket on destroy even if it's not empty | `bool` | `true` | no |
 | <a name="input_ecs_runner_id"></a> [ecs\_runner\_id](#input\_ecs\_runner\_id) | The ID of the ECS runner. If not provided, one will be generated using ecs\_runner\_prefix | `string` | `null` | no |
 | <a name="input_ecs_runner_prefix"></a> [ecs\_runner\_prefix](#input\_ecs\_runner\_prefix) | Prefix for the ECS runner resources (used when ecs\_runner\_cluster\_name is null) | `string` | `"ecs-runner"` | no |
 | <a name="input_ecs_runner_secrets"></a> [ecs\_runner\_secrets](#input\_ecs\_runner\_secrets) | Secret environment variables to expose in the ECS runner. Each value should be a secret or property ARN | `map(string)` | `{}` | no |
@@ -453,7 +453,7 @@ The module creates an IAM policy that grants the ECS runner the following permis
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_ecs_runner_id"></a> [ecs\_runner\_id](#output\_ecs\_runner\_id) | The ID of the ECS runner |
 | <a name="output_ecs_runner_task_role_arn"></a> [ecs\_runner\_task\_role\_arn](#output\_ecs\_runner\_task\_role\_arn) | The ARN of the ECS runner task role |
 | <a name="output_ecs_runner_task_role_name"></a> [ecs\_runner\_task\_role\_name](#output\_ecs\_runner\_task\_role\_name) | The name of the ECS runner task role |
