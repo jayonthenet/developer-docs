@@ -57,7 +57,8 @@ module "lambda_serverless" {
   source = "github.com/stellwerk-labs/platform-orchestrator-use-cases//serverless-targets/lambda"
 
   # Platform Orchestrator Configuration
-  org_id = "your-org-id"
+  org_id        = "your-org-id"
+  oidc_hostname = "oidc.orchestrator.example.com"
 
   # AWS Configuration
   aws_region = "your-aws-region" # "e.g. eu-central-1"
@@ -73,7 +74,7 @@ module "lambda_serverless" {
 <details>
 <summary>Example 2: Use existing OIDC provider</summary>
 
-If you already have an OIDC provider configured for `oidc.stellwerk.dev`, configure it here:
+If you already have an AWS OIDC provider configured for the issuer exposed by your Platform Orchestrator installation, configure it here:
 
 ```hcl
 # main.tf
@@ -81,7 +82,8 @@ module "lambda_serverless" {
   source = "github.com/stellwerk-labs/platform-orchestrator-use-cases//serverless-targets/lambda"
 
   # Platform Orchestrator Configuration
-  org_id = "your-org-id"
+  org_id        = "your-org-id"
+  oidc_hostname = "oidc.orchestrator.example.com"
 
   # AWS Configuration
   aws_region = "eu-central-1"
@@ -90,7 +92,7 @@ module "lambda_serverless" {
   lambda_package_s3_bucket = "your-deployment-package-bucket-name"
 
   # OIDC configuration
-  existing_oidc_provider_arn = "arn:aws:iam::123456789012:oidc-provider/oidc.stellwerk.dev"
+  existing_oidc_provider_arn = "arn:aws:iam::123456789012:oidc-provider/oidc.orchestrator.example.com"
 }
 ```
 
@@ -107,7 +109,8 @@ module "lambda_serverless" {
   source = "github.com/stellwerk-labs/platform-orchestrator-use-cases//serverless-targets/lambda"
 
   # Platform Orchestrator Configuration
-  org_id = "your-org-id"
+  org_id        = "your-org-id"
+  oidc_hostname = "oidc.orchestrator.example.com"
 
   # AWS Configuration
   aws_region = "eu-central-1"
@@ -296,7 +299,7 @@ octl deploy $PROJECT_ID development manifest.yaml
 
 ### 5. Validate the result
 
-Once the deployment finished, open the [Orchestrator console](https://console.stellwerk.dev) and find the project created for this use case in the "Projects" view. Use `echo $PROJECT_ID` to obtain the project ID.
+Once the deployment finished, open your Orchestrator console and find the project created for this use case in the "Projects" view. Use `echo $PROJECT_ID` to obtain the project ID.
 
 Open the "development" environment. In the resource graph, select the `lambda-zip` resource representing the Lambda function.
 
@@ -446,7 +449,7 @@ The module creates an IAM policy that grants the ECS runner the following permis
 | <a name="input_lambda_package_s3_bucket"></a> [lambda\_package\_s3\_bucket](#input\_lambda\_package\_s3\_bucket) | S3 bucket name for Lambda deployment packages | `string` | n/a | yes |
 | <a name="input_lambda_runtime"></a> [lambda\_runtime](#input\_lambda\_runtime) | Lambda runtime environment | `string` | `"nodejs22.x"` | no |
 | <a name="input_lambda_timeout"></a> [lambda\_timeout](#input\_lambda\_timeout) | Default timeout for Lambda functions in seconds | `number` | `100` | no |
-| <a name="input_oidc_hostname"></a> [oidc\_hostname](#input\_oidc\_hostname) | OIDC hostname for authentication | `string` | `"oidc.stellwerk.dev"` | no |
+| <a name="input_oidc_hostname"></a> [oidc\_hostname](#input\_oidc\_hostname) | Hostname of the OIDC issuer exposed by your Platform Orchestrator installation | `string` | n/a | yes |
 | <a name="input_org_id"></a> [org\_id](#input\_org\_id) | The Platform Orchestrator organization ID | `string` | n/a | yes |
 | <a name="input_project_id_prefix"></a> [project\_id\_prefix](#input\_project\_id\_prefix) | The Platform Orchestrator project ID prefix | `string` | `"lambda-project-"` | no |
 

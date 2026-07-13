@@ -27,7 +27,7 @@ export PO_ORG_ID=my-org
 octl config set-org my-org
 ```
 
-When [self-hosting]({{< relref "/platform-orchestrator/docs/architecture/self-hosting" >}}) the Orchestrator, also set the API URL to your own endpoint:
+Set the API URL to the endpoint of your installation:
 
 ```bash
 # Option 1: set API URL via environment variable

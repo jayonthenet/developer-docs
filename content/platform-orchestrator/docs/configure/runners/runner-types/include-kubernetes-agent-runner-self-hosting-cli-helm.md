@@ -4,7 +4,7 @@ description: "Common kubernetes-agent runner snippet on CLI Helm command for sel
 draft: true # This page is made for being included in other pages, not standalone
 ---
 
-In a [self-hosting](#self-hosting-requirements) setup only, append these settings to the `helm install` command. Remove those that do not apply:
+Append the API endpoint setting to the `helm install` command. Include the version and image overrides only when using a private mirror:
 
 ```bash
   --version ${KUBERNETES_AGENT_RUNNER_CHART_VERSION} \

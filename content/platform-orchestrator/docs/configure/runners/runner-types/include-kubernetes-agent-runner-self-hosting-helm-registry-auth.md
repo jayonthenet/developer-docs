@@ -5,7 +5,7 @@ draft: true # This page is made for being included in other pages, not standalon
 ---
 
 
-If you are [self-hosting](#self-hosting-requirements) the Helm chart in your own registry and that registry requires authentication, you need to configure credentials for Helm. There are several options.
+If you mirror the Helm chart to a private registry that requires authentication, configure credentials for Helm. There are several options.
 
 - Option 1: Configure credentials in the [`helm` provider](https://registry.terraform.io/providers/hashicorp/helm/latest/docs) in TF:
 

@@ -4,12 +4,12 @@ description: "Common kubernetes-agent runner snippet on TF values for self-hosti
 draft: true # This page is made for being included in other pages, not standalone
 ---
 
-In a [self-hosting](#self-hosting-requirements) setup only, add and adjust these additional values. Remove those that do not apply:
+Set the API endpoint for your installation. Override the public chart and image locations only when using private mirrors:
 
 ```hcl
 locals {
   ###
-  # Parameters for a self-hosting setup
+  # Parameters for this installation
   ###
   #
   # Your internal OCI registry for the runner Helm chart

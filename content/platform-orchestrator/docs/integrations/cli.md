@@ -128,7 +128,7 @@ The command `octl config show` displays the _effective_ configuration, taking an
 | Config item      | Environment variable   | CLI command             | Description                                                                                                                                                                      | Default | Mandatory |
 | ---------------- | ---------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --------- |
 | `default_org_id` | `PO_ORG_ID`        | `octl config set-org`   | The id of the Organization in which to run commands                                                                                                                              | ""      | Yes       |
-| `api_url`        | `PO_API_URL`    | `octl config set-url`   | The base URL of the Orchestrator API. Set to your internal endpoint when [self-hosting]({{< relref "/platform-orchestrator/docs/architecture/self-hosting" >}}) the Orchestrator | ""      | Yes       |
+| `api_url`        | `PO_API_URL`    | `octl config set-url`   | The base URL of your Orchestrator API endpoint                                                                                                                                    | ""      | Yes       |
 | `token`          | `PO_AUTH_TOKEN` | `octl config set-token` | An authentication token. The session token obtained via `octl login` will be written into this property                                                                          | ""      | Yes       |
 
 ## Commands

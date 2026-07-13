@@ -14,7 +14,7 @@ aliases:
 
 {{% description %}}
 
-You will find a visual rendering of the resource graph in the Orchestrator [console](https://console.stellwerk.dev) for each environment that has a deployment. It may look like this:
+You will find a visual rendering of the resource graph in your Orchestrator console for each environment that has a deployment. It may look like this:
 
 ![Sample resource graph](/images/example_resource_graph.png 'Sample resource graph')
 

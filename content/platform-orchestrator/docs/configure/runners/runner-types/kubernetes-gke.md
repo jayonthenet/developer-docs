@@ -155,6 +155,8 @@ You will need the following resources and permissions:
 
 Perform the following setup in the GCP project of the target GKE cluster.
 
+The steps use the optional OIDC issuer exposed by your Platform Orchestrator installation. Replace `https://oidc.orchestrator.example.com` with its URL. The value must match `data-plane.config.OIDC_ISSUER_URL`, and Google Cloud must be able to retrieve its discovery and JWKS documents over publicly trusted HTTPS.
+
 1. Set Google Cloud and GKE values
 
 Set the proper values for your Orchestrator organization and Google Cloud project:
@@ -168,6 +170,7 @@ locals {
   gcp_project_id   = "<my-gcp-project-id>"
   cluster_name     = "<my-cluster-name>"
   cluster_location = "<my-cluster-region>"
+  oidc_issuer_url  = "https://oidc.orchestrator.example.com"
 }
 ```
 
@@ -179,6 +182,7 @@ export PO_ORG_ID=<my-org>
 export GCP_PROJECT_ID=<my-gcp-project-id>
 export CLUSTER_NAME=<my-cluster-name>
 export CLUSTER_LOCATION=<my-cluster-region>
+export OIDC_ISSUER_URL=https://oidc.orchestrator.example.com
 ```
 
 Set the `gcloud` CLI to your project:
@@ -241,7 +245,7 @@ resource "google_iam_workload_identity_pool_provider" "platform_orchestrator_run
     "google.subject" = "assertion.sub"
   }
   oidc {
-    issuer_uri = "https://oidc.stellwerk.dev"
+    issuer_uri = local.oidc_issuer_url
   }
 }
 ```
@@ -253,7 +257,7 @@ resource "google_iam_workload_identity_pool_provider" "platform_orchestrator_run
 gcloud iam workload-identity-pools providers create-oidc platform-orchestrator-runner \
     --location="global" \
     --workload-identity-pool=${WIP_NAME} \
-    --issuer-uri="https://oidc.stellwerk.dev" \
+    --issuer-uri="${OIDC_ISSUER_URL}" \
     --attribute-mapping="google.subject=assertion.sub" \
     --project=${GCP_PROJECT_ID}
 ```

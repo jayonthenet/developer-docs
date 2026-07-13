@@ -4,11 +4,11 @@ description: "Common kubernetes-agent runner snippet on CLI values for self-host
 draft: true # This page is made for being included in other pages, not standalone
 ---
 
-In a [self-hosting](#self-hosting-requirements) setup only, add and adjust these additional values. Remove those that do not apply:
+Set the API endpoint for your installation. Override the public chart and image locations only when using private mirrors:
 
 ```bash
 ###
-# Parameters for a self-hosting setup
+# Parameters for this installation
 ###
 # Override the Helm chart registry with your internal OCI registry
 export KUBERNETES_AGENT_RUNNER_CHART_REPOSITORY="oci://myregistry.example.com/charts"

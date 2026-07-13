@@ -148,6 +148,8 @@ You will need the following resources and permissions:
 
 Perform the following setup in the AWS account of the target EKS cluster.
 
+The steps use the optional OIDC issuer exposed by your Platform Orchestrator installation. Replace `oidc.orchestrator.example.com` with its hostname. The value must match `data-plane.config.OIDC_ISSUER_URL`, and AWS must be able to retrieve its discovery and JWKS documents over publicly trusted HTTPS.
+
 1. Set values
 
 {{< tabs >}}
@@ -159,6 +161,7 @@ locals {
   cluster_name   = "<my-eks-cluster-name>"
   cluster_region = "<my-eks-cluster-region>"
   platform_orchestrator_org = "<my-org>"
+  oidc_hostname  = "oidc.orchestrator.example.com"
 }
 ```
 
@@ -170,6 +173,7 @@ export AWS_ACCOUNT_ID=<my-aws-account-id>
 export CLUSTER_NAME=<my-eks-cluster-name>
 export CLUSTER_REGION=<my-eks-cluster-region>
 export PO_ORG_ID=<my-org>
+export OIDC_HOSTNAME=oidc.orchestrator.example.com
 ```
 
 {{% /tab %}}
@@ -182,7 +186,7 @@ export PO_ORG_ID=<my-org>
 
 ```hcl
 resource "aws_iam_openid_connect_provider" "platform_orchestrator" {
-  url = "https://oidc.stellwerk.dev"
+  url = "https://${local.oidc_hostname}"
   client_id_list = [
     "sts.amazonaws.com",
   ]
@@ -194,7 +198,7 @@ resource "aws_iam_openid_connect_provider" "platform_orchestrator" {
 
 ```bash
 aws iam create-open-id-connect-provider \
-  --url https://oidc.stellwerk.dev \
+  --url https://${OIDC_HOSTNAME} \
   --client-id-list sts.amazonaws.com
 ```
 
@@ -224,12 +228,12 @@ data "aws_iam_policy_document" "runner_kubernetes_eks" {
     actions = ["sts:AssumeRoleWithWebIdentity"]
     condition {
       test     = "StringEquals"
-      variable = "oidc.stellwerk.dev:aud"
+      variable = "${local.oidc_hostname}:aud"
       values   = ["sts.amazonaws.com"]
     }
     condition {
       test     = "StringEquals"
-      variable = "oidc.stellwerk.dev:sub"
+      variable = "${local.oidc_hostname}:sub"
       values   = ["${local.platform_orchestrator_org}+${local.kubernetes_eks_runner_id}"]
     }
   }
@@ -256,13 +260,13 @@ cat <<EOF > platform-orchestrator-runner-eks-trust-policy.json
     {
       "Effect": "Allow",
       "Principal": {
-        "Federated": "arn:aws:iam::${AWS_ACCOUNT_ID}:oidc-provider/oidc.stellwerk.dev"
+        "Federated": "arn:aws:iam::${AWS_ACCOUNT_ID}:oidc-provider/${OIDC_HOSTNAME}"
       },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
-          "oidc.stellwerk.dev:aud": "sts.amazonaws.com",
-          "oidc.stellwerk.dev:sub": "${PO_ORG_ID}+${RUNNER_ID}"
+          "${OIDC_HOSTNAME}:aud": "sts.amazonaws.com",
+          "${OIDC_HOSTNAME}:sub": "${PO_ORG_ID}+${RUNNER_ID}"
         }
       }
     }

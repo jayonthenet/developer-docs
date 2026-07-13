@@ -193,9 +193,7 @@ runner_configuration:
 
 ECS task launching is done through the AWS APIs. Besides proper [permissions](#required-permissions), the Orchestrator needs network connectivity to AWS APIs, typically over HTTPS to AWS endpoints.
 
-For the SaaS version of the Orchestrator, this requirement is fulfilled unless you have specifically configured IP-based restrictions in your IAM policies or VPC endpoint policies. In that case, refer to the Orchestrator [public source IPs]({{< relref "/platform-orchestrator/docs/security/connectivity#source-ips" >}}) to configure your setup.
-
-For a [self-hosted]({{< relref "/platform-orchestrator/docs/architecture/self-hosting" >}}) Orchestrator, you need to provide outgoing AWS API access from the compute hosting your `serverless-ecs` runner to the relevant [AWS service endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html) according to your own networking layout.
+Provide outgoing AWS API access from the data plane to the relevant [AWS service endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html) according to your networking layout. AWS also needs public HTTPS access to the discovery and JWKS documents of your installation's OIDC issuer.
 
 ## Required permissions
 
@@ -203,7 +201,7 @@ For a [self-hosted]({{< relref "/platform-orchestrator/docs/architecture/self-ho
 
 The Platform Orchestrator will assume this role using OIDC and use it to manage ECS task definitions and execute one-off tasks. Therefore it needs:
 
-1. OIDC federation to allow the `oidc.stellwerk.dev` provider to assume the role where the `sub` (subject) claim is `${PO_ORG_ID}+${RUNNER_ID}`
+1. OIDC federation to allow your installation's issuer to assume the role where the `sub` (subject) claim is `${PO_ORG_ID}+${RUNNER_ID}`
 2. A policy allowing it to be passed to the ecs-tasks service
 3. Permissions to List, Register, Deregister, and Delete ECS task definitions in the account
 4. Permissions to List, Describe, Run, and Tag ECS tasks within the target ECS cluster
@@ -245,6 +243,8 @@ A [public Terraform/OpenTofu module](https://github.com/stellwerk-tf-modules/ser
 
 Perform the following to allow the runner to execute:
 
+The steps use the optional OIDC issuer exposed by your Platform Orchestrator installation. Replace `oidc.orchestrator.example.com` with its hostname. The value must match `data-plane.config.OIDC_ISSUER_URL`, and AWS must be able to retrieve its discovery and JWKS documents over publicly trusted HTTPS.
+
 1. Set values
 
 {{< tabs >}}
@@ -257,6 +257,7 @@ locals {
   ecs_cluster    = "<my-ecs-cluster-name>"
   subnet_id      = "<my-subnet-id>"
   platform_orchestrator_org = "<my-org>"
+  oidc_hostname  = "oidc.orchestrator.example.com"
 }
 ```
 
@@ -269,6 +270,7 @@ export AWS_REGION=<my-aws-region>
 export ECS_CLUSTER=<my-ecs-cluster-name>
 export SUBNET_ID=<my-subnet-id>
 export PO_ORG_ID=<my-org>
+export OIDC_HOSTNAME=oidc.orchestrator.example.com
 ```
 
 {{% /tab %}}
@@ -285,7 +287,7 @@ locals {
 }
 
 resource "aws_iam_openid_connect_provider" "provider" {
-  url = "https://oidc.stellwerk.dev"
+  url = "https://${local.oidc_hostname}"
   client_id_list = [
     "sts.amazonaws.com",
   ]
@@ -302,13 +304,13 @@ data "aws_iam_policy_document" "ecs_runner_orchestrator_role" {
 
     condition {
       test     = "StringEquals"
-      variable = "oidc.stellwerk.dev:aud"
+      variable = "${local.oidc_hostname}:aud"
       values   = ["sts.amazonaws.com"]
     }
 
     condition {
       test     = "StringEquals"
-      variable = "oidc.stellwerk.dev:sub"
+      variable = "${local.oidc_hostname}:sub"
       values   = ["${local.platform_orchestrator_org}+${local.ecs_runner_id}"]
     }
   }
@@ -326,7 +328,7 @@ resource "aws_iam_role" "ecs_runner_orchestrator_role" {
 
 ```bash
 aws iam create-open-id-connect-provider \
-  --url https://oidc.stellwerk.dev \
+  --url https://${OIDC_HOSTNAME} \
   --client-id-list sts.amazonaws.com
 
 export RUNNER_ID=ecs-${ECS_CLUSTER}-${AWS_REGION}
@@ -338,13 +340,13 @@ cat <<EOF > platform-orchestrator-runner-trust-policy.json
     {
       "Effect": "Allow",
       "Principal": {
-        "Federated": "arn:aws:iam::${AWS_ACCOUNT_ID}:oidc-provider/oidc.stellwerk.dev"
+        "Federated": "arn:aws:iam::${AWS_ACCOUNT_ID}:oidc-provider/${OIDC_HOSTNAME}"
       },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
-          "oidc.stellwerk.dev:aud": "sts.amazonaws.com",
-          "oidc.stellwerk.dev:sub": "${PO_ORG_ID}+${RUNNER_ID}"
+          "${OIDC_HOSTNAME}:aud": "sts.amazonaws.com",
+          "${OIDC_HOSTNAME}:sub": "${PO_ORG_ID}+${RUNNER_ID}"
         }
       }
     }

@@ -20,7 +20,7 @@ A service user is a non-human system user. API tokens can be generated from serv
 
 An organization Admin can create a new service user in the Platform Orchestrator. This involves specifying the service user's name, description, and any necessary permissions.
 
-Creating service users is currently supported via the Orchestrator console, in the `Service Users` section of your organization at [https://console.stellwerk.dev](https://console.stellwerk.dev).
+Creating service users is currently supported in the `Service Users` section of your Platform Orchestrator console.
 
 {{< tabs >}}
 {{% tab name="Console" %}}

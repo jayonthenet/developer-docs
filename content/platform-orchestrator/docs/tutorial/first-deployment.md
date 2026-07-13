@@ -30,7 +30,7 @@ To get started with this tutorial, you’ll need:
 - The [octl]({{< relref "/platform-orchestrator/docs/integrations/cli#installation" >}}) CLI installed locally
 - Either the [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) or the [OpenTofu CLI](https://opentofu.org/docs/intro/install/) installed locally
 - [Git](https://git-scm.com/downloads) installed locally
-- A Platform Orchestrator organization. To create one, please go [here](https://console.stellwerk.dev/auth/register) and follow the instructions
+- A Platform Orchestrator organization created by the administrator of your [installation]({{< relref "/platform-orchestrator/docs/configure/organizations" >}})
 - (optional) The Kubernetes [kubectl](https://kubernetes.io/docs/tasks/tools/) CLI installed locally
 
 ### Amazon Web Services (AWS)
@@ -138,7 +138,7 @@ cp terraform.tfvars.template terraform.tfvars
 
 All requests to the Orchestrator must be authenticated. To this end, the Orchestrator lets you create "Service users" with an associated token that you can supply to code-based interactions such as the Platform Orchestrator Terraform/OpenTofu provider.
 
-- Open the Orchestrator web console at [https://console.stellwerk.dev/](https://console.stellwerk.dev/)
+- Open the Orchestrator web console for your installation
 - Select the **Service users** view
 - Click **Create service user**
 - Enter "`first-deployment-tutorial`" as the name and keep the default expiry
@@ -234,7 +234,7 @@ Perform a deployment into the `dev` environment of the newly created project:
 octl deploy ${PROJECT_ID} dev ./manifest.yaml
 ```
 
-To see the outcome, return to the Orchestrator console at [https://console.stellwerk.dev/](https://console.stellwerk.dev/) in your browser and open the **Projects** view. Select the `*-tutorial` project and open the `dev` environment.
+To see the outcome, return to your Orchestrator console and open the **Projects** view. Select the `*-tutorial` project and open the `dev` environment.
 
 As the deployment was empty, there is not much to see yet. Still, this first step shows that
 

@@ -75,9 +75,9 @@ Executing the tutorial will incur minor cloud cost for running resources in your
 
 {{% description "/platform-orchestrator/docs/configure/organizations" %}}
 
-If you already have an organization, you're good. Otherwise, [register](https://console.stellwerk.dev/auth/register) for a free trial organization now.
+Use an organization created by the administrator of your Platform Orchestrator installation. See [Organizations]({{< relref "/platform-orchestrator/docs/configure/organizations" >}}) for the setup and ways to find its ID.
 
-Once done, you will have access to the Orchestrator console at [https://console.stellwerk.dev](https://console.stellwerk.dev).
+You also need access to the console URL configured for your installation.
 
 ## Install the octl CLI
 
@@ -623,7 +623,7 @@ octl get deployment the-id-you-copied
 
 Inspect the result in the Orchestrator console:
 
-- Open the Orchestrator web console at [https://console.stellwerk.dev/](https://console.stellwerk.dev/)
+- Open the Orchestrator web console for your installation
 - In the **Projects** view, select the **get-started** project
 - Select the **development** environment
 
@@ -913,7 +913,7 @@ Note that the module has a `required_providers` block but it does not include a 
 
 Control over the providers and the authentication mechanisms they use therefore lies with the Orchestrator and is governed by the platform engineers.
 
-Once the deployment finished, return to the Orchestrator console at [https://console.stellwerk.dev](https://console.stellwerk.dev) and open the `development` environment of the `get-started` project.
+Once the deployment finished, return to your Orchestrator console and open the `development` environment of the `get-started` project.
 
 The resource graph now contains an additional active resource node for the PostgreSQL database. Click on the resource to explore its details. It exposes set of metadata on the real-world database resource, including a link to the cloud console or portal. Click the link to view it.
 

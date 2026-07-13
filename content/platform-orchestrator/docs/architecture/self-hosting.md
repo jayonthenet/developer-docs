@@ -1,6 +1,6 @@
 ---
 title: "Self-hosting"
-description: 'You may self-host the Platform Orchestrator on your own infrastructure instead of using the SaaS version.'
+description: 'Install and operate the Platform Orchestrator in your own infrastructure.'
 lead: ""
 draft: false
 type: docs
@@ -10,13 +10,13 @@ toc: true
 
 {{% description %}}
 
-While the SaaS version of the Orchestrator is fully managed by us, a self-hosted installation will be managed by you. The hosting infrastructure may be located anywhere, including in your own data center ("on premise"), a shared hosting facility, or in your account with a public cloud provider.
+The Platform Orchestrator is currently offered as self-hosted software. You manage the installation and its infrastructure in your own data center ("on premise"), a shared hosting facility, or your account with a public cloud provider.
 
 The installation is based on [Helm](https://helm.sh) charts bundled via [Helmfile](https://github.com/helmfile/helmfile).
 
 Since you also manage the data storage, the self-hosted setup enables data sovereignty.
 
-A fully air-gapped setup without internet ingress or egress is supported. Refer to the detailed requirements below.
+A fully air-gapped setup without internet ingress or egress is supported for runner types that do not depend on a public OIDC issuer. Refer to the detailed requirements below.
 
 ## Prerequisites
 
@@ -25,12 +25,15 @@ Infrastructure:
 - Kubernetes cluster
 - PostgreSQL database (v17+)
   - Or use the optional in-cluster PostgreSQL as part of the [installation](#installation) package (not recommended for production use)
-- DNS and TLS certificates for the domains of the Orchestrator console and the API endpoint
+- DNS and TLS certificates for the domains of the Orchestrator console and API endpoint
+- Optional: a dedicated public DNS name and publicly trusted TLS certificate for the per-install OIDC issuer when using AWS or Google Cloud identity federation
 
 For air-gapped environments, in addition to the above:
 
 - Internal container registry (OCI-compatible)
 - Ability to [mirror Terraform providers](https://developer.hashicorp.com/terraform/internals/provider-network-mirror-protocol)
+
+Air-gapped installations cannot use runner types that require AWS or Google Cloud to retrieve public OIDC discovery and signing-key documents. Other runner types remain available.
 
 Tools:
 
@@ -38,6 +41,17 @@ Tools:
 - [Helmfile](https://github.com/helmfile/helmfile)
 - [Helm Diff](https://github.com/databus23/helm-diff)
 - `kubectl` with cluster admin access
+
+## Optional OIDC issuer
+
+The data plane includes an optional OIDC issuer for authenticating runners to AWS and Google Cloud without long-lived cloud credentials. It is disabled unless `data-plane.config.OIDC_ISSUER_URL` is set.
+
+To enable it, configure a dedicated hostname under `global.gatewayApi.oidc.hostname`, terminate it with publicly trusted TLS, and set `data-plane.config.OIDC_ISSUER_URL` to the exact public URL, for example `https://oidc.orchestrator.example.com`. The cloud identity service must be able to retrieve these endpoints:
+
+- `/.well-known/openid-configuration`
+- `/.well-known/jwks`
+
+The issuer belongs to this installation. Stellwerk does not operate a shared OIDC issuer.
 
 <!-- This part is auto-generated -->
 <!-- BEGIN_HELM_README -->

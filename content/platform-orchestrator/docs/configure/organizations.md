@@ -14,9 +14,9 @@ aliases:
 
 Organizations are identified by an **ID**.
 
-## Register an Organization
+## Create an organization
 
-Follow [this link](https://console.stellwerk.dev/auth/register) to register a free trial organization.
+An installation administrator creates the initial organization through the admin API. Follow the [organization and user management instructions]({{< relref "/platform-orchestrator/docs/architecture/self-hosting#organization-and-user-management" >}}) for your installation.
 
 ## Your Organization ID
 

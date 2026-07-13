@@ -6,7 +6,7 @@ draft: true # This page is made for being included in other pages, not standalon
 
 Visit the [module documentation](https://github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner) to see further configuration options and available releases.
 
-In a [self-hosting](#self-hosting-requirements) setup only, apply these additional changes to the `module`. Remove those that do not apply:
+Apply the API endpoint setting to the module. Use the optional source, chart, and image overrides only when using private mirrors:
 
 ```hcl
 module "kubernetes_agent_runner" {
@@ -16,14 +16,14 @@ module "kubernetes_agent_runner" {
   # Existing properties ...
   #
   ###
-  # Parameters for a self-hosting setup
+  # Parameters for this installation
   # Remove those that do not apply
   ###
   # Use an internally hosted Helm chart registry
   kubernetes_agent_runner_chart_repository = local.kubernetes_agent_runner_chart_repository
   kubernetes_agent_runner_chart_version    = local.kubernetes_agent_runner_chart_version
   #
-  # Use the API endpoint of a self-hosted Orchestrator
+  # Use the API endpoint of your Orchestrator installation
   extra_env_vars = [
     {
       name  = "REMOTE_URL"

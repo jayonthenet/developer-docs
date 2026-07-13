@@ -127,14 +127,16 @@ The setup guide provides specific instructions for different cluster types:
 
 Perform the steps in the section that corresponds to your Kubernetes cluster type.
 
-## Self-hosting requirements
+## Installation requirements
 
-You need to make the required runner components available in your own infrastructure when [self-hosting]({{< relref "/platform-orchestrator/docs/architecture/self-hosting" >}}) the Orchestrator. This includes:
+The agent requires the API endpoint of your Platform Orchestrator installation. The public Terraform module, Helm chart, and runner image can be used directly when the target cluster has internet access.
 
-- An internal Git service to host a repository for the TF runner module
-- An internal OCI artefact registry to host the runner Helm chart and runner container image
+For an air-gapped installation, mirror these components into services reachable by the target cluster:
 
-Instructions how to obtain and import each component are shown below. Review and execute these before proceeding to the actual Kubernetes setup.
+- A Git service hosting the Terraform runner module
+- An OCI artifact registry hosting the runner Helm chart and runner container image
+
+Instructions for importing each component are shown below. Skip the mirror-specific steps when using the public sources.
 
 {{< alert context="info" >}}
 Some repository or registry tools have a capability to continuously "mirror" or "proxy" selected public repos or artefacts for internal use. Check the documentation of your tooling for such an option. If available, we recommend using it instead of performing the imports manually.
@@ -142,7 +144,7 @@ Some repository or registry tools have a capability to continuously "mirror" or 
 
 ### Orchestrator API endpoint
 
-Obtain the Orchestrator API endpoint out of your [self-hosting]({{< relref "/platform-orchestrator/docs/architecture/self-hosting" >}}) setup of the Orchestrator. The setup instructions for each cluster type further down on this page will ask you to provide it at the appropriate place.
+Obtain the API endpoint from your Platform Orchestrator installation. The setup instructions for each cluster type further down on this page will ask you to provide it at the appropriate place.
 
 ### TF module
 

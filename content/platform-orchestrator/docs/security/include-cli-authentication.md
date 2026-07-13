@@ -4,7 +4,7 @@ description: "How to authenticate using the CLI"
 draft: true # This page is made for being included in other pages, not standalone
 ---
 
-Once you sign up and have access to the [Platform Orchestrator Console](https://console.stellwerk.dev) you can use the `octl login` command to authenticate the CLI.
+Once your installation administrator has created your user and organization, use the `octl login` command to authenticate the CLI against the configured API endpoint.
 
 ```bash
 octl login

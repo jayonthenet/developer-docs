@@ -9,7 +9,9 @@ An [environment]({{< relref "/platform-orchestrator/docs/configure/environments"
 Use the `dry_run` flag to test the result of the command without applying any change.
 
 ```bash
-curl https://api.stellwerk.dev/orgs/my-org/projects/my-project/envs/my-environment/actions/refresh_runner \
+export PO_API_URL=https://api.orchestrator.example.com
+
+curl ${PO_API_URL}/orgs/my-org/projects/my-project/envs/my-environment/actions/refresh_runner \
   -X POST \
   -H "Authorization: Bearer ${PO_AUTH_TOKEN}" \
   -H "Content-Type: application/json" \

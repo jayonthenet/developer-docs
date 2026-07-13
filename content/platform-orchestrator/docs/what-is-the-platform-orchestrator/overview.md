@@ -20,7 +20,7 @@ The Orchestrator maintains a real-time, queryable resource graph of all infrastr
 
 {{% include "/platform-orchestrator/docs/what-is-the-platform-orchestrator/include-tf-only.md" %}}
 
-The Orchestrator is available as a SaaS offering hosted by us or [self-hosted]({{< relref "/platform-orchestrator/docs/architecture/self-hosting" >}}) by you.
+The Orchestrator is distributed as open source software for [installation in your own infrastructure]({{< relref "/platform-orchestrator/docs/architecture/self-hosting" >}}).
 
 The Platform Orchestrator is compute and cloud-provider agnostic. While the documentation currently highlights the most common use cases, with more technologies being added over time, the Orchestrator can support a wide range of environments. If you’d like to see it in action with the stack you care about, you can [book a demo with us](https://stellwerk.dev).
 

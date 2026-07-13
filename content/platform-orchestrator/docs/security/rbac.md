@@ -12,9 +12,9 @@ aliases:
 
 ## What is Role Based Access Control (RBAC)?
 
-The Platform Orchestrator allows developers in your team or from across your Organization to collaborate on tasks related to delivering software. Users can be [invited as members]({{< relref "/platform-orchestrator/docs/security/members#inviting-users-to-an-organization" >}}) to join a Platform Orchestrator Organization. Tooling integration and automation is supported via [service users]({{< relref "/platform-orchestrator/docs/security/service-users" >}}).
+The Platform Orchestrator allows developers in your team or from across your organization to collaborate on tasks related to delivering software. Users are managed as [members]({{< relref "/platform-orchestrator/docs/security/members" >}}) of a Platform Orchestrator organization. Tooling integration and automation is supported via [service users]({{< relref "/platform-orchestrator/docs/security/service-users" >}}).
 
-Both kinds of users require permissions to interact with the Orchestrator. Permissions are bound to **roles** and obtained by assigning a **role** to a **user** on a particular **scope**. You manage role assignments via the [Platform Orchestrator console](https://console.stellwerk.dev).
+Both kinds of users require permissions to interact with the Orchestrator. Permissions are bound to **roles** and obtained by assigning a **role** to a **user** on a particular **scope**. You manage role assignments in your Platform Orchestrator console.
 
 Role assignments are additive. A member or service user has all the permissions obtained via all their role assigments on the respective scopes.
 

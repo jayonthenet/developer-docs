@@ -12,19 +12,15 @@ aliases:
 
 ## Authentication in the console
 
-To access the [Platform Orchestrator Console](https://console.stellwerk.dev), users must authenticate using an identity provider.
+To access the Platform Orchestrator console, users authenticate through the Keycloak instance deployed with their installation.
 
 {{< alert context="info" >}}
 If your identity provider email changes, your email will be updated in the Orchestrator as well on your next log in.
 {{< /alert >}}
 
-### Supported identity providers
+### Identity providers
 
-- <img src="/images/google_cloud.png" alt="Google Cloud logo" width="16rem"/> Google
-- <img src="/images/microsoft-logo.svg" alt="Microsoft logo" width="16rem"/> Microsoft (personal or work account) 🆕
-- [Single Sign-On (SSO)](#single-sign-on-sso) 🆕
-
-<img src="/images/signup-page.png" alt="Sign up page" width="400rem"/>
+Installation administrators manage local users and identity-provider connections in Keycloak. Keycloak can also broker external OpenID Connect and SAML identity providers.
 
 ## Authentication in the CLI
 
