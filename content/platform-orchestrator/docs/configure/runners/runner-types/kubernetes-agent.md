@@ -340,7 +340,7 @@ module "kubernetes_agent_runner" {
   # To pin a specific module release, use this notation:
   # source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
 
-  humanitec_org_id             = local.platform_orchestrator_org
+  orchestrator_org_id          = local.platform_orchestrator_org
   runner_id                    = local.runner_id
   private_key_path             = "./runner_private_key.pem"
   public_key_path              = "./runner_public_key.pem"
@@ -726,7 +726,7 @@ module "kubernetes_agent_runner" {
   # To pin a specific module release, use this notation:
   # source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
 
-  humanitec_org_id             = local.platform_orchestrator_org
+  orchestrator_org_id          = local.platform_orchestrator_org
   runner_id                    = local.runner_id
   private_key_path             = "./runner_private_key.pem"
   public_key_path              = "./runner_public_key.pem"
@@ -1075,7 +1075,7 @@ module "kubernetes_agent_runner" {
   # To pin a specific module release, use this notation:
   # source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
 
-  humanitec_org_id             = local.platform_orchestrator_org
+  orchestrator_org_id          = local.platform_orchestrator_org
   runner_id                    = local.runner_id
   private_key_path             = "./runner_private_key.pem"
   public_key_path              = "./runner_public_key.pem"
@@ -1426,7 +1426,7 @@ module "kubernetes_agent_runner" {
   # To pin a specific module release, use this notation:
   # source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=vX.Y.Z"
 
-  humanitec_org_id             = local.platform_orchestrator_org
+  orchestrator_org_id          = local.platform_orchestrator_org
   runner_id                    = local.runner_id
   private_key_path             = "./runner_private_key.pem"
   public_key_path              = "./runner_public_key.pem"

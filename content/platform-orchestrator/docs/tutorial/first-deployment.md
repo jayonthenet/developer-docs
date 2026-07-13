@@ -111,11 +111,11 @@ cd first-deployment
 The repository contains these files for setting up the base infrastructure in the `infra` directory:
 
 - `main.tf` contains the basic providers and allows you to activate the cloud provider of your choice.
-- `humanitec.tf` contains Orchestrator configuration like the project and any non-cloud-specific providers and types. The actual implementations of modules are mostly found in the cloud provider specific module.
+- `platform-orchestrator.tf` contains Orchestrator configuration like the project and any non-cloud-specific providers and types. The actual implementations of modules are mostly found in the cloud provider specific module.
 
 If you want to learn what cloud provider specific infrastructure and Orchestrator configuration is being created, please review the corresponding files under `infra/modules/<yourCloudProvider>`. On top the cloud provider specific module will call the runner module to facilitate the installation of the runner for that cloud - see `infra/modules/shared/runner-integration`.
 
-The most interesting part to review is probably the `humanitec.tf` and cloud provider specific `humanitec-resources.tf` which combined together include all infrastructure components that you actually want the Orchestrator to create.
+The most interesting part to review is probably `platform-orchestrator.tf` and the cloud provider-specific `platform-orchestrator-resources.tf`, which together include all infrastructure components that you actually want the Orchestrator to create.
 
 You will always find triplets of resources in the Terraform/OpenTofu code:
 
@@ -148,7 +148,7 @@ All requests to the Orchestrator must be authenticated. To this end, the Orchest
 
 - Click **OK**
 
-The token value will now be passed in as the Terraform/OpenTofu variable `humanitec_auth_token` declared in the `variables.tf` file.
+The token value will now be passed in as the Terraform/OpenTofu variable `orchestrator_auth_token` declared in the `variables.tf` file.
 
 ## Configure your cloud provider
 
@@ -174,7 +174,7 @@ tofu plan # Optional - review the plan before you apply
 tofu apply
 ```
 
-The execution will take a few minutes. Use the time to explore the code a little more, especially the Orchestrator objects in the `humanitec.tf` file.
+The execution will take a few minutes. Use the time to explore the code a little more, especially the Orchestrator objects in the `platform-orchestrator.tf` file.
 
 Note: For simplicity, the Terraform/OpenTofu code uses a local backend by default to store the state. We will clean up the entire setup at the end of this tutorial.
 

@@ -357,7 +357,7 @@ provider "helm" {
 module "kubernetes_agent_runner" {
   source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner"
 
-  humanitec_org_id = var.orchestrator_org
+  orchestrator_org_id = var.orchestrator_org
   private_key_path = "./runner_private_key.pem"
   public_key_path  = "./runner_public_key.pem"
 

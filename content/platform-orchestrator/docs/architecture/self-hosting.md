@@ -72,8 +72,6 @@ Each release can be toggled on/off via the helmfile environment state values (e.
 
 ## Installation in the KinD cluster
 
-Create `test-credentials.json` file containing GCP credentials with permissions to pull Platform Orchestrator images from GCR.
-
 Run:
 ```bash
 make create-kind
@@ -99,9 +97,9 @@ Important: you need to switch your kubectl context to the correct cluster before
 
 ### Configure image registry
 
-Workaround for now: create `test-credentials.json` file containing GCP credentials with permissions to pull Platform Orchestrator images from GCR and run `bash scripts/create-gcr-secret.sh` to create a namespace registry secrets in your cluster.
-
-TODO: configure local registry, provide a way to copy required images and charts to this registry, configure helmfile / helm charts to use this registry.
+The default chart values use the public images under `ghcr.io/stellwerk-labs`,
+so no registry credentials are required. To use a private mirror, override the
+component image repositories and configure `global.imagePullSecrets`.
 
 ### Install Platform Orchestrator
 
@@ -151,7 +149,7 @@ The `test/` directory contains a smoke test that provisions a minimal Platform O
 ### Prerequisites
 
 - [`terraform`](https://developer.hashicorp.com/terraform/install) installed
-- [`octl`](https://docs.stellwerk.dev/getting-started/cli) installed and authenticated
+- [`octl`](https://docs.stellwerk.dev/platform-orchestrator/docs/integrations/cli/) installed and authenticated
 - `kubectl` configured and pointing at the target cluster (used to pull cluster credentials)
 - Platform Orchestrator deployed and accessible
 
