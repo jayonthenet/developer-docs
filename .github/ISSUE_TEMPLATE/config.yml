@@ -1,4 +1,1 @@
-contact_links:
-  - name: Question 🙋
-    url: https://github.com/humanitec/discussions/categories/q-a
-    about: Ask your question in Doks Discussions
+blank_issues_enabled: true

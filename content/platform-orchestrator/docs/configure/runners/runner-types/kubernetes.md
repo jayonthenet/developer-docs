@@ -194,16 +194,16 @@ Perform the following setup on the target cluster for the runner.
 {{% tab name="TF" %}}
 
 ```hcl
-resource "kubernetes_namespace" "humanitec_runner" {
+resource "kubernetes_namespace" "platform_orchestrator_runner" {
   metadata {
     name = local.runner_k8s_namespace
   }
 }
 
-resource "kubernetes_service_account" "humanitec_runner" {
+resource "kubernetes_service_account" "platform_orchestrator_runner" {
   metadata {
     name      = local.runner_k8s_sa
-    namespace = kubernetes_namespace.humanitec_runner.metadata[0].name
+    namespace = kubernetes_namespace.platform_orchestrator_runner.metadata[0].name
   }
 }
 ```
@@ -240,10 +240,10 @@ Prepare a [Role](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#r
 {{% tab name="TF" %}}
 
 ```hcl
-resource "kubernetes_role" "humanitec_runner_orchestrator_access" {
+resource "kubernetes_role" "platform_orchestrator_runner_access" {
   metadata {
     name      = "platform-orchestrator-runner-orchestrator-access"
-    namespace = kubernetes_namespace.humanitec_runner.metadata[0].name
+    namespace = kubernetes_namespace.platform_orchestrator_runner.metadata[0].name
   }
   rule {
     api_groups = ["batch"]
@@ -252,19 +252,19 @@ resource "kubernetes_role" "humanitec_runner_orchestrator_access" {
   }
 }
 
-resource "kubernetes_role_binding" "humanitec_runner_orchestrator_access" {
+resource "kubernetes_role_binding" "platform_orchestrator_runner_access" {
   metadata {
     name      = "platform-orchestrator-runner-orchestrator-access"
-    namespace = kubernetes_namespace.humanitec_runner.metadata[0].name
+    namespace = kubernetes_namespace.platform_orchestrator_runner.metadata[0].name
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "Role"
-    name      = kubernetes_role.humanitec_runner_orchestrator_access.metadata[0].name
+    name      = kubernetes_role.platform_orchestrator_runner_access.metadata[0].name
   }
   subject {
     kind = "ServiceAccount"
-    name = kubernetes_service_account.humanitec_runner.metadata[0].name
+    name = kubernetes_service_account.platform_orchestrator_runner.metadata[0].name
   }
 }
 ```
@@ -382,8 +382,8 @@ resource "platform-orchestrator_kubernetes_runner" "example" {
       }
     }
     job = {
-      namespace       = kubernetes_namespace.humanitec_runner.metadata[0].name
-      service_account = kubernetes_service_account.humanitec_runner.metadata[0].name
+      namespace       = kubernetes_namespace.platform_orchestrator_runner.metadata[0].name
+      service_account = kubernetes_service_account.platform_orchestrator_runner.metadata[0].name
     }
   }
 }

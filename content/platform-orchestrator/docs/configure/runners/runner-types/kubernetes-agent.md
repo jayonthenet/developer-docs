@@ -186,15 +186,15 @@ Also, If your registry requires authentication, the client executing the TF `app
 
 ### Runner image
 
-Make the public [`platform-orchestrator-runner` container image](https://github.com/orgs/Platform-Orchestrator/packages/container/package/platform-orchestrator-runner) available in an OCI registry within your infrastructure.
+Make the public [`platform-orchestrator-runner` container image](https://github.com/orgs/stellwerk-labs/packages/container/package/platform-orchestrator-runner) available in an OCI registry within your infrastructure.
 
 ```bash
 # Pull the desired version
-docker image pull ghcr.io/platform-orchestrator/platform-orchestrator-runner:vX.Y.Z
+docker image pull ghcr.io/stellwerk-labs/platform-orchestrator-runner:vX.Y.Z
 
 # Tag the image so that it points to your internal registry
 # Adjust your registry domain and image path according to your setup
-docker image tag ghcr.io/platform-orchestrator/platform-orchestrator-runner:vX.Y.Z myregistry.example.com/platform-orchestrator/platform-orchestrator-runner:vX.Y.Z
+docker image tag ghcr.io/stellwerk-labs/platform-orchestrator-runner:vX.Y.Z myregistry.example.com/platform-orchestrator/platform-orchestrator-runner:vX.Y.Z
 
 # Push the image to your internal registry
 # Adjust your registry domain and image path according to your setup

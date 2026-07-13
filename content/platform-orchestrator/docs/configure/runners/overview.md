@@ -47,7 +47,7 @@ resource "platform-orchestrator_kubernetes_gke_runner" "my-gke-runner" {
       internal_ip = false
       auth = {
         gcp_audience        = "//iam.googleapis.com/projects/123456789012/locations/global/workloadIdentityPools/my-wif-pool/providers/platform-orchestrator-runner"
-        gcp_service_account = "humanitec-orchestrator-runner@my-gcp-project.iam.gserviceaccount.com"
+        gcp_service_account = "platform-orchestrator-runner@my-gcp-project.iam.gserviceaccount.com"
       }
     }
     job = {
@@ -83,7 +83,7 @@ runner_configuration:
     location: europe-west3
     auth:
       gcp_audience: //iam.googleapis.com/projects/123456789012/locations/global/workloadIdentityPools/my-wif-pool/providers/platform-orchestrator-runner
-      gcp_service_account: humanitec-orchestrator-runner@my-gcp-project.iam.gserviceaccount.com
+      gcp_service_account: platform-orchestrator-runner@my-gcp-project.iam.gserviceaccount.com
   job:
     namespace: platform-orchestrator-runner
     service_account: platform-orchestrator-runner
@@ -299,7 +299,7 @@ Your custom image should inherit from the `platform-orchestrator-runner` image t
 
 ```dockerfile
 # Use a pinned version of the official Orchestrator runner
-FROM ghcr.io/platform-orchestrator/platform-orchestrator-runner:vx.y.z
+FROM ghcr.io/stellwerk-labs/platform-orchestrator-runner:vx.y.z
 
 
 # Add your customizations here (certificates, tools, or configurations as needed)

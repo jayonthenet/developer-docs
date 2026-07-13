@@ -4,7 +4,7 @@ description: "Using custom container image for Platform Orchestrator runners"
 draft: true # This page is made for being included in other pages, not standalone
 ---
 
-A runner is based on a container image which is pulled from the public source `ghcr.io/platform-orchestrator/platform-orchestrator-runner` by default, using one of the recent versions. The most current available version is `{{< param canyonRunnerImageVersion >}}`.
+A runner is based on a container image which is pulled from the public source `ghcr.io/stellwerk-labs/platform-orchestrator-runner` by default, using one of the recent versions. The most current available version is `{{< param platformOrchestratorRunnerImageVersion >}}`.
 
 You may need to use a custom container image to:
 

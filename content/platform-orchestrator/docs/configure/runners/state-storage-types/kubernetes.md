@@ -93,7 +93,7 @@ locals {
 }
 
 # If the namespace does not exist yet, create it
-resource "kubernetes_namespace" "humanitec_runner_state_storage" {
+resource "kubernetes_namespace" "platform_orchestrator_runner_state_storage" {
   metadata {
     name = local.state_storage_namespace
   }
@@ -155,7 +155,7 @@ Prepare a [Role](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#r
 resource "kubernetes_role" "platform-orchestrator-runner-kubernetes-stage-storage" {
   metadata {
     name      = "platform-orchestrator-runner-kubernetes-stage-storage"
-    namespace = kubernetes_namespace.humanitec_runner_state_storage.metadata[0].name
+    namespace = kubernetes_namespace.platform_orchestrator_runner_state_storage.metadata[0].name
   }
   rule {
     api_groups = [""]
@@ -172,7 +172,7 @@ resource "kubernetes_role" "platform-orchestrator-runner-kubernetes-stage-storag
 resource "kubernetes_role_binding" "platform-orchestrator-runner-kubernetes-stage-storage" {
   metadata {
     name      = "platform-orchestrator-runner-kubernetes-stage-storage"
-    namespace = kubernetes_namespace.humanitec_runner_state_storage.metadata[0].name
+    namespace = kubernetes_namespace.platform_orchestrator_runner_state_storage.metadata[0].name
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
@@ -244,7 +244,7 @@ resource "platform-orchestrator_kubernetes_agent_runner" "my_runner" {
   state_storage_configuration = {
     type = "kubernetes"
     kubernetes_configuration = {
-      namespace = kubernetes_namespace.humanitec_runner_state_storage.metadata[0].name
+      namespace = kubernetes_namespace.platform_orchestrator_runner_state_storage.metadata[0].name
     }
   }
 }

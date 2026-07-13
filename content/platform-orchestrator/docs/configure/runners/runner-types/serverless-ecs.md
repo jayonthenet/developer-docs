@@ -256,7 +256,7 @@ locals {
   aws_region     = "<my-aws-region>"
   ecs_cluster    = "<my-ecs-cluster-name>"
   subnet_id      = "<my-subnet-id>"
-  humanitec_org  = "<my-org>"
+  platform_orchestrator_org = "<my-org>"
 }
 ```
 
@@ -309,7 +309,7 @@ data "aws_iam_policy_document" "ecs_runner_orchestrator_role" {
     condition {
       test     = "StringEquals"
       variable = "oidc.stellwerk.dev:sub"
-      values   = ["${local.humanitec_org}+${local.ecs_runner_id}"]
+      values   = ["${local.platform_orchestrator_org}+${local.ecs_runner_id}"]
     }
   }
 }
@@ -390,7 +390,7 @@ resource "aws_iam_role_policy" "ecs_runner_orchestrator_role" {
                 "ecs:DeleteTaskDefinitions"
             ],
             Resource = [
-              "arn:aws:ecs:${local.aws_region}:${local.aws_account_id}:task-definition/humanitec_*",
+              "arn:aws:ecs:${local.aws_region}:${local.aws_account_id}:task-definition/platform_orchestrator_*",
             ]
         },
         {
@@ -402,7 +402,7 @@ resource "aws_iam_role_policy" "ecs_runner_orchestrator_role" {
                 "ecs:TagResource",
             ],
             Resource = [
-              "arn:aws:ecs:${local.aws_region}:${local.aws_account_id}:task-definition/humanitec_*",
+              "arn:aws:ecs:${local.aws_region}:${local.aws_account_id}:task-definition/platform_orchestrator_*",
               "arn:aws:ecs:${local.aws_region}:${local.aws_account_id}:cluster/${local.ecs_cluster}",
               "arn:aws:ecs:${local.aws_region}:${local.aws_account_id}:task/${local.ecs_cluster}/*",
               "arn:aws:ecs:${local.aws_region}:${local.aws_account_id}:container-instance/${local.ecs_cluster}/*"
@@ -427,7 +427,7 @@ resource "aws_iam_role_policy" "ecs_runner_orchestrator_role" {
 {{% tab name="CLI" %}}
 
 ```bash
-cat <<EOF > humanitec-role-policy.json
+cat <<EOF > platform-orchestrator-role-policy.json
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -446,7 +446,7 @@ cat <<EOF > humanitec-role-policy.json
         "ecs:DeleteTaskDefinitions"
       ],
       "Resource": [
-        "arn:aws:ecs:${AWS_REGION}:${AWS_ACCOUNT_ID}:task-definition/humanitec_*"
+        "arn:aws:ecs:${AWS_REGION}:${AWS_ACCOUNT_ID}:task-definition/platform_orchestrator_*"
       ]
     },
     {
@@ -458,7 +458,7 @@ cat <<EOF > humanitec-role-policy.json
         "ecs:TagResource"
       ],
       "Resource": [
-        "arn:aws:ecs:${AWS_REGION}:${AWS_ACCOUNT_ID}:task-definition/humanitec_*",
+        "arn:aws:ecs:${AWS_REGION}:${AWS_ACCOUNT_ID}:task-definition/platform_orchestrator_*",
         "arn:aws:ecs:${AWS_REGION}:${AWS_ACCOUNT_ID}:cluster/${ECS_CLUSTER}",
         "arn:aws:ecs:${AWS_REGION}:${AWS_ACCOUNT_ID}:task/${ECS_CLUSTER}/*",
         "arn:aws:ecs:${AWS_REGION}:${AWS_ACCOUNT_ID}:container-instance/${ECS_CLUSTER}/*"
@@ -481,7 +481,7 @@ EOF
 aws iam put-role-policy \
   --role-name ${ORCHESTRATOR_IAM_ROLE} \
   --policy-name ecs-runner-orchestrator-role-policy \
-  --policy-document file://humanitec-role-policy.json
+  --policy-document file://platform-orchestrator-role-policy.json
 ```
 
 {{% /tab %}}

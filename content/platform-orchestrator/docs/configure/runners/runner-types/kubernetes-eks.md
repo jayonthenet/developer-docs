@@ -105,7 +105,7 @@ runner_configuration:
       role_arn: arn:aws:iam::123456789012:role/platform-orchestrator-runner-eks-role
       # (optional, defaults to cluster region) AWS region for STS token requests
       sts_region: eu-center-1
-      # (optional, defaults to "{humanitec-org-id}-{runner-id}") Custom session name for the assumed role
+      # (optional, defaults to "{org_id}-{runner_id}") Custom session name for the assumed role
       session_name: my-session
 
   # Kubernetes job configuration
@@ -158,7 +158,7 @@ locals {
   aws_account_id = "<my-aws-account-id>"
   cluster_name   = "<my-eks-cluster-name>"
   cluster_region = "<my-eks-cluster-region>"
-  humanitec_org  = "<my-org>"
+  platform_orchestrator_org = "<my-org>"
 }
 ```
 
@@ -181,7 +181,7 @@ export PO_ORG_ID=<my-org>
 {{% tab name="TF" %}}
 
 ```hcl
-resource "aws_iam_openid_connect_provider" "humanitec_dev" {
+resource "aws_iam_openid_connect_provider" "platform_orchestrator" {
   url = "https://oidc.stellwerk.dev"
   client_id_list = [
     "sts.amazonaws.com",
@@ -219,7 +219,7 @@ data "aws_iam_policy_document" "runner_kubernetes_eks" {
     effect = "Allow"
     principals {
       type        = "Federated"
-      identifiers = ["${aws_iam_openid_connect_provider.humanitec_dev.arn}"]
+      identifiers = ["${aws_iam_openid_connect_provider.platform_orchestrator.arn}"]
     }
     actions = ["sts:AssumeRoleWithWebIdentity"]
     condition {
@@ -230,7 +230,7 @@ data "aws_iam_policy_document" "runner_kubernetes_eks" {
     condition {
       test     = "StringEquals"
       variable = "oidc.stellwerk.dev:sub"
-      values   = ["${local.humanitec_org}+${local.kubernetes_eks_runner_id}"]
+      values   = ["${local.platform_orchestrator_org}+${local.kubernetes_eks_runner_id}"]
     }
   }
 }
@@ -500,7 +500,7 @@ resource "kubernetes_role_binding" "runner_kubernetes_eks" {
   subject {
     api_group = "rbac.authorization.k8s.io"
     kind      = "User"
-    name      = "arn:aws:sts::${data.aws_caller_identity.current.account_id}:assumed-role/${aws_iam_role.runner_kubernetes_eks.name}/${substr(join("-", [local.humanitec_org, local.kubernetes_eks_runner_id]), 0, 64)}"
+    name      = "arn:aws:sts::${data.aws_caller_identity.current.account_id}:assumed-role/${aws_iam_role.runner_kubernetes_eks.name}/${substr(join("-", [local.platform_orchestrator_org, local.kubernetes_eks_runner_id]), 0, 64)}"
     namespace = ""
   }
 }

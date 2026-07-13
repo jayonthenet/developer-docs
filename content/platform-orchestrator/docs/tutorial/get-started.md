@@ -383,7 +383,7 @@ module "kubernetes_agent_runner" {
 # to enable the runner to create deployments in other namespaces
 resource "kubernetes_cluster_role_binding" "runner_inner_cluster_admin" {
   metadata {
-    name = "humanitec-kubernetes-agent-runner-cluster-admin"
+    name = "platform-orchestrator-kubernetes-agent-runner-cluster-admin"
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"

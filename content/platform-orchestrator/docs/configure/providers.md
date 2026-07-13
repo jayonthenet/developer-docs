@@ -676,7 +676,7 @@ This example shows how to configure the [`hashicorp/google` provider](https://re
 {{% tab name="TF" %}}
 
 ```hcl
-resource "google_service_account" "example_humanitec_runner" {
+resource "google_service_account" "example_platform_orchestrator_runner" {
   account_id   = "example-platform-orchestrator-runner"
   display_name = "Example Runner"
   description  = "Service Account used by the Runner"
@@ -703,7 +703,7 @@ gcloud iam service-accounts create example-platform-orchestrator-runner \
 
 ```hcl
 resource "google_service_account_key" "example_key" {
-  service_account_id = google_service_account.example_humanitec_runner.name
+  service_account_id = google_service_account.example_platform_orchestrator_runner.name
 }
 resource "kubernetes_secret_v1" "runner_gcp_credential" {
   metadata {
@@ -996,9 +996,9 @@ resource "platform-orchestrator_provider" "aws_with_default_tags" {
     # ...
     default_tags = {
       tags = {
-        humanitec-org     = "$${context.org_id}"
-        humanitec-project = "$${context.project_id}"
-        humanitec-env     = "$${context.env_id}"
+        platform-orchestrator-org     = "$${context.org_id}"
+        platform-orchestrator-project = "$${context.project_id}"
+        platform-orchestrator-env     = "$${context.env_id}"
       }
     }
   })
@@ -1022,9 +1022,9 @@ resource "platform-orchestrator_provider" "gcp_with_default_labels" {
   configuration = jsonencode({
       # ...
       default_labels = {
-        humanitec-org     = "$${context.org_id}"
-        humanitec-project = "$${context.project_id}"
-        humanitec-env     = "$${context.env_id}"
+        platform-orchestrator-org     = "$${context.org_id}"
+        platform-orchestrator-project = "$${context.project_id}"
+        platform-orchestrator-env     = "$${context.env_id}"
       }
   })
 }
