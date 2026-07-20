@@ -110,7 +110,7 @@ target = "layouts"
 
 [Params]
 octlVersion = "1.0.0"
-platformOrchestratorRunnerImageVersion = "1.0.0"
+platformOrchestratorRunnerImageVersion = "1.0.3"
 scoreVersion = "0.10.2"
 GitHubBaseUrl = "https://github.com"
 GitHubRawBaseUrl = "https://raw.githubusercontent.com"
