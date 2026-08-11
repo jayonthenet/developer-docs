@@ -13,8 +13,8 @@ Orchestrator, the data plane can create a runner itself. This applies, for
 example, to runner types using a cloud service with a reachable API.
 
 **Agent**: If the target compute is not reachable from the Orchestrator, install
-the runner agent in the target infrastructure. The agent connects outbound to
-the installation's operator-provided TLS NATS endpoint and consumes durable,
-runner-specific commands from JetStream. Commands remain buffered while the
-agent is disconnected. The agent launches runner Jobs in its local compute;
-the runner publishes results and encrypted log objects through NATS.
+the runner agent in the target infrastructure. The agent makes outbound HTTPS
+requests to the [runner gateway]({{< relref "/platform-orchestrator/docs/architecture/runner-gateway" >}}).
+Commands remain buffered while the agent is disconnected. The agent launches
+runner Jobs in its local compute; those Jobs return results and encrypted logs
+through the same HTTPS gateway. They never receive broker credentials.

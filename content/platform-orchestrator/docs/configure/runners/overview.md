@@ -19,8 +19,9 @@ The Orchestrator will launch a runner to execute a [deployment]({{< relref "/pla
 There are different _runner types_ to support executing runners on specific kinds of compute, like Kubernetes clusters or serverless container runtimes. Each runner is configured to use a particular instance of such compute.
 
 A runner is either launched by the Orchestrator when it can reach the target
-compute, or by an agent in the target infrastructure. Agents consume durable,
-runner-specific commands from NATS JetStream, so commands remain buffered while
+compute, or by an agent in the target infrastructure. Both use the same
+outbound HTTPS [runner gateway]({{< relref "/platform-orchestrator/docs/architecture/runner-gateway" >}})
+for bundles, results, and encrypted logs. Agent commands remain buffered while
 an agent is disconnected.
 
 In addition, a runner uses a particular _state storage_ to maintain Terraform/OpenTofu state in between invocations.
@@ -135,7 +136,7 @@ where `runner-config.yaml` is:
 description: GKE runner for my-cluster in europe-west3
 
 # Runner configuration
-runner_configuration: {}
+runner_configuration:
   # Runner type
   type: kubernetes-gke
   # Further properties are depending on the runner type
@@ -153,6 +154,34 @@ state_storage_configuration:
 The properties to set for the runner configuration and state storage configuration vary by their `type`. Refer to the individual sections for each runner type and state storage type to find the available configuration options and examples.
 
 ## Runner types
+
+Runner types describe two independent decisions: where a deployment runs, and
+how the Orchestrator authenticates to that compute. `kubernetes`,
+`kubernetes-gke`, and `kubernetes-eks` all execute the same Kubernetes Job. The
+GKE and EKS variants exist for their cloud-specific discovery and temporary
+authentication configuration; they are not different execution engines.
+
+Choose `kubernetes-agent` for private Kubernetes API servers and network
+segments where inbound control-plane access is undesirable. Choose
+`serverless-ecs` when ECS Fargate, rather than Kubernetes, is the execution
+topology. Existing cloud-specific Kubernetes types remain supported for
+compatibility, but new automation should treat them as Kubernetes authentication
+strategies rather than assume different runner behavior.
+
+| Public runner type | Execution engine | What is actually different |
+| --- | --- | --- |
+| `kubernetes` | Kubernetes Job | Generic kubeconfig/API access |
+| `kubernetes-gke` | Kubernetes Job | GKE discovery and Google temporary authentication |
+| `kubernetes-eks` | Kubernetes Job | EKS discovery and AWS temporary authentication |
+| `kubernetes-agent` | Kubernetes Job | An in-cluster agent owns API access and receives commands over outbound HTTPS |
+| `serverless-ecs` | ECS Fargate task | A genuinely different compute and scheduling topology |
+
+AKS does not require a separate execution type. Use `kubernetes` when the data
+plane can reach its API, or `kubernetes-agent` when the agent should own local
+cluster access. A future major API could represent GKE and EKS as authentication
+strategies under one Kubernetes runner, but removing the existing types now
+would break runner resources and provider schemas without changing execution
+behavior.
 
 Available runner types are:
 
@@ -174,7 +203,7 @@ Not all runner types can technically use every state storage type. The compatibi
 | [kubernetes-agent]({{< relref "/platform-orchestrator/docs/configure/runners/runner-types/kubernetes-agent" >}}) | ✅ | ✅ | ✅ | ✅ |
 | [kubernetes-eks]({{< relref "/platform-orchestrator/docs/configure/runners/runner-types/kubernetes-eks" >}}) | ✅ | ✅ | ✅ | ✅ |
 | [kubernetes-gke]({{< relref "/platform-orchestrator/docs/configure/runners/runner-types/kubernetes-gke" >}}) | ✅ | ✅ | ✅ | ✅ |
-| [serverless-ecs]({{< relref "/platform-orchestrator/docs/configure/runners/runner-types/kubernetes-gke" >}}) | ❌ | ✅ | ❌ | ❌ |
+| [serverless-ecs]({{< relref "/platform-orchestrator/docs/configure/runners/runner-types/serverless-ecs" >}}) | ❌ | ✅ | ❌ | ❌ |
 
 ## Manage runners
 

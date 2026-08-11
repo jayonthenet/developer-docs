@@ -6,7 +6,7 @@ draft: true # This page is made for being included in other pages, not standalon
 
 Visit the [module documentation](https://github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner) to see further configuration options and available releases.
 
-Apply the NATS endpoint and credential Secret settings to the module. Use the
+Apply the HTTPS gateway endpoint and key paths to the module. Use the
 optional source, chart, and image overrides only when using private mirrors:
 
 ```hcl
@@ -24,11 +24,10 @@ module "kubernetes_agent_runner" {
   kubernetes_agent_runner_chart_repository = local.kubernetes_agent_runner_chart_repository
   kubernetes_agent_runner_chart_version    = local.kubernetes_agent_runner_chart_version
   #
-  # Use the NATS endpoint and existing Secrets for this installation
-  nats_url                             = local.nats_url
-  nats_existing_secret                 = "runner-nats-creds"
-  nats_job_credentials_existing_secret = "runner-nats-creds"
-  create_namespaces                    = false
+  # Public key is registered; the module mounts the private key in the agent
+  public_key_path  = "./runner_public_key.pem"
+  private_key_path = "./runner_private_key.pem"
+  gateway_url      = local.gateway_url
   #
   # Use an internally hosted image registry
   kubernetes_agent_runner_image_repository = local.kubernetes_agent_runner_image_repository

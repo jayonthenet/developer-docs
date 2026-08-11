@@ -15,6 +15,12 @@ The Platform Orchestrator can execute the runner as an ECS task for each deploym
 2. It is bound to a subnet within your own VPC for networking
 3. It executes as an IAM role within your account and may read and write infrastructure within your account according to the permissions you delegate to it
 
+Each task makes outbound HTTPS requests to the installation's
+[runner gateway]({{< relref "/platform-orchestrator/docs/architecture/runner-gateway" >}})
+for its deployment bundle, result, and encrypted logs. The data plane injects
+the gateway URL and a deployment-scoped token when it launches the task. The
+Terraform module does not require broker credentials.
+
 To access the ECS cluster, the Platform Orchestrator uses temporary credentials granted through OIDC and an assume-role-with-web-identity policy to assume a role within your AWS account.
 
 Although you can use most state storage backends with the ECS runner, we recommend you use the [`s3` state storage]({{< relref "/platform-orchestrator/docs/configure/runners/state-storage-types/s3" >}}) type for the best integration and centralised management.

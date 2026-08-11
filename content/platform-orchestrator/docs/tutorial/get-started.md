@@ -353,15 +353,12 @@ provider "helm" {
 
 # Install the Kubernetes agent runner Helm chart and its prerequisites and register the runner with the Orchestrator
 module "kubernetes_agent_runner" {
-  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=v3.0.0"
+  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=v4.0.0"
 
   orchestrator_org_id = var.orchestrator_org
-  public_key_path  = "./runner_public_key.pem"
-  nats_url         = "tls://nats.orchestrator.example.com:4222"
-
-  # Tutorial/bootstrap convenience only. Use externally managed, subject-scoped
-  # credential Secrets for production so the token is not stored in TF state.
-  nats_token = "replace-with-your-runner-nats-token"
+  public_key_path      = "./runner_public_key.pem"
+  private_key_path     = "./runner_private_key.pem"
+  gateway_url          = "https://api.orchestrator.example.com/runner-gateway"
 
   # Workload Identity configuration - link to the cloud IAM identity created above
   service_account_annotations = var.enabled_cloud_provider == "aws" ? {
@@ -424,11 +421,11 @@ While the `apply` executes, inspect the resources now being added. Refer to the 
 You now have:
 
 - ✅ Installed a runner component into the demo infrastructure
-- ✅ Configured the runner with durable NATS communication
+- ✅ Configured outbound HTTPS runner communication
 - ✅ Enabled the runner to maintain TF state
 - ✅ Registered the runner with the Orchestrator
 
-The runner is now ready to execute deployments. JetStream buffers commands when
+The runner is now ready to execute deployments. Commands remain buffered when
 the runner is temporarily disconnected.
 
 ## Create a project and environment

@@ -10,10 +10,10 @@ toc: true
 {{% description %}}
 
 The `kubernetes-agent` is a [runner agent]({{< relref "/platform-orchestrator/docs/configure/runners/overview#runner-agent" >}})
-that runs in your cluster. It connects outbound to the installation's
-operator-provided TLS NATS endpoint, consumes durable commands for its runner,
-and creates Kubernetes Jobs in the local cluster. JetStream buffers commands
-while the agent is disconnected.
+that runs in your cluster. It connects outbound to the installation's HTTPS
+runner gateway, receives durable commands for its runner, and creates
+Kubernetes Jobs in the local cluster. No inbound cluster access or broker
+credentials are required.
 
 Follow the steps below to configure a runner of type `kubernetes-agent`.
 
@@ -83,14 +83,14 @@ runner_configuration:
   # Runner type
   type: kubernetes-agent
 
+  # Public key used to verify the runner agent's identity
+  key: |
+    -----BEGIN PUBLIC KEY-----
+    ...
+    -----END PUBLIC KEY-----
+
   # Kubernetes job configuration
   job:
-    # Public key used to verify the runner agent's identity
-    key: |
-      -----BEGIN PUBLIC KEY-----
-      ...
-      -----END PUBLIC KEY-----
-
     # Namespace where runner jobs run
     namespace: platform-orchestrator-runner
 
@@ -132,20 +132,16 @@ Perform the steps in the section that corresponds to your Kubernetes cluster typ
 
 ## Installation requirements
 
-The bundled NATS service is cluster-local by default. A runner in another
-cluster requires an externally reachable TLS NATS endpoint supplied by the
-operator. You can provide an external NATS service or securely expose and add
-TLS to the bundled service; chart `0.2.0` does not create that external endpoint
-or its certificates. Do not expose the bundled plaintext NATS listener outside
-the installation cluster.
+The runner requires outbound HTTPS access to the API hostname's
+`/runner-gateway` path. The Helm chart mounts the agent's Ed25519 private key
+from a Kubernetes Secret. The public key is registered with the Orchestrator.
 
 The public Terraform module, Helm chart, and runner image can be used directly
 when the target cluster has internet access.
 
-For production, pre-create the runner and Job namespaces with the same
-subject-scoped NATS credential Secret, then set `create_namespaces = false` in
-the Terraform module. The module's `nats_token` input is a local/bootstrap
-convenience and stores the token in Terraform state.
+The Terraform module creates the identity Secret from `private_key_path`. If
+your organization manages Secrets separately, install the Helm chart directly
+and set `gateway.privateKeyExistingSecret`.
 
 For an air-gapped installation, mirror these components into services reachable by the target cluster:
 
@@ -158,13 +154,12 @@ Instructions for importing each component are shown below. Skip the mirror-speci
 Some repository or registry tools have a capability to continuously "mirror" or "proxy" selected public repos or artefacts for internal use. Check the documentation of your tooling for such an option. If available, we recommend using it instead of performing the imports manually.
 {{< /alert >}}
 
-### NATS endpoint and credentials
+### Gateway endpoint and identity
 
-Obtain an operator-provided TLS NATS endpoint and subject-scoped runner
-credentials. The setup instructions for each cluster type further down on this
-page ask you to provide the endpoint and a Kubernetes Secret containing the
-credentials. The self-hosted chart's generated shared token is only for local
-bootstrap and must not be distributed to remote production runners.
+Use `https://<api-host>/runner-gateway`, where `<api-host>` is the backend API
+hostname of your installation. If it uses a private CA, provide the CA Secret
+through `gateway.caExistingSecret` and copy it to the Job namespace when the
+namespaces differ. The runner never connects to NATS.
 
 ### TF module
 
@@ -358,15 +353,13 @@ export CLUSTER_RUNNER_JOB_SERVICEACCOUNT="platform-orchestrator-kubernetes-agent
 
 ```hcl
 module "kubernetes_agent_runner" {
-  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=v3.0.0"
+  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=v4.0.0"
 
   orchestrator_org_id          = local.platform_orchestrator_org
   runner_id                    = local.runner_id
-  public_key_path              = "./runner_public_key.pem"
-  nats_url                             = local.nats_url
-  nats_existing_secret                 = "runner-nats-creds"
-  nats_job_credentials_existing_secret = "runner-nats-creds"
-  create_namespaces                    = false
+  public_key_path             = "./runner_public_key.pem"
+  private_key_path            = "./runner_private_key.pem"
+  gateway_url                 = local.gateway_url
   k8s_namespace                = local.cluster_runner_namespace
   k8s_service_account_name     = local.cluster_runner_serviceaccount
   k8s_job_namespace            = local.cluster_runner_job_namespace
@@ -426,19 +419,15 @@ export KUBECONFIG_CONTEXT=$(kubectl config current-context)
 export RUNNER_ID=kubernetes-agent-${KUBECONFIG_CONTEXT}  # Adjust the ID at your discretion
 ```
 
-4. Create the runner and Job namespaces and place the NATS token in both:
+4. Create the runner and Job namespaces and the agent identity Secret:
 
 ```bash
 kubectl create namespace ${CLUSTER_RUNNER_NAMESPACE}
-
-kubectl create secret generic runner-nats-creds \
+kubectl create secret generic runner-identity \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
-  --from-literal=token='<runner-token>'
+  --from-file=private-key.pem=runner_private_key.pem
 
 kubectl create namespace ${CLUSTER_RUNNER_JOB_NAMESPACE}
-kubectl create secret generic runner-nats-creds \
-  -n ${CLUSTER_RUNNER_JOB_NAMESPACE} \
-  --from-literal=token='<runner-token>'
 ```
 
 5. Register the `kubernetes-agent` runner with the Orchestrator:
@@ -457,9 +446,8 @@ helm install platform-orchestrator-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
   --set platformOrchestrator.orgId=${PO_ORG_ID} \
   --set platformOrchestrator.runnerId=${RUNNER_ID} \
-  --set nats.url=${NATS_URL} \
-  --set nats.existingSecret=runner-nats-creds \
-  --set nats.jobCredentialsExistingSecret=runner-nats-creds \
+  --set gateway.url=${RUNNER_GATEWAY_URL} \
+  --set gateway.privateKeyExistingSecret=runner-identity \
   --set namespaceOverride=${CLUSTER_RUNNER_NAMESPACE} \
   --set serviceAccount.name=${CLUSTER_RUNNER_SERVICEACCOUNT} \
   --set jobsRbac.namespace=${CLUSTER_RUNNER_JOB_NAMESPACE} \
@@ -746,15 +734,13 @@ eksctl utils associate-iam-oidc-provider --cluster $CLUSTER_NAME --approve
 
 ```hcl
 module "kubernetes_agent_runner" {
-  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=v3.0.0"
+  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=v4.0.0"
 
   orchestrator_org_id          = local.platform_orchestrator_org
   runner_id                    = local.runner_id
-  public_key_path              = "./runner_public_key.pem"
-  nats_url                             = local.nats_url
-  nats_existing_secret                 = "runner-nats-creds"
-  nats_job_credentials_existing_secret = "runner-nats-creds"
-  create_namespaces                    = false
+  public_key_path             = "./runner_public_key.pem"
+  private_key_path            = "./runner_private_key.pem"
+  gateway_url                 = local.gateway_url
   k8s_namespace                = local.cluster_runner_namespace
   k8s_service_account_name     = local.cluster_runner_serviceaccount
   k8s_job_namespace            = local.cluster_runner_job_namespace
@@ -826,19 +812,15 @@ export PO_ORG_ID=<my-org>
 export RUNNER_ID=kubernetes-agent-${CLUSTER_NAME}
 ```
 
-7. Create the runner and Job namespaces and place the NATS token in both:
+7. Create the runner and Job namespaces and the agent identity Secret:
 
 ```bash
 kubectl create namespace ${CLUSTER_RUNNER_NAMESPACE}
-
-kubectl create secret generic runner-nats-creds \
+kubectl create secret generic runner-identity \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
-  --from-literal=token='<runner-token>'
+  --from-file=private-key.pem=runner_private_key.pem
 
 kubectl create namespace ${CLUSTER_RUNNER_JOB_NAMESPACE}
-kubectl create secret generic runner-nats-creds \
-  -n ${CLUSTER_RUNNER_JOB_NAMESPACE} \
-  --from-literal=token='<runner-token>'
 ```
 
 8. Install the runner Helm chart onto the cluster, providing required values:
@@ -849,9 +831,8 @@ helm install platform-orchestrator-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
   --set platformOrchestrator.orgId=${PO_ORG_ID} \
   --set platformOrchestrator.runnerId=${RUNNER_ID} \
-  --set nats.url=${NATS_URL} \
-  --set nats.existingSecret=runner-nats-creds \
-  --set nats.jobCredentialsExistingSecret=runner-nats-creds \
+  --set gateway.url=${RUNNER_GATEWAY_URL} \
+  --set gateway.privateKeyExistingSecret=runner-identity \
   --set namespaceOverride=${CLUSTER_RUNNER_NAMESPACE} \
   --set serviceAccount.name=${CLUSTER_RUNNER_SERVICEACCOUNT} \
   --set jobsRbac.namespace=${CLUSTER_RUNNER_JOB_NAMESPACE} \
@@ -1097,15 +1078,13 @@ gcloud iam service-accounts add-iam-policy-binding ${GCP_SERVICE_ACCOUNT_NAME}@$
 
 ```hcl
 module "kubernetes_agent_runner" {
-  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=v3.0.0"
+  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=v4.0.0"
 
   orchestrator_org_id          = local.platform_orchestrator_org
   runner_id                    = local.runner_id
-  public_key_path              = "./runner_public_key.pem"
-  nats_url                             = local.nats_url
-  nats_existing_secret                 = "runner-nats-creds"
-  nats_job_credentials_existing_secret = "runner-nats-creds"
-  create_namespaces                    = false
+  public_key_path             = "./runner_public_key.pem"
+  private_key_path            = "./runner_private_key.pem"
+  gateway_url                 = local.gateway_url
   k8s_namespace                = local.cluster_runner_namespace
   k8s_service_account_name     = local.cluster_runner_serviceaccount
   k8s_job_namespace            = local.cluster_runner_job_namespace
@@ -1176,19 +1155,15 @@ export PO_ORG_ID=<my-org>
 export RUNNER_ID=kubernetes-agent-${CLUSTER_NAME}
 ```
 
-7. Create the runner and Job namespaces and place the NATS token in both:
+7. Create the runner and Job namespaces and the agent identity Secret:
 
 ```bash
 kubectl create namespace ${CLUSTER_RUNNER_NAMESPACE}
-
-kubectl create secret generic runner-nats-creds \
+kubectl create secret generic runner-identity \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
-  --from-literal=token='<runner-token>'
+  --from-file=private-key.pem=runner_private_key.pem
 
 kubectl create namespace ${CLUSTER_RUNNER_JOB_NAMESPACE}
-kubectl create secret generic runner-nats-creds \
-  -n ${CLUSTER_RUNNER_JOB_NAMESPACE} \
-  --from-literal=token='<runner-token>'
 ```
 
 8. Install the runner Helm chart onto the cluster, providing required values:
@@ -1199,9 +1174,8 @@ helm install platform-orchestrator-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
   --set platformOrchestrator.orgId=${PO_ORG_ID} \
   --set platformOrchestrator.runnerId=${RUNNER_ID} \
-  --set nats.url=${NATS_URL} \
-  --set nats.existingSecret=runner-nats-creds \
-  --set nats.jobCredentialsExistingSecret=runner-nats-creds \
+  --set gateway.url=${RUNNER_GATEWAY_URL} \
+  --set gateway.privateKeyExistingSecret=runner-identity \
   --set namespaceOverride=${CLUSTER_RUNNER_NAMESPACE} \
   --set serviceAccount.name=${CLUSTER_RUNNER_SERVICEACCOUNT} \
   --set jobsRbac.namespace=${CLUSTER_RUNNER_JOB_NAMESPACE} \
@@ -1450,15 +1424,13 @@ az identity federated-credential create \
 
 ```hcl
 module "kubernetes_agent_runner" {
-  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=v3.0.0"
+  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=v4.0.0"
 
   orchestrator_org_id          = local.platform_orchestrator_org
   runner_id                    = local.runner_id
-  public_key_path              = "./runner_public_key.pem"
-  nats_url                             = local.nats_url
-  nats_existing_secret                 = "runner-nats-creds"
-  nats_job_credentials_existing_secret = "runner-nats-creds"
-  create_namespaces                    = false
+  public_key_path             = "./runner_public_key.pem"
+  private_key_path            = "./runner_private_key.pem"
+  gateway_url                 = local.gateway_url
   k8s_namespace                = local.cluster_runner_namespace
   k8s_service_account_name     = local.cluster_runner_serviceaccount
   k8s_job_namespace            = local.cluster_runner_job_namespace
@@ -1542,19 +1514,15 @@ export PO_ORG_ID=<my-org>
 export RUNNER_ID=kubernetes-agent-${CLUSTER_NAME}
 ```
 
-7. Create the runner and Job namespaces and place the NATS token in both:
+7. Create the runner and Job namespaces and the agent identity Secret:
 
 ```bash
 kubectl create namespace ${CLUSTER_RUNNER_NAMESPACE}
-
-kubectl create secret generic runner-nats-creds \
+kubectl create secret generic runner-identity \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
-  --from-literal=token='<runner-token>'
+  --from-file=private-key.pem=runner_private_key.pem
 
 kubectl create namespace ${CLUSTER_RUNNER_JOB_NAMESPACE}
-kubectl create secret generic runner-nats-creds \
-  -n ${CLUSTER_RUNNER_JOB_NAMESPACE} \
-  --from-literal=token='<runner-token>'
 ```
 
 8. Install the runner Helm chart onto the cluster, providing required values:
@@ -1570,9 +1538,8 @@ helm install platform-orchestrator-kubernetes-agent-runner \
   -n ${CLUSTER_RUNNER_NAMESPACE} \
   --set platformOrchestrator.orgId=${PO_ORG_ID} \
   --set platformOrchestrator.runnerId=${RUNNER_ID} \
-  --set nats.url=${NATS_URL} \
-  --set nats.existingSecret=runner-nats-creds \
-  --set nats.jobCredentialsExistingSecret=runner-nats-creds \
+  --set gateway.url=${RUNNER_GATEWAY_URL} \
+  --set gateway.privateKeyExistingSecret=runner-identity \
   --set namespaceOverride=${CLUSTER_RUNNER_NAMESPACE} \
   --set serviceAccount.name=${CLUSTER_RUNNER_SERVICEACCOUNT} \
   --set jobsRbac.namespace=${CLUSTER_RUNNER_JOB_NAMESPACE} \

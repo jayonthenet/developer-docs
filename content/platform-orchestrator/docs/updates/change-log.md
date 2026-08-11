@@ -11,6 +11,28 @@ aliases:
 
 This change log starts with the open source publication of the Platform Orchestrator ecosystem.
 
+## August 11, 2026
+
+- **Breaking:** Standardized runner communication on outbound HTTPS through a
+  stateless runner gateway. Runner agents and deployment Jobs no longer receive
+  broker endpoints or credentials; JetStream remains the Orchestrator's
+  internal durable transport.
+- **New:** Added short-lived Ed25519 agent authentication, deployment-scoped Job
+  tokens, encrypted portable delivery receipts, separate public and
+  cluster-internal gateway endpoints, and multi-replica gateway operation
+  without sticky sessions.
+- **New:** Added simple, edge, and air-gap deployment modes. Edge installations
+  persist results and encrypted logs in an RWX HTTPS outbox during outages.
+  Air-gap installations run a protected-side gateway and broker and require a
+  separately authorized reverse relay to return results and logs.
+- **Changed:** Released runner and data plane `v3.0.0`, Kubernetes runner chart
+  `0.3.0`, Kubernetes and ECS runner modules `v4.0.0`, use cases `v3.0.0`, and
+  self-hosted chart `v0.3.0` for the gateway architecture.
+- **Simplified:** Documented that `kubernetes`, `kubernetes-gke`, and
+  `kubernetes-eks` use the same Kubernetes Job executor. Their differences are
+  cluster discovery and temporary cloud authentication, not separate runtime
+  implementations.
+
 ## July 23, 2026
 
 - **Improved:** Migrated GitHub Actions across the Stellwerk Labs and Stellwerk Terraform module repositories from Node 20-backed action releases to Node 24-compatible releases.

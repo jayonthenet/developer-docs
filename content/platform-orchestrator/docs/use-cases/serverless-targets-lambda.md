@@ -30,10 +30,8 @@ You need to supply a Lambda deployment package and place it in an S3 bucket to r
   - E.g. Having the `aws` CLI installed locally and authenticated
 - Platform Orchestrator credentials configured for the [platform-orchestrator provider](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs)
   - For example, by authenticating locally with `octl login`
-- A TLS NATS endpoint reachable from the ECS runner subnets and an AWS Secrets
-  Manager or SSM secret containing the runner's NATS token
-  - If the secret uses a customer-managed KMS key, provide that exact key ARN
-    through `ecs_runner_nats_token_kms_key_arn`
+- Outbound HTTPS from the ECS runner subnets to the Platform Orchestrator
+  runner gateway
 - Either the [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) or the [OpenTofu CLI](https://opentofu.org/docs/intro/install/) installed locally
 - (optional) An S3 bucket for Lambda deployment packages
 - (optional) A Lambda function deployment package of your choice
@@ -64,8 +62,6 @@ module "lambda_serverless" {
   org_id        = "your-org-id"
   oidc_hostname = "oidc.orchestrator.example.com"
 
-  ecs_runner_nats_url              = "tls://nats.orchestrator.example.com:4222"
-  ecs_runner_nats_token_secret_arn = "arn:aws:secretsmanager:eu-central-1:123456789012:secret:runner-nats-token-AbCdEf"
   # AWS Configuration
   aws_region = "your-aws-region" # "e.g. eu-central-1"
 
@@ -91,8 +87,6 @@ module "lambda_serverless" {
   org_id        = "your-org-id"
   oidc_hostname = "oidc.orchestrator.example.com"
 
-  ecs_runner_nats_url              = "tls://nats.orchestrator.example.com:4222"
-  ecs_runner_nats_token_secret_arn = "arn:aws:secretsmanager:eu-central-1:123456789012:secret:runner-nats-token-AbCdEf"
   # AWS Configuration
   aws_region = "eu-central-1"
 
@@ -120,8 +114,6 @@ module "lambda_serverless" {
   org_id        = "your-org-id"
   oidc_hostname = "oidc.orchestrator.example.com"
 
-  ecs_runner_nats_url              = "tls://nats.orchestrator.example.com:4222"
-  ecs_runner_nats_token_secret_arn = "arn:aws:secretsmanager:eu-central-1:123456789012:secret:runner-nats-token-AbCdEf"
   # AWS Configuration
   aws_region = "eu-central-1"
 
@@ -177,10 +169,6 @@ module "lambda_serverless" {
 
   # OIDC Configuration
   oidc_hostname              = "your-oidc.hostname.dev"
-  ecs_runner_nats_url              = "tls://nats.orchestrator.example.com:4222"
-  ecs_runner_nats_token_secret_arn = "arn:aws:secretsmanager:eu-central-1:123456789012:secret:runner-nats-token-AbCdEf"
-  # Optional when the NATS token secret uses a customer-managed KMS key:
-  # ecs_runner_nats_token_kms_key_arn = "arn:aws:kms:eu-central-1:123456789012:key/12345678-1234-1234-1234-123456789012"
   existing_oidc_provider_arn = "arn:aws:iam::123456789012:oidc-provider/your-oidc.hostname.dev"
 
   # Lambda Configuration
@@ -410,7 +398,7 @@ The module creates an IAM policy that grants the ECS runner the following permis
 
 | Name | Source | Version |
 | ---- | ------ | ------- |
-| <a name="module_ecs_runner"></a> [ecs\_runner](#module\_ecs\_runner) | github.com/stellwerk-tf-modules/serverless-ecs-orchestrator-runner | v3.0.0 |
+| <a name="module_ecs_runner"></a> [ecs\_runner](#module\_ecs\_runner) | github.com/stellwerk-tf-modules/serverless-ecs-orchestrator-runner | v4.0.0 |
 
 ## Resources
 
@@ -440,9 +428,6 @@ The module creates an IAM policy that grants the ECS runner the following permis
 | <a name="input_ecs_runner_environment"></a> [ecs\_runner\_environment](#input\_ecs\_runner\_environment) | Plain text environment variables to expose in the ECS runner | `map(string)` | `{}` | no |
 | <a name="input_ecs_runner_force_delete_s3"></a> [ecs\_runner\_force\_delete\_s3](#input\_ecs\_runner\_force\_delete\_s3) | Force delete the ECS runner S3 state files bucket on destroy even if it's not empty | `bool` | `true` | no |
 | <a name="input_ecs_runner_id"></a> [ecs\_runner\_id](#input\_ecs\_runner\_id) | The ID of the ECS runner. If not provided, one will be generated using ecs\_runner\_prefix | `string` | `null` | no |
-| <a name="input_ecs_runner_nats_token_kms_key_arn"></a> [ecs\_runner\_nats\_token\_kms\_key\_arn](#input\_ecs\_runner\_nats\_token\_kms\_key\_arn) | Optional customer-managed KMS key ARN used to encrypt the ECS runner's NATS token secret | `string` | `null` | no |
-| <a name="input_ecs_runner_nats_token_secret_arn"></a> [ecs\_runner\_nats\_token\_secret\_arn](#input\_ecs\_runner\_nats\_token\_secret\_arn) | AWS Secrets Manager or SSM ARN containing the runner's NATS token | `string` | n/a | yes |
-| <a name="input_ecs_runner_nats_url"></a> [ecs\_runner\_nats\_url](#input\_ecs\_runner\_nats\_url) | TLS NATS endpoint reachable by ECS runner tasks | `string` | n/a | yes |
 | <a name="input_ecs_runner_prefix"></a> [ecs\_runner\_prefix](#input\_ecs\_runner\_prefix) | Prefix for the ECS runner resources (used when ecs\_runner\_cluster\_name is null) | `string` | `"ecs-runner"` | no |
 | <a name="input_ecs_runner_secrets"></a> [ecs\_runner\_secrets](#input\_ecs\_runner\_secrets) | Secret environment variables to expose in the ECS runner. Each value should be a secret or property ARN | `map(string)` | `{}` | no |
 | <a name="input_ecs_runner_security_group_ids"></a> [ecs\_runner\_security\_group\_ids](#input\_ecs\_runner\_security\_group\_ids) | List of security group IDs for the ECS runner | `list(string)` | `[]` | no |

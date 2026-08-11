@@ -4,7 +4,7 @@ description: "Common kubernetes-agent runner snippet on CLI values for self-host
 draft: true # This page is made for being included in other pages, not standalone
 ---
 
-Set the NATS endpoint for your installation. Override the public chart and image
+Set the HTTPS gateway endpoint for your installation. Override the public chart and image
 locations only when using private mirrors:
 
 ```bash
@@ -19,6 +19,6 @@ export KUBERNETES_AGENT_RUNNER_CHART_VERSION="X.Y.Z"
 export KUBERNETES_AGENT_RUNNER_IMAGE_REPOSITORY="myregistry.example.com/platform-orchestrator/platform-orchestrator-runner"
 # Runner image tag (optional)
 export KUBERNETES_AGENT_RUNNER_IMAGE_TAG="vX.Y.Z"
-# TLS NATS endpoint reachable from the runner cluster
-export NATS_URL="tls://nats.my-orchestrator.example.com:4222"
+# HTTPS runner gateway reachable from the runner cluster
+export RUNNER_GATEWAY_URL="https://api.my-orchestrator.example.com/runner-gateway"
 ```
