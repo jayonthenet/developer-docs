@@ -8,7 +8,9 @@
     "/orgs/{orgId}/deployments": {
       "get": {
         "operationId": "listDeployments",
-        "tags": ["Deployment"],
+        "tags": [
+          "Deployment"
+        ],
         "summary": "List deployments in the organization",
         "parameters": [
           {
@@ -54,7 +56,9 @@
       },
       "post": {
         "operationId": "createDeployment",
-        "tags": ["Deployment"],
+        "tags": [
+          "Deployment"
+        ],
         "summary": "Create a new deployment in the target project and environment.",
         "parameters": [
           {
@@ -113,7 +117,9 @@
     "/orgs/{orgId}/last-deployments": {
       "get": {
         "operationId": "listLastDeployments",
-        "tags": ["Deployment"],
+        "tags": [
+          "Deployment"
+        ],
         "summary": "List the last deployment for each project_id and env_id combination",
         "parameters": [
           {
@@ -164,7 +170,9 @@
     "/orgs/{orgId}/deployments/{deploymentId}": {
       "get": {
         "operationId": "getDeployment",
-        "tags": ["Deployment"],
+        "tags": [
+          "Deployment"
+        ],
         "summary": "Get a deployment by id in the org",
         "parameters": [
           {
@@ -194,7 +202,9 @@
     "/orgs/{orgId}/deployments/{deploymentId}/actions/wait-for-complete": {
       "get": {
         "operationId": "waitForDeploymentComplete",
-        "tags": ["Deployment"],
+        "tags": [
+          "Deployment"
+        ],
         "summary": "Long-poll wait for the deployment to be completed. Either a 200 OK is returned indicating that the deployment is complete, or a 408 will indicate that the client must continue waiting.",
         "parameters": [
           {
@@ -244,7 +254,9 @@
     "/orgs/{orgId}/deployments/{deploymentId}/actions/diff": {
       "post": {
         "operationId": "calculateDeploymentDiff",
-        "tags": ["Deployment"],
+        "tags": [
+          "Deployment"
+        ],
         "summary": "Calculate the diff from another deployment to this one.",
         "description": "Returns the diff from another deployment to this one. The deployments must both be in the same environment.\nThe diff details the nodes that have been added, removed, or changed.\n",
         "parameters": [
@@ -287,7 +299,9 @@
     "/orgs/{orgId}/deployments/{deploymentId}/actions/get-logs": {
       "get": {
         "operationId": "getDeploymentLogs",
-        "tags": ["Deployment"],
+        "tags": [
+          "Deployment"
+        ],
         "summary": "Get the logs produced by the runner execution during the deployment.",
         "description": "These logs are only stored and available for 30 days and they are returned encrypted or decrypted according to the existence or not of the\ndecryption key query parameter.\n",
         "parameters": [
@@ -341,7 +355,9 @@
     "/orgs/{orgId}/deployments/{deploymentId}/encrypted-outputs": {
       "get": {
         "operationId": "getDeploymentEncryptedOutputs",
-        "tags": ["Deployment"],
+        "tags": [
+          "Deployment"
+        ],
         "summary": "Get the encrypted outputs produced by the deployment.",
         "description": "These outputs are only stored and available for a short time after the deployment completes and are returned encrypted by the private key\nthat was given when the deployment was created. If no private key was provided, no outputs are available.\n",
         "parameters": [
@@ -372,7 +388,9 @@
     "/orgs/{orgId}/deployments/{deploymentId}/bundle": {
       "get": {
         "operationId": "getDeploymentBundle",
-        "tags": ["Deployment"],
+        "tags": [
+          "Deployment"
+        ],
         "summary": "Get a bundle archive for a deployment. This API is called by the runner during execution and is not intended for public consumption.",
         "parameters": [
           {
@@ -416,7 +434,9 @@
         "summary": "Return the runner outcome for a specific deployment.",
         "description": "This receives the runner outcome for a specific deployment, eventually along with encrypted outputs and logs.\n",
         "operationId": "updateDeploymentResults",
-        "tags": ["Deployment"],
+        "tags": [
+          "Deployment"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -464,7 +484,9 @@
         "summary": "Returns the compiled TF file associated with a deployment.",
         "description": "This returns the compiled TF file associated with a deployment. This is intended for debugging purposes.\nThis does not return the contents of any inline modules.\n",
         "operationId": "getDeploymentTf",
-        "tags": ["Deployment"],
+        "tags": [
+          "Deployment"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -493,7 +515,10 @@
     "/internal/orgs/{orgId}/deployments/{deploymentId}/actions/force-failure": {
       "post": {
         "operationId": "internalForceFailDeployment",
-        "tags": ["internal", "Deployment"],
+        "tags": [
+          "internal",
+          "Deployment"
+        ],
         "summary": "Emergency API for force failing a deployment.",
         "description": "This should only be used once you have confirmed that the underlying runner job has stopped, failed, or will\nnever execute.\n",
         "parameters": [
@@ -524,44 +549,12 @@
         }
       }
     },
-    "/orgs/{orgId}/remote-runners/{runnerId}/actions/poll-requests": {
-      "post": {
-        "summary": "Long-poll wait for pending messages for a remote runner",
-        "description": "Remote runners should poll this endpoint to receive pending messages.\n",
-        "operationId": "waitForRemoteRunnerMessages",
-        "tags": ["RemoteRunnerMessages"],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/orgIdPathParam"
-          },
-          {
-            "$ref": "#/components/parameters/runnerIdPathParam"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully polled for requests.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RemoteRunnerMessage"
-                }
-              }
-            }
-          },
-          "204": {
-            "description": "No messages for the runner."
-          },
-          "404": {
-            "$ref": "#/components/responses/404NotFound"
-          }
-        }
-      }
-    },
     "/orgs/{orgId}/deployments/{deploymentId}/resources": {
       "get": {
         "operationId": "listDeploymentResourceNodes",
-        "tags": ["Deployment"],
+        "tags": [
+          "Deployment"
+        ],
         "summary": "List resource nodes for a deployment",
         "description": "Returns the resource graph calculated for this deployment. Works for all\ndeployment types including plan-only and historical deployments. Unlike\nactive-resources, this endpoint returns graph nodes without runtime metadata.\n",
         "parameters": [
@@ -592,7 +585,9 @@
     "/orgs/{orgId}/active-resources": {
       "get": {
         "operationId": "listActiveResourceNodes",
-        "tags": ["ActiveResource"],
+        "tags": [
+          "ActiveResource"
+        ],
         "summary": "List active resource nodes",
         "description": "List active resource nodes matching the query. At the moment, project_id and env_id are required.\n",
         "parameters": [
@@ -631,7 +626,10 @@
         "summary": "Check whether a given module is in use in a resource graph.",
         "description": "This is a simple and efficient API. It returns only the project environments which are using this module.\nA more complex public api should be created to list each individual resource node usage.\n",
         "operationId": "internalCheckModuleUsage",
-        "tags": ["internal", "Modules"],
+        "tags": [
+          "internal",
+          "Modules"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -670,46 +668,14 @@
         }
       }
     },
-    "/internal/orgs/{orgId}/remote-runners/{runnerId}/actions/push-message": {
-      "post": {
-        "summary": "Push a message to a remote runner",
-        "description": "Sends a message to a specific remote runner for processing.\n",
-        "operationId": "internalPushMessageToRemoteRunner",
-        "tags": ["internal", "RemoteRunnerMessages"],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/orgIdPathParam"
-          },
-          {
-            "$ref": "#/components/parameters/runnerIdPathParam"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RemoteRunnerMessage"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "Message pushed successfully."
-          },
-          "503": {
-            "description": "Runner is not connected."
-          }
-        }
-      }
-    },
     "/orgs/{orgId}/metadata-keys": {
       "get": {
         "summary": "List metadata keys for an organization",
         "description": "Returns a list of metadata keys for the specified organization. Each key is represented as a JSON object\ncontaining the key name, type, and other attributes.\n",
         "operationId": "listMetadataKeys",
-        "tags": ["MetadataKey"],
+        "tags": [
+          "MetadataKey"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -741,7 +707,9 @@
         "summary": "Create a new metadata key for an organization",
         "description": "Creates a new metadata key for the specified organization. The request body should contain the key name,\ntype, and other attributes.\n",
         "operationId": "createMetadataKey",
-        "tags": ["MetadataKey"],
+        "tags": [
+          "MetadataKey"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -785,7 +753,9 @@
         "summary": "Get a metadata key for an organization",
         "description": "Returns the details of a specific metadata key for the specified organization. The response includes\nthe key name, type, and other attributes.\n",
         "operationId": "getMetadataKey",
-        "tags": ["MetadataKey"],
+        "tags": [
+          "MetadataKey"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -814,7 +784,9 @@
         "summary": "Delete a metadata key for an organization",
         "description": "Deletes a specific metadata key for the specified organization. The request body should contain the key name.\n",
         "operationId": "deleteMetadataKey",
-        "tags": ["MetadataKey"],
+        "tags": [
+          "MetadataKey"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -836,7 +808,9 @@
         "summary": "Update a metadata key for an organization",
         "description": "Updates a specific metadata key for the specified organization. The request body should contain the updated\nattributes of the metadata key.\n",
         "operationId": "updateMetadataKey",
-        "tags": ["MetadataKey"],
+        "tags": [
+          "MetadataKey"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -878,7 +852,10 @@
     "/internal/orgs/{orgId}/deployments": {
       "delete": {
         "operationId": "internalDeleteDeployments",
-        "tags": ["internal", "Deployment"],
+        "tags": [
+          "internal",
+          "Deployment"
+        ],
         "summary": "Delete all the deployments for an project_id, env_id combination. The last deployment must be a successful destroy.",
         "parameters": [
           {
@@ -919,7 +896,9 @@
     "/.well-known/openid-configuration": {
       "get": {
         "operationId": "getOpenidConfiguration",
-        "tags": ["WellKnown"],
+        "tags": [
+          "WellKnown"
+        ],
         "summary": "Show OIDC discovery configuration.",
         "responses": {
           "200": {
@@ -941,7 +920,9 @@
     "/.well-known/jwks": {
       "get": {
         "operationId": "getJwks",
-        "tags": ["WellKnown"],
+        "tags": [
+          "WellKnown"
+        ],
         "summary": "Show JSON Web Keys Set (JWKS).",
         "responses": {
           "200": {
@@ -1103,7 +1084,11 @@
           "type": "array",
           "items": {
             "type": "string",
-            "enum": ["executing", "failed", "succeeded"]
+            "enum": [
+              "executing",
+              "failed",
+              "succeeded"
+            ]
           }
         }
       }
@@ -1128,7 +1113,10 @@
             "type": "object"
           }
         },
-        "required": ["error", "message"],
+        "required": [
+          "error",
+          "message"
+        ],
         "type": "object"
       },
       "OrganizationId": {
@@ -1172,7 +1160,10 @@
           },
           "status": {
             "type": "string",
-            "enum": ["success", "failure"],
+            "enum": [
+              "success",
+              "failure"
+            ],
             "description": "The overall status of the runner execution."
           },
           "error": {
@@ -1185,7 +1176,9 @@
             "$ref": "#/components/schemas/DeploymentResultMetadata"
           }
         },
-        "required": ["status"]
+        "required": [
+          "status"
+        ]
       },
       "DeploymentResultMetadata": {
         "x-go-type-skip-optional-pointer": true,
@@ -1198,7 +1191,10 @@
       "DeploymentResultMetadataPerNode": {
         "description": "The metadata produced by a specific resource identified by its hash.",
         "type": "object",
-        "required": ["node_id", "metadata"],
+        "required": [
+          "node_id",
+          "metadata"
+        ],
         "properties": {
           "node_id": {
             "type": "string",
@@ -1248,7 +1244,10 @@
       "DeploymentMetrics": {
         "type": "object",
         "description": "Metrics resulting from a deployment.",
-        "required": ["num_workloads", "num_resource_nodes"],
+        "required": [
+          "num_workloads",
+          "num_resource_nodes"
+        ],
         "properties": {
           "num_workloads": {
             "type": "integer",
@@ -1360,7 +1359,9 @@
       "DeploymentPage": {
         "description": "A page of deployments",
         "type": "object",
-        "required": ["items"],
+        "required": [
+          "items"
+        ],
         "properties": {
           "items": {
             "type": "array",
@@ -1377,7 +1378,9 @@
       "DeploymentManifest": {
         "type": "object",
         "description": "The manifest associated with a deployment",
-        "required": ["workloads"],
+        "required": [
+          "workloads"
+        ],
         "properties": {
           "workloads": {
             "description": "The set of workloads in the environment.",
@@ -1401,7 +1404,9 @@
       "DeploymentManifestResource": {
         "description": "A resource to provision as part of the deployment",
         "type": "object",
-        "required": ["type"],
+        "required": [
+          "type"
+        ],
         "properties": {
           "type": {
             "description": "The resource type to provision",
@@ -1468,7 +1473,10 @@
             "$ref": "#/components/schemas/DeploymentSummary"
           },
           {
-            "required": ["manifest", "runner_id"],
+            "required": [
+              "manifest",
+              "runner_id"
+            ],
             "properties": {
               "manifest": {
                 "$ref": "#/components/schemas/DeploymentManifest"
@@ -1484,12 +1492,20 @@
       },
       "DeploymentCreateBody": {
         "type": "object",
-        "required": ["mode", "project_id", "env_id"],
+        "required": [
+          "mode",
+          "project_id",
+          "env_id"
+        ],
         "properties": {
           "mode": {
             "description": "The mode of the deployment. Defaults to 'deploy'. Can be set to 'rollback' to rollback to the graph used in\nthe deployment specified by `rollback_to_deployment_id`. For backwards compatibility, this can be set to\n'plan_only' which is equivalent to 'deploy' mode with plan_only set to true.\n",
             "type": "string",
-            "enum": ["plan_only", "deploy", "rollback"],
+            "enum": [
+              "plan_only",
+              "deploy",
+              "rollback"
+            ],
             "example": "deploy"
           },
           "plan_only": {
@@ -1542,7 +1558,12 @@
           "runner_log_level": {
             "description": "The log level for the runner.",
             "type": "string",
-            "enum": ["debug", "info", "warn", "error"],
+            "enum": [
+              "debug",
+              "info",
+              "warn",
+              "error"
+            ],
             "example": "info",
             "default": "info"
           }
@@ -1550,7 +1571,10 @@
       },
       "DeploymentDryRun": {
         "type": "object",
-        "required": ["runner_id", "diff"],
+        "required": [
+          "runner_id",
+          "diff"
+        ],
         "properties": {
           "runner_id": {
             "description": "The Runner ID that this deployment would have executed on",
@@ -1564,7 +1588,9 @@
       },
       "DeploymentEncryptedOutputs": {
         "type": "object",
-        "required": ["raw"],
+        "required": [
+          "raw"
+        ],
         "properties": {
           "raw": {
             "description": "The base64 encoded encrypted outputs. These are returned in standard base64 with padding. The outputs are encrypted with https://age-encryption.org/ and may\nbe decrypted by the holder of the recipients key.\n",
@@ -1575,7 +1601,12 @@
       "DeploymentDiff": {
         "type": "object",
         "description": "Describes a diff between the resource graphs of two deployments.",
-        "required": ["changes", "num_added", "num_changed", "num_removed"],
+        "required": [
+          "changes",
+          "num_added",
+          "num_changed",
+          "num_removed"
+        ],
         "properties": {
           "from_deployment_id": {
             "description": "The deployment ID the diff is calculated from. This will be null if there is no previous deployment.",
@@ -1609,7 +1640,12 @@
       },
       "DeploymentDiffChange": {
         "type": "object",
-        "required": ["id", "resource", "type", "summary"],
+        "required": [
+          "id",
+          "resource",
+          "type",
+          "summary"
+        ],
         "properties": {
           "id": {
             "description": "The deterministic hash of the node.",
@@ -1624,7 +1660,12 @@
           "type": {
             "description": "The type of change in a resource node.",
             "type": "string",
-            "enum": ["added", "removed", "module_changed", "params_changed"],
+            "enum": [
+              "added",
+              "removed",
+              "module_changed",
+              "params_changed"
+            ],
             "x-enum-varnames": [
               "DeploymentDiffChangeTypeAdded",
               "DeploymentDiffChangeTypeRemoved",
@@ -1641,7 +1682,9 @@
       "MetadataKeyPage": {
         "description": "A page of metadata keys",
         "type": "object",
-        "required": ["items"],
+        "required": [
+          "items"
+        ],
         "properties": {
           "items": {
             "type": "array",
@@ -1679,7 +1722,11 @@
             "$ref": "#/components/schemas/MetadataKeySchema"
           }
         },
-        "required": ["name", "schema", "created_at"],
+        "required": [
+          "name",
+          "schema",
+          "created_at"
+        ],
         "type": "object"
       },
       "MetadataKeySchema": {
@@ -1689,7 +1736,9 @@
           "type": {
             "description": "The type of the metadata key.",
             "type": "string",
-            "enum": ["string"],
+            "enum": [
+              "string"
+            ],
             "example": "string"
           },
           "format": {
@@ -1704,7 +1753,9 @@
             "example": "^[a-zA-Z0-9_.-]*$"
           }
         },
-        "required": ["type"]
+        "required": [
+          "type"
+        ]
       },
       "MetadataKeyCreateBody": {
         "description": "A metadata key for an organization.",
@@ -1724,7 +1775,10 @@
             "$ref": "#/components/schemas/MetadataKeySchema"
           }
         },
-        "required": ["name", "schema"],
+        "required": [
+          "name",
+          "schema"
+        ],
         "type": "object"
       },
       "MetadataKeyUpdateBody": {
@@ -1748,7 +1802,9 @@
           "type": {
             "description": "The type of the metadata key.",
             "type": "string",
-            "enum": ["string"],
+            "enum": [
+              "string"
+            ],
             "example": "string"
           },
           "format": {
@@ -1842,7 +1898,9 @@
       },
       "ListActiveResourceNodesPage": {
         "type": "object",
-        "required": ["items"],
+        "required": [
+          "items"
+        ],
         "properties": {
           "items": {
             "type": "array",
@@ -1855,7 +1913,9 @@
       },
       "ResourceNodesPage": {
         "type": "object",
-        "required": ["items"],
+        "required": [
+          "items"
+        ],
         "properties": {
           "items": {
             "type": "array",
@@ -1865,101 +1925,6 @@
             }
           }
         }
-      },
-      "RemoteRunnerMessage": {
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/RemoteRunnerMessageCreateJob"
-          },
-          {
-            "$ref": "#/components/schemas/RemoteRunnerMessageCheckJobStatus"
-          }
-        ],
-        "discriminator": {
-          "propertyName": "action",
-          "mapping": {
-            "create-job": "#/components/schemas/RemoteRunnerMessageCreateJob",
-            "check-job-status": "#/components/schemas/RemoteRunnerMessageCheckJobStatus"
-          }
-        }
-      },
-      "RemoteRunnerMessageAction": {
-        "description": "The action to be performed by the remote runner.",
-        "type": "string",
-        "enum": ["create-job", "check-job-status"]
-      },
-      "RemoteRunnerMessageCreateJob": {
-        "type": "object",
-        "description": "The response for creating a job on the runner.",
-        "properties": {
-          "action": {
-            "$ref": "#/components/schemas/RemoteRunnerMessageAction"
-          },
-          "job_id": {
-            "type": "string",
-            "description": "The ID of the job created on the runner.",
-            "example": "job-12345"
-          },
-          "namespace": {
-            "type": "string",
-            "description": "The ID of the namespace associated with the job.",
-            "example": "test-namespace"
-          },
-          "configuration": {
-            "type": "object",
-            "additionalProperties": true,
-            "description": "The configuration for the job to be created on the runner. It must be parsable into a kubernetes Job definition."
-          },
-          "deployment_token": {
-            "type": "string",
-            "description": "The deployment token to authenticate any request to update deployment results from the remote runner.",
-            "example": "deployment-token-12345"
-          }
-        },
-        "required": [
-          "action",
-          "job_id",
-          "namespace",
-          "configuration",
-          "deployment_token"
-        ]
-      },
-      "RemoteRunnerMessageCheckJobStatus": {
-        "type": "object",
-        "description": "The response for checking the status of a job on the runner.",
-        "properties": {
-          "action": {
-            "$ref": "#/components/schemas/RemoteRunnerMessageAction"
-          },
-          "job_id": {
-            "type": "string",
-            "description": "The ID of the job whose status is being requested.",
-            "example": "job-12345"
-          },
-          "namespace": {
-            "type": "string",
-            "description": "The ID of the namespace associated with the job.",
-            "example": "test-namespace"
-          },
-          "deployment_token": {
-            "type": "string",
-            "description": "The deployment token to authenticate any request to update deployment results from the remote runner.",
-            "example": "deployment-token-12345"
-          },
-          "expires_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The time at which the job should be considered stuck by the runner if no pods are running or completed.",
-            "example": "2025-01-02T03:04:05Z"
-          }
-        },
-        "required": [
-          "action",
-          "job_id",
-          "namespace",
-          "deployment_token",
-          "expires_at"
-        ]
       },
       "OpenidConfiguration": {
         "description": "OpenID discovery configuration.",
@@ -2022,7 +1987,9 @@
             }
           }
         },
-        "required": ["keys"],
+        "required": [
+          "keys"
+        ],
         "type": "object"
       },
       "Jwk": {
@@ -2057,11 +2024,20 @@
             "type": "string"
           }
         },
-        "required": ["alg", "kty", "use", "n", "e", "kid"]
+        "required": [
+          "alg",
+          "kty",
+          "use",
+          "n",
+          "e",
+          "kid"
+        ]
       },
       "InternalModuleUsage": {
         "type": "object",
-        "required": ["env_ids_by_project_id"],
+        "required": [
+          "env_ids_by_project_id"
+        ],
         "properties": {
           "env_ids_by_project_id": {
             "type": "object",

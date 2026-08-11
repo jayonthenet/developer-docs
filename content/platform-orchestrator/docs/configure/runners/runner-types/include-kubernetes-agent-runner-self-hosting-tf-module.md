@@ -6,7 +6,8 @@ draft: true # This page is made for being included in other pages, not standalon
 
 Visit the [module documentation](https://github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner) to see further configuration options and available releases.
 
-Apply the API endpoint setting to the module. Use the optional source, chart, and image overrides only when using private mirrors:
+Apply the NATS endpoint and credential Secret settings to the module. Use the
+optional source, chart, and image overrides only when using private mirrors:
 
 ```hcl
 module "kubernetes_agent_runner" {
@@ -23,13 +24,11 @@ module "kubernetes_agent_runner" {
   kubernetes_agent_runner_chart_repository = local.kubernetes_agent_runner_chart_repository
   kubernetes_agent_runner_chart_version    = local.kubernetes_agent_runner_chart_version
   #
-  # Use the API endpoint of your Orchestrator installation
-  extra_env_vars = [
-    {
-      name  = "REMOTE_URL"
-      value = local.orchestrator_api_url
-    }
-  ]
+  # Use the NATS endpoint and existing Secrets for this installation
+  nats_url                             = local.nats_url
+  nats_existing_secret                 = "runner-nats-creds"
+  nats_job_credentials_existing_secret = "runner-nats-creds"
+  create_namespaces                    = false
   #
   # Use an internally hosted image registry
   kubernetes_agent_runner_image_repository = local.kubernetes_agent_runner_image_repository

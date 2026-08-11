@@ -4,6 +4,8 @@ description: "Common runner connectivity section for agent-based Kubernetes runn
 draft: true # This page is made for being included in other pages, not standalone
 ---
 
-The Kubernetes nodes hosting the runner require outbound HTTPS access to the API hostname of your Platform Orchestrator installation.
+The Kubernetes nodes hosting the runner require outbound access to the
+operator-provided TLS NATS endpoint, normally on TCP port 4222. They do not need
+inbound connectivity from the Platform Orchestrator installation.
 
 See [connectivity]({{< relref "/platform-orchestrator/docs/security/connectivity" >}}) for more details.

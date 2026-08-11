@@ -7,6 +7,10 @@ const main = async () => {
   }
 
   let version = process.argv[2];
+  if (!/^v?\d+\.\d+\.\d+$/.test(version)) {
+    throw new Error(`Expected a stable semantic version tag, received: ${version}`);
+  }
+
   // Remove 'v' prefix if present
   if (version.startsWith('v')) {
     version = version.slice(1);

@@ -16,7 +16,9 @@ The installation is based on [Helm](https://helm.sh) charts bundled via [Helmfil
 
 Since you also manage the data storage, the self-hosted setup enables data sovereignty.
 
-A fully air-gapped setup without internet ingress or egress is supported for runner types that do not depend on a public OIDC issuer. Refer to the detailed requirements below.
+An air-gapped runner design without internet ingress or egress is included for
+runner types that do not depend on a public OIDC issuer. It is not
+production-qualified in release `0.2.0`; refer to the limitations below.
 
 ## Prerequisites
 
@@ -25,15 +27,40 @@ Infrastructure:
 - Kubernetes cluster
 - PostgreSQL database (v17+)
   - Or use the optional in-cluster PostgreSQL as part of the [installation](#installation) package (not recommended for production use)
+- NATS JetStream, either installed by chart `0.2.0` or provided as an external
+  service
 - DNS and TLS certificates for the domains of the Orchestrator console and API endpoint
 - Optional: a dedicated public DNS name and publicly trusted TLS certificate for the per-install OIDC issuer when using AWS or Google Cloud identity federation
 
-For air-gapped environments, in addition to the above:
+For planned air-gapped environments, in addition to the above:
 
 - Internal container registry (OCI-compatible)
 - Ability to [mirror Terraform providers](https://developer.hashicorp.com/terraform/internals/provider-network-mirror-protocol)
 
 Air-gapped installations cannot use runner types that require AWS or Google Cloud to retrieve public OIDC discovery and signing-key documents. Other runner types remain available.
+
+The NATS air-gap relay is included in runner `v2.0.0`, but it has not been
+qualified with a physical diode. Do not treat that path as production-validated
+until it has passed acceptance tests with the selected device.
+
+## Messaging and runner connectivity
+
+Chart `0.2.0` uses NATS JetStream for service events, runner commands, results,
+and encrypted log references. Runner commands are buffered centrally while an
+edge runner is disconnected. Edge runner results and logs use a persistent
+outbound spool; multi-node clusters require `ReadWriteMany` storage.
+
+The bundled NATS service is cluster-local and uses a plaintext listener by
+default. Remote Kubernetes and ECS runners need an operator-provided,
+externally reachable TLS NATS endpoint. Operators can use an external NATS
+service or securely expose and add TLS to the bundled service; chart `0.2.0`
+does not create that external endpoint or its certificates. Do not expose the
+bundled plaintext listener outside the installation cluster.
+
+The chart-generated shared token is acceptable only for local bootstrap.
+Production installations need per-service and per-runner subject-scoped
+credentials plus issuance, rotation, revocation, and emergency-recovery
+procedures before remote runners are connected.
 
 Tools:
 
@@ -60,27 +87,29 @@ The issuer belongs to this installation. Stellwerk does not operate a shared OID
 
 Helm charts to install and operate Platform Orchestrator in Kubernetes.
 
+Chart `0.2.0` is the breaking NATS transport release. Read the
+[`v0.2.0` release notes](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/releases/tag/v0.2.0) before upgrading; mixed `v1`
+and `v2` backend or runner images are unsupported.
+
 ## Charts
 
-All releases are managed via [Helmfile](helmfile.yaml.gotmpl). The main chart
+All releases are managed via [Helmfile](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/blob/main/helmfile.yaml.gotmpl). The main chart
 is `platform-orchestrator`; the others are prerequisites (operators, CRDs, and
 infrastructure) that it depends on.
 
 | Release | Chart | Type | Description |
 |---------|-------|------|-------------|
 | `envoy-gateway` | `oci://docker.io/envoyproxy/gateway-helm` | External | Envoy Gateway controller |
-| `gatewayclass` | [charts/gatewayclass](charts/gatewayclass) | Local | GatewayClass resource for Envoy Gateway |
+| `gatewayclass` | [charts/gatewayclass](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/tree/main/charts/gatewayclass) | Local | GatewayClass resource for Envoy Gateway |
 | `cnpg` | `cnpg/cloudnative-pg` | External | CloudNativePG operator for PostgreSQL |
-| `seaweedfs-operator` | `seaweedfs-operator/seaweedfs-operator` | External | SeaweedFS operator |
 | `cert-manager` | `oci://quay.io/jetstack/charts/cert-manager` | External | TLS certificate management |
-| `rabbitmq-cluster-operator` | [charts/rabbitmq-cluster-operator](charts/rabbitmq-cluster-operator) | Local | RabbitMQ Cluster Operator |
-| `spicedb-operator` | [charts/spicedb-operator](charts/spicedb-operator) | Local | SpiceDB operator |
-| `keycloak-operator` | [charts/keycloak-operator](charts/keycloak-operator) | Local | Keycloak operator |
+| `spicedb-operator` | [charts/spicedb-operator](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/tree/main/charts/spicedb-operator) | Local | SpiceDB operator |
+| `keycloak-operator` | [charts/keycloak-operator](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/tree/main/charts/keycloak-operator) | Local | Keycloak operator |
 | `openbao` | `openbao/openbao` | External | OpenBao (Vault-compatible secret store) |
-| `cluster-issuer` | [charts/cluster-issuer](charts/cluster-issuer) | Local | cert-manager ClusterIssuer resource |
+| `cluster-issuer` | [charts/cluster-issuer](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/tree/main/charts/cluster-issuer) | Local | cert-manager ClusterIssuer resource |
 | `opentelemetry-operator` | `opentelemetry-operator/opentelemetry-operator` | External | OpenTelemetry operator |
-| `opentelemetry` | [charts/opentelemetry](charts/opentelemetry) | Local | OpenTelemetry Collector configuration |
-| **`platform-orchestrator`** | [**charts/platform-orchestrator**](charts/platform-orchestrator) | **Local** | **Platform Orchestrator and its dependencies** ([values reference](charts/platform-orchestrator/README.md)) |
+| `opentelemetry` | [charts/opentelemetry](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/tree/main/charts/opentelemetry) | Local | OpenTelemetry Collector configuration |
+| **`platform-orchestrator`** | [**charts/platform-orchestrator**](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/tree/main/charts/platform-orchestrator) | **Local** | **Platform Orchestrator and its dependencies** ([values reference](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/blob/main/charts/platform-orchestrator/README.md)) |
 
 Each release can be toggled on/off via the helmfile environment state values (e.g., `installEnvoyGateway`, `installPostgres`, etc.).
 
@@ -120,6 +149,21 @@ component image repositories and configure `global.imagePullSecrets`.
 ```bash
 make deploy
 ```
+
+The chart-generated NATS token is intended for local bootstrap. Before a
+production rollout, provision per-service and per-runner subject-scoped NATS
+credentials and establish rotation and revocation procedures.
+
+## Releasing the OCI chart
+
+Chart publication is deliberately manual. Updating a component image does not
+publish a chart by itself. When a coherent set of image tags is ready, update
+the default image tags in `charts/platform-orchestrator/values.yaml`, increment
+the chart version in `charts/platform-orchestrator/Chart.yaml`, and commit the
+change. Create and push a signed `v<chart-version>` tag on that commit, then run
+the **Release Chart** workflow from that tag. The workflow validates the tag and
+chart version, lints and packages the chart, pushes it to
+`oci://ghcr.io/stellwerk-labs/charts`, and creates the matching GitHub release.
 
 ## Organization and user management
 

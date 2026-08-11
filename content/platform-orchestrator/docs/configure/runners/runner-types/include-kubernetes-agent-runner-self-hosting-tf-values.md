@@ -4,7 +4,8 @@ description: "Common kubernetes-agent runner snippet on TF values for self-hosti
 draft: true # This page is made for being included in other pages, not standalone
 ---
 
-Set the API endpoint for your installation. Override the public chart and image locations only when using private mirrors:
+Set the NATS endpoint for your installation. Override the public chart and image
+locations only when using private mirrors:
 
 ```hcl
 locals {
@@ -24,7 +25,7 @@ locals {
   # Runner image tag (optional)
   kubernetes_agent_runner_image_tag = "vX.Y.Z"
   #
-  # Your internal Orchestrator API endpoint
-  orchestrator_api_url = "https://my-orchestrator-api.example.com"
+  # TLS NATS endpoint reachable from the runner cluster
+  nats_url = "tls://nats.my-orchestrator.example.com:4222"
 }
 ```

@@ -251,7 +251,8 @@ The next steps require the TF `apply` for the demo infrastructure to be finished
 
 Make sure you are in the `orchestrator` directory in your shell.
 
-Create a private/public key pair for the runner to authenticate against the Orchestrator:
+Create the runner registration key pair. The public key is registered with the
+Orchestrator; the private key remains local and is not mounted into the runner:
 
 ```bash
 openssl genpkey -algorithm ed25519 -out runner_private_key.pem
@@ -325,9 +326,6 @@ Create a new file named `orchestrator.tf` in the current `orchestrator` director
 data "local_file" "agent_runner_public_key" {
   filename = "./runner_public_key.pem"
 }
-data "local_file" "agent_runner_private_key" {
-  filename = "./runner_private_key.pem"
-}
 
 # Configure the Kubernetes provider for accessing the demo cluster
 provider "kubernetes" {
@@ -355,11 +353,15 @@ provider "helm" {
 
 # Install the Kubernetes agent runner Helm chart and its prerequisites and register the runner with the Orchestrator
 module "kubernetes_agent_runner" {
-  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner"
+  source = "github.com/stellwerk-tf-modules/kubernetes-agent-orchestrator-runner?ref=v3.0.0"
 
   orchestrator_org_id = var.orchestrator_org
-  private_key_path = "./runner_private_key.pem"
   public_key_path  = "./runner_public_key.pem"
+  nats_url         = "tls://nats.orchestrator.example.com:4222"
+
+  # Tutorial/bootstrap convenience only. Use externally managed, subject-scoped
+  # credential Secrets for production so the token is not stored in TF state.
+  nats_token = "replace-with-your-runner-nats-token"
 
   # Workload Identity configuration - link to the cloud IAM identity created above
   service_account_annotations = var.enabled_cloud_provider == "aws" ? {
@@ -422,11 +424,12 @@ While the `apply` executes, inspect the resources now being added. Refer to the 
 You now have:
 
 - ✅ Installed a runner component into the demo infrastructure
-- ✅ Configured the runner with a key pair
+- ✅ Configured the runner with durable NATS communication
 - ✅ Enabled the runner to maintain TF state
 - ✅ Registered the runner with the Orchestrator
 
-The runner is now ready to execute deployments, polling the Orchestrator for deployment requests.
+The runner is now ready to execute deployments. JetStream buffers commands when
+the runner is temporarily disconnected.
 
 ## Create a project and environment
 

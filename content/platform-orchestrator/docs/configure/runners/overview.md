@@ -18,7 +18,10 @@ The Orchestrator will launch a runner to execute a [deployment]({{< relref "/pla
 
 There are different _runner types_ to support executing runners on specific kinds of compute, like Kubernetes clusters or serverless container runtimes. Each runner is configured to use a particular instance of such compute.
 
-A runner is either launched by the Orchestrator itself if the target compute is reachable for it, or by an agent running in the target infrastructure and polling the Orchestrator for deployment events.
+A runner is either launched by the Orchestrator when it can reach the target
+compute, or by an agent in the target infrastructure. Agents consume durable,
+runner-specific commands from NATS JetStream, so commands remain buffered while
+an agent is disconnected.
 
 In addition, a runner uses a particular _state storage_ to maintain Terraform/OpenTofu state in between invocations.
 

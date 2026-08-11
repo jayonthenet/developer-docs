@@ -12,7 +12,7 @@ Network administrators and platform engineers need to configure connectivity bet
 
 ## Orchestrator endpoints
 
-Expose the console and API hostnames configured during [installation]({{< relref "/platform-orchestrator/docs/architecture/self-hosting" >}}) to the users and systems that need them. Agent runners require outbound HTTPS access to the API hostname.
+Expose the console and API hostnames configured during [installation]({{< relref "/platform-orchestrator/docs/architecture/self-hosting" >}}) to the users and systems that need them. Agent and ECS runners outside the installation cluster require outbound access to an operator-provided TLS NATS endpoint, normally on TCP port 4222. The bundled NATS service is cluster-local and plaintext by default; chart `0.2.0` does not expose it externally or provision its TLS certificates.
 
 Direct runners require the data plane to reach the target infrastructure. Use the installation's egress source ranges when target systems use IP allowlists.
 
@@ -55,6 +55,10 @@ For example, a [kubernetes-gke runner]({{< relref "/platform-orchestrator/docs/c
 
 ### Agent
 
-For an agent runner, configure egress from the system hosting the agent component to your Orchestrator API hostname on TCP port 443. The agent maintains a persistent, outbound-only connection to the Orchestrator, eliminating the need for inbound firewall rules.
+For an agent runner, configure egress from the system hosting the agent
+component to the operator-provided TLS NATS endpoint, normally on TCP port
+4222. The runner maintains an outbound connection and JetStream buffers
+commands while an edge is disconnected, eliminating the need for inbound
+firewall rules at the runner cluster.
 
-For example, a [kubernetes-agent runner]({{< relref "/platform-orchestrator/docs/configure/runners/runner-types/kubernetes-agent" >}}) requires egress access from the cluster nodes where the agent pod runs to your API endpoint.
+For example, a [kubernetes-agent runner]({{< relref "/platform-orchestrator/docs/configure/runners/runner-types/kubernetes-agent" >}}) requires egress access from the cluster nodes where the agent pod runs to your NATS endpoint.
