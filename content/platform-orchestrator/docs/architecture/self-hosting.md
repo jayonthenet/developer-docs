@@ -89,9 +89,9 @@ The issuer belongs to this installation. Stellwerk does not operate a shared OID
 
 Helm charts to install and operate Platform Orchestrator in Kubernetes.
 
-Chart `0.3.0` exposes the HTTPS runner gateway while keeping NATS JetStream
-internal. Keep the chart, data plane, and runner image versions from the same
-compatibility set.
+Chart `0.4.0` embeds Casbin RBAC in IAM and automatically upgrades supported
+SpiceDB-based installations. It retains the HTTPS runner gateway and internal
+NATS JetStream architecture introduced in `0.3.0`.
 
 ## Charts
 
@@ -105,7 +105,6 @@ infrastructure) that it depends on.
 | `gatewayclass` | [charts/gatewayclass](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/tree/main/charts/gatewayclass) | Local | GatewayClass resource for Envoy Gateway |
 | `cnpg` | `cnpg/cloudnative-pg` | External | CloudNativePG operator for PostgreSQL |
 | `cert-manager` | `oci://quay.io/jetstack/charts/cert-manager` | External | TLS certificate management |
-| `spicedb-operator` | [charts/spicedb-operator](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/tree/main/charts/spicedb-operator) | Local | SpiceDB operator |
 | `keycloak-operator` | [charts/keycloak-operator](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/tree/main/charts/keycloak-operator) | Local | Keycloak operator |
 | `openbao` | `openbao/openbao` | External | OpenBao (Vault-compatible secret store) |
 | `cluster-issuer` | [charts/cluster-issuer](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/tree/main/charts/cluster-issuer) | Local | cert-manager ClusterIssuer resource |
@@ -155,6 +154,20 @@ make deploy
 The chart-generated NATS token is intended for local bootstrap. Before a
 production rollout, provision per-service and per-runner subject-scoped NATS
 credentials and establish rotation and revocation procedures.
+
+### Upgrade from SpiceDB to Casbin
+
+Chart `0.4.0` makes the authorization migration automatic. Upgrading a
+supported IAM schema 29 installation with Helm stops all old IAM pods, starts
+the Casbin-based version, serializes the database cutover across replicas, and
+reconstructs the complete authorization hierarchy from the control plane. IAM
+does not become ready unless migration and verification both succeed.
+
+The `Recreate` rollout causes a short IAM outage. Back up the IAM PostgreSQL
+database first, ensure IAM can reach the control plane, and retain the old
+SpiceDB database during the rollback window. The complete upgrade and rollback
+instructions are in the chart's
+[SpiceDB-to-Casbin migration guide](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/blob/main/docs/migrations/spicedb-to-casbin.md).
 
 ## Releasing the OCI chart
 

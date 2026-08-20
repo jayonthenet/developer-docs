@@ -51,4 +51,14 @@ These assignable scopes exist. Assigning a role on a scope will give the user th
 
 ## Custom Roles
 
-If you need more granular control over permissions and you want to create custom roles, please contact [support](mailto:hello@stellwerk.dev).
+Organization administrators can create configurable roles with a display name
+and one or more permissions through the Platform Orchestrator API. Configurable
+roles can be updated at any time and can be deleted when they have no active
+assignments. Built-in Admin, Deployer, and Viewer roles are immutable.
+
+Use `POST /orgs/{orgId}/roles` to create a role, and the corresponding `GET`,
+`PUT`, and `DELETE` operations under `/orgs/{orgId}/roles/{roleId}` to manage
+it. See the [API specification]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}})
+for request and response schemas. Assign configurable roles to members and
+service users at organization, project, or environment scope in the same way as
+built-in roles.
