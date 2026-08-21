@@ -32,11 +32,12 @@ This change log starts with the open source publication of the Platform Orchestr
   [`v0.4.0`](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/releases/tag/v0.4.0),
   removing the SpiceDB workload, operator, endpoint, pre-shared key, and
   separate runtime database dependency.
-- **Fixed:** Released chart
-  [`v0.4.1`](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/releases/tag/v0.4.1)
-  with console `v1.1.0`, completing the configurable-role release for normal
-  Helm upgrades.
-- **Upgrade:** Chart `0.4.1` automatically migrates qualified IAM `v2.0.1`
+- **Fixed:** Released qualified chart
+  [`v0.4.3`](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/releases/tag/v0.4.3)
+  with console `v1.1.0`, an application-account-safe NATS bootstrap probe, and
+  the runner gateway wired to the documented NATS endpoint. It supersedes the
+  intermediate `0.4.1` and `0.4.2` chart revisions.
+- **Upgrade:** Chart `0.4.3` automatically migrates qualified IAM `v2.0.1`
   installations from schema 29 to Casbin during an ordinary Helm upgrade. The
   migration is serialized, resumable, verified before readiness, and retains
   the former SpiceDB database for a guarded rollback window. Follow the
