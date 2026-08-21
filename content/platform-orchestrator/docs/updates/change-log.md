@@ -11,6 +11,28 @@ aliases:
 
 This change log starts with the open source publication of the Platform Orchestrator ecosystem.
 
+## August 21, 2026
+
+- **New:** Added configurable organization roles with explicit permissions,
+  while keeping the built-in Admin, Deployer, and Viewer roles immutable.
+- **Changed:** Released IAM
+  [`v2.1.0`](https://github.com/stellwerk-labs/platform-orchestrator-iam/releases/tag/v2.1.0)
+  with Casbin authorization evaluated inside IAM and policy data stored in the
+  existing IAM PostgreSQL database.
+- **Improved:** Added bounded in-process authorization caches and NATS
+  invalidation so role and assignment changes propagate across IAM replicas
+  without a shared remote authorization service on every request.
+- **Simplified:** Released self-hosted chart
+  [`v0.4.0`](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/releases/tag/v0.4.0),
+  removing the SpiceDB workload, operator, endpoint, pre-shared key, and
+  separate runtime database dependency.
+- **Upgrade:** Chart `0.4.0` automatically migrates qualified IAM `v2.0.1`
+  installations from schema 29 to Casbin during an ordinary Helm upgrade. The
+  migration is serialized, resumable, verified before readiness, and retains
+  the former SpiceDB database for a guarded rollback window. Follow the
+  [upgrade procedure](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/blob/main/docs/migrations/spicedb-to-casbin.md)
+  before rollout.
+
 ## August 11, 2026
 
 - **Breaking:** Standardized runner communication on outbound HTTPS through a

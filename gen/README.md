@@ -9,3 +9,17 @@ yarn gen-all
 ```
 
 Refer to the individual commands as seen in the `gen-all` script in `package.json` for details.
+
+## Platform Orchestrator OpenAPI specification
+
+The checked-in `platform-orchestrator/openapi/spec-cp.json`, `spec-dp.json`,
+and `spec-iam.json` files are snapshots of the matching service repositories'
+`openapi/spec.json` files. Refresh a snapshot whenever the corresponding API
+changes, then rebuild the public combined specification:
+
+```bash
+bash gen/platform-orchestrator/openapi/createOpenApiSource.sh
+```
+
+Commit the refreshed service snapshot and
+`static/spec/platform-orchestrator-openapi-spec.json` together.

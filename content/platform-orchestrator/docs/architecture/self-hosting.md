@@ -71,6 +71,24 @@ Tools:
 - [Helm Diff](https://github.com/databus23/helm-diff)
 - `kubectl` with cluster admin access
 
+## Upgrading from SpiceDB to Casbin
+
+Chart `0.4.0` automatically migrates a supported SpiceDB-based installation to
+Casbin RBAC during a normal Helm upgrade. The qualified source is IAM `v2.0.1`
+at database schema 29. Upgrade older installations to that version first.
+
+Before upgrading, back up the IAM PostgreSQL database, confirm that IAM can
+reach the control plane, and retain the old SpiceDB database during the
+rollback window. The chart uses a `Recreate` rollout, so all old IAM Pods stop
+before the database migration starts and IAM is briefly unavailable.
+
+The first new IAM replica serializes the migration with a PostgreSQL advisory
+lock, reconstructs the organization, project, and environment hierarchy, and
+verifies the result before becoming ready. Interrupted upgrades resume on the
+next restart; failed verification prevents IAM from serving requests. Follow
+the complete [SpiceDB-to-Casbin upgrade and rollback procedure](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/blob/main/docs/migrations/spicedb-to-casbin.md)
+before deploying chart `0.4.0`.
+
 ## Optional OIDC issuer
 
 The data plane includes an optional OIDC issuer for authenticating runners to AWS and Google Cloud without long-lived cloud credentials. It is disabled unless `data-plane.config.OIDC_ISSUER_URL` is set.
@@ -89,9 +107,9 @@ The issuer belongs to this installation. Stellwerk does not operate a shared OID
 
 Helm charts to install and operate Platform Orchestrator in Kubernetes.
 
-Chart `0.3.0` exposes the HTTPS runner gateway while keeping NATS JetStream
-internal. Keep the chart, data plane, and runner image versions from the same
-compatibility set.
+Chart `0.4.0` embeds Casbin RBAC in IAM and automatically upgrades supported
+SpiceDB-based installations. It retains the HTTPS runner gateway and internal
+NATS JetStream architecture introduced in `0.3.0`.
 
 ## Charts
 
@@ -105,7 +123,6 @@ infrastructure) that it depends on.
 | `gatewayclass` | [charts/gatewayclass](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/tree/main/charts/gatewayclass) | Local | GatewayClass resource for Envoy Gateway |
 | `cnpg` | `cnpg/cloudnative-pg` | External | CloudNativePG operator for PostgreSQL |
 | `cert-manager` | `oci://quay.io/jetstack/charts/cert-manager` | External | TLS certificate management |
-| `spicedb-operator` | [charts/spicedb-operator](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/tree/main/charts/spicedb-operator) | Local | SpiceDB operator |
 | `keycloak-operator` | [charts/keycloak-operator](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/tree/main/charts/keycloak-operator) | Local | Keycloak operator |
 | `openbao` | `openbao/openbao` | External | OpenBao (Vault-compatible secret store) |
 | `cluster-issuer` | [charts/cluster-issuer](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/tree/main/charts/cluster-issuer) | Local | cert-manager ClusterIssuer resource |
@@ -155,6 +172,11 @@ make deploy
 The chart-generated NATS token is intended for local bootstrap. Before a
 production rollout, provision per-service and per-runner subject-scoped NATS
 credentials and establish rotation and revocation procedures.
+
+Chart `0.4.0` automatically upgrades IAM schema 29 from SpiceDB to Casbin during
+the first replacement Pod's startup. Read the
+[SpiceDB-to-Casbin upgrade notes](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/blob/main/docs/migrations/spicedb-to-casbin.md) for the
+required backup, short IAM outage, verification, and rollback procedure.
 
 ## Releasing the OCI chart
 

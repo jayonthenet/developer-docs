@@ -7,7 +7,9 @@
   "paths": {
     "/auth/register": {
       "post": {
-        "tags": ["internal"],
+        "tags": [
+          "internal"
+        ],
         "operationId": "registerUser",
         "summary": "Register a new user using a login provider and grant an initial session token in the cookie.",
         "requestBody": {
@@ -57,7 +59,9 @@
     },
     "/auth/login": {
       "post": {
-        "tags": ["internal"],
+        "tags": [
+          "internal"
+        ],
         "operationId": "loginSession",
         "summary": "Log in and create a new session token",
         "requestBody": {
@@ -110,7 +114,9 @@
     },
     "/auth/device": {
       "post": {
-        "tags": ["Device"],
+        "tags": [
+          "Device"
+        ],
         "operationId": "requestDeviceLogin",
         "summary": "Begin a device login flow",
         "parameters": [
@@ -159,7 +165,9 @@
     },
     "/auth/sso/login": {
       "post": {
-        "tags": ["internal"],
+        "tags": [
+          "internal"
+        ],
         "operationId": "requestSsoLogin",
         "summary": "Begin SSO login flow",
         "requestBody": {
@@ -193,7 +201,9 @@
     },
     "/auth/sso/callback": {
       "get": {
-        "tags": ["internal"],
+        "tags": [
+          "internal"
+        ],
         "operationId": "getSsoCallback",
         "summary": "Callback SSO login flow",
         "parameters": [
@@ -258,7 +268,9 @@
     },
     "/internal/orgs/{orgId}/sso-configuration": {
       "put": {
-        "tags": ["internal"],
+        "tags": [
+          "internal"
+        ],
         "operationId": "internalUpdateSsoConfiguration",
         "summary": "Update SSO configuration for the organization",
         "parameters": [
@@ -295,7 +307,9 @@
         }
       },
       "get": {
-        "tags": ["internal"],
+        "tags": [
+          "internal"
+        ],
         "operationId": "internalGetSsoConfiguration",
         "summary": "Get SSO configuration for the organization",
         "parameters": [
@@ -322,7 +336,9 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": ["internal"],
+        "tags": [
+          "internal"
+        ],
         "operationId": "logoutSession",
         "summary": "Log out the current session token",
         "parameters": [
@@ -353,7 +369,9 @@
     },
     "/auth/check-permissions": {
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "operationId": "checkPermissions",
         "summary": "Bulkly check permissions for the current subject that is logged in. This works for both human users and service users.",
         "requestBody": {
@@ -394,7 +412,9 @@
     },
     "/users/{userId}/memberships": {
       "get": {
-        "tags": ["Membership"],
+        "tags": [
+          "Membership"
+        ],
         "operationId": "listUserMemberships",
         "summary": "List all of the memberships for the given user",
         "parameters": [
@@ -433,7 +453,9 @@
     },
     "/users/{userId}/session-tokens": {
       "get": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "operationId": "listUserSessionTokens",
         "summary": "List all of the active user session tokens",
         "parameters": [
@@ -463,7 +485,9 @@
     },
     "/users/{userId}/session-tokens/{hash}": {
       "delete": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "operationId": "revokeUserSessionToken",
         "summary": "Revoke the session token for this user. Due to internal caching, this may take up to a minute for authorized sessions to be revoked.",
         "parameters": [
@@ -494,7 +518,9 @@
     },
     "/users/{userId}/actions/dismiss-prompt": {
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "operationId": "dismissPrompt",
         "summary": "Dismiss a prompt for the user",
         "parameters": [
@@ -528,7 +554,9 @@
     },
     "/orgs/{orgId}/members": {
       "get": {
-        "tags": ["Membership"],
+        "tags": [
+          "Membership"
+        ],
         "operationId": "listMembers",
         "summary": "List the members of an org with their identity provider information",
         "parameters": [
@@ -568,7 +596,9 @@
     },
     "/orgs/{orgId}/memberships": {
       "get": {
-        "tags": ["Membership"],
+        "tags": [
+          "Membership"
+        ],
         "operationId": "listOrgMemberships",
         "summary": "List the memberships for an org",
         "parameters": [
@@ -608,7 +638,9 @@
     },
     "/orgs/{orgId}/memberships/{membershipId}": {
       "delete": {
-        "tags": ["Membership"],
+        "tags": [
+          "Membership"
+        ],
         "operationId": "deleteOrgMembership",
         "summary": "Delete an org membership for a user. Due to internal caching, this may take up to a minute for authorized sessions to be revoked.",
         "parameters": [
@@ -640,7 +672,10 @@
     },
     "/orgs/{orgId}/users/{userId}/memberships": {
       "put": {
-        "tags": ["Membership", "internal"],
+        "tags": [
+          "Membership",
+          "internal"
+        ],
         "operationId": "replaceOrgUserMemberships",
         "summary": "Replace all memberships for a user in an organization",
         "parameters": [
@@ -685,7 +720,10 @@
     },
     "/internal/orgs/{orgId}/memberships": {
       "post": {
-        "tags": ["internal", "Membership"],
+        "tags": [
+          "internal",
+          "Membership"
+        ],
         "operationId": "internalCreateOrgMembership",
         "summary": "Manually create an org membership",
         "parameters": [
@@ -727,7 +765,9 @@
     },
     "/internal/orgs/{orgId}/actions/remove-access": {
       "post": {
-        "tags": ["internal"],
+        "tags": [
+          "internal"
+        ],
         "operationId": "internalRemoveAccessFromOrg",
         "summary": "Removes all user and service user access from an org.",
         "parameters": [
@@ -742,43 +782,14 @@
         }
       }
     },
-    "/internal/orgs/{orgId}/actions/sync-spicedb": {
-      "post": {
-        "tags": ["internal"],
-        "operationId": "internalSyncOrgToSpiceDB",
-        "summary": "Sync organization relationships to SpiceDB",
-        "description": "Performs a snapshot sync of the organization's memberships and service user roles to SpiceDB. Deletes all existing relationships and bulk inserts fresh data.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/orgIdPathParam"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully synced organization to SpiceDB",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SpiceDBSyncResult"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400BadRequest"
-          },
-          "404": {
-            "$ref": "#/components/responses/404NotFound"
-          }
-        }
-      }
-    },
     "/internal/orgs/{orgId}/actions/sync-scopes": {
       "post": {
-        "tags": ["internal"],
+        "tags": [
+          "internal"
+        ],
         "operationId": "internalSyncOrgScopes",
-        "summary": "Sync scoped roles for all projects in an organization",
-        "description": "Checks that the organization exists, lists all projects, and creates scoped roles and relationships for all projects and their environments in SpiceDB.",
+        "summary": "Sync authorization resources for all projects in an organization",
+        "description": "Checks that the organization exists and stores the organization, project, and environment hierarchy used for inherited role bindings.",
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -806,7 +817,9 @@
     },
     "/internal/authenticate": {
       "post": {
-        "tags": ["internal"],
+        "tags": [
+          "internal"
+        ],
         "operationId": "internalAuthenticate",
         "summary": "Authenticate the current request and return From and Hash headers to the gateway",
         "parameters": [
@@ -852,7 +865,9 @@
     },
     "/internal/authorize": {
       "post": {
-        "tags": ["internal"],
+        "tags": [
+          "internal"
+        ],
         "operationId": "internalAuthorize",
         "summary": "Perform a policy enforcement check on the requested user, subjects, and permissions",
         "requestBody": {
@@ -879,7 +894,9 @@
     },
     "/current-user": {
       "get": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "operationId": "getCurrentUser",
         "summary": "Get details of the current user that is logged in",
         "responses": {
@@ -898,7 +915,9 @@
     },
     "/orgs/{orgId}/service-users": {
       "get": {
-        "tags": ["ServiceUser"],
+        "tags": [
+          "ServiceUser"
+        ],
         "operationId": "listServiceUsers",
         "summary": "List the service users in this org",
         "parameters": [
@@ -926,7 +945,9 @@
         }
       },
       "post": {
-        "tags": ["ServiceUser"],
+        "tags": [
+          "ServiceUser"
+        ],
         "operationId": "createServiceUser",
         "summary": "Create a new service user in the org",
         "parameters": [
@@ -965,7 +986,9 @@
     },
     "/orgs/{orgId}/service-users/{serviceUserId}": {
       "delete": {
-        "tags": ["ServiceUser"],
+        "tags": [
+          "ServiceUser"
+        ],
         "operationId": "deleteServiceUser",
         "summary": "Delete a service user from the org. Due to internal caching, this may take up to a minute for authorized sessions to be revoked.",
         "parameters": [
@@ -986,7 +1009,10 @@
         }
       },
       "put": {
-        "tags": ["ServiceUser", "internal"],
+        "tags": [
+          "ServiceUser",
+          "internal"
+        ],
         "operationId": "replaceServiceUserRoles",
         "summary": "Replace all roles for a service user in an organization",
         "parameters": [
@@ -1031,7 +1057,9 @@
     },
     "/orgs/{orgId}/service-users/{serviceUserId}/actions/regenerate": {
       "post": {
-        "tags": ["ServiceUser"],
+        "tags": [
+          "ServiceUser"
+        ],
         "operationId": "regenerateServiceUser",
         "summary": "Regenerate the service user token and extend the expiry. Due to internal caching, this may take up to a minute for authorized sessions to be revoked.",
         "parameters": [
@@ -1070,7 +1098,9 @@
     },
     "/orgs/{orgId}/invitations": {
       "post": {
-        "tags": ["Invitation"],
+        "tags": [
+          "Invitation"
+        ],
         "operationId": "createInvitation",
         "summary": "Create and send an email invitation to a user to join this organization.",
         "parameters": [
@@ -1104,7 +1134,9 @@
         }
       },
       "get": {
-        "tags": ["Invitation"],
+        "tags": [
+          "Invitation"
+        ],
         "operationId": "listInvitations",
         "summary": "List the invitations that are pending in the organization.",
         "parameters": [
@@ -1134,7 +1166,9 @@
     },
     "/orgs/{orgId}/invitations/{invitationId}": {
       "get": {
-        "tags": ["Invitation"],
+        "tags": [
+          "Invitation"
+        ],
         "operationId": "getInvitation",
         "summary": "Previews an invitation for membership to an org without redeeming it. The user must be authorized or present the correct redemption token.",
         "parameters": [
@@ -1179,7 +1213,9 @@
         }
       },
       "delete": {
-        "tags": ["Invitation"],
+        "tags": [
+          "Invitation"
+        ],
         "operationId": "revokeInvitation",
         "summary": "Deletes a pending invitation and invalidates it.",
         "parameters": [
@@ -1208,7 +1244,9 @@
     },
     "/orgs/{orgId}/invitations/{invitationId}/actions/redeem": {
       "post": {
-        "tags": ["Invitation"],
+        "tags": [
+          "Invitation"
+        ],
         "operationId": "redeemInvitation",
         "summary": "Redeems an invitation for membership to an org.",
         "parameters": [
@@ -1258,7 +1296,10 @@
     },
     "/orgs/{orgId}/projects/{projectId}/users": {
       "get": {
-        "tags": ["Project", "Permissions"],
+        "tags": [
+          "Project",
+          "Permissions"
+        ],
         "operationId": "listProjectUsers",
         "summary": "List the users and service users that have access to this project.",
         "parameters": [
@@ -1300,7 +1341,10 @@
     },
     "/orgs/{orgId}/projects/{projectId}/envs/{envId}/users": {
       "get": {
-        "tags": ["Environment", "Permissions"],
+        "tags": [
+          "Environment",
+          "Permissions"
+        ],
         "operationId": "listEnvironmentUsers",
         "summary": "List the users and service users that have access to this environment.",
         "parameters": [
@@ -1345,7 +1389,9 @@
     },
     "/orgs/{orgId}/roles": {
       "get": {
-        "tags": ["Role"],
+        "tags": [
+          "Role"
+        ],
         "operationId": "listRoles",
         "summary": "List the roles in this Organization.",
         "parameters": [
@@ -1371,11 +1417,53 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Role"
+        ],
+        "operationId": "createRole",
+        "summary": "Create a configurable role in this organization.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/orgIdPathParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleWriteBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created the role.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400BadRequest"
+          },
+          "409": {
+            "$ref": "#/components/responses/409Conflict"
+          }
+        }
       }
     },
     "/orgs/{orgId}/roles/{roleId}": {
       "get": {
-        "tags": ["Role"],
+        "tags": [
+          "Role"
+        ],
         "operationId": "getRole",
         "summary": "Obtain details of a Role in an Organization.",
         "parameters": [
@@ -1410,11 +1498,97 @@
             "$ref": "#/components/responses/404NotFound"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Role"
+        ],
+        "operationId": "updateRole",
+        "summary": "Replace the name and permissions of a configurable role.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/orgIdPathParam"
+          },
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleWriteBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated the role.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400BadRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/404NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/409Conflict"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Role"
+        ],
+        "operationId": "deleteRole",
+        "summary": "Delete an unassigned configurable role.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/orgIdPathParam"
+          },
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted the role."
+          },
+          "404": {
+            "$ref": "#/components/responses/404NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/409Conflict"
+          }
+        }
       }
     },
     "/devicelogins/{requestId}/actions/poll": {
       "post": {
-        "tags": ["Device"],
+        "tags": [
+          "Device"
+        ],
         "operationId": "pollDeviceLoginRequest",
         "summary": "Poll the device login request and attempt to redeem for a session token",
         "parameters": [
@@ -1461,7 +1635,9 @@
     },
     "/devicelogins/{code}": {
       "get": {
-        "tags": ["Device"],
+        "tags": [
+          "Device"
+        ],
         "operationId": "getDeviceLoginRequest",
         "summary": "View the attributes of a device login request",
         "parameters": [
@@ -1494,7 +1670,9 @@
     },
     "/devicelogins/{requestId}/actions/accept": {
       "post": {
-        "tags": ["Device"],
+        "tags": [
+          "Device"
+        ],
         "operationId": "acceptDeviceLoginRequest",
         "summary": "Accept the device login request and allocate it a session token.",
         "parameters": [
@@ -1520,7 +1698,9 @@
     },
     "/devicelogins/{requestId}/actions/reject": {
       "post": {
-        "tags": ["Device"],
+        "tags": [
+          "Device"
+        ],
         "operationId": "rejectDeviceLoginRequest",
         "summary": "Reject the device login request",
         "parameters": [
@@ -1606,7 +1786,10 @@
         "required": false,
         "schema": {
           "type": "string",
-          "enum": ["user", "service-user"]
+          "enum": [
+            "user",
+            "service-user"
+          ]
         }
       },
       "perPageQueryParam": {
@@ -1742,12 +1925,18 @@
             "type": "object"
           }
         },
-        "required": ["error", "message"],
+        "required": [
+          "error",
+          "message"
+        ],
         "type": "object"
       },
       "TemporaryLoginBody": {
         "description": "A payload needed to login to Orchestrator (temporary).",
-        "required": ["org_id", "token"],
+        "required": [
+          "org_id",
+          "token"
+        ],
         "properties": {
           "org_id": {
             "description": "The Organization ID",
@@ -1763,7 +1952,10 @@
       },
       "RegisterUserBody": {
         "description": "A payload needed to register a user against an identity provider.",
-        "required": ["provider", "provider_token"],
+        "required": [
+          "provider",
+          "provider_token"
+        ],
         "properties": {
           "provider": {
             "description": "The login provider type.",
@@ -1778,7 +1970,10 @@
       },
       "LoginUserBody": {
         "description": "A payload needed to login a user against an identity provider.",
-        "required": ["provider", "provider_token"],
+        "required": [
+          "provider",
+          "provider_token"
+        ],
         "properties": {
           "provider": {
             "description": "The login provider type.",
@@ -1793,7 +1988,12 @@
       },
       "User": {
         "description": "The details of a users account",
-        "required": ["id", "display_name", "created_at", "login_providers"],
+        "required": [
+          "id",
+          "display_name",
+          "created_at",
+          "login_providers"
+        ],
         "properties": {
           "id": {
             "description": "The user id",
@@ -1836,7 +2036,9 @@
             "$ref": "#/components/schemas/User"
           },
           {
-            "required": ["identity_already_exists"],
+            "required": [
+              "identity_already_exists"
+            ],
             "properties": {
               "identity_already_exists": {
                 "description": "Whether an existing user already matched this login identity and could be returned",
@@ -1853,7 +2055,10 @@
             "$ref": "#/components/schemas/User"
           },
           {
-            "required": ["organization_memberships", "dismissed_prompts"],
+            "required": [
+              "organization_memberships",
+              "dismissed_prompts"
+            ],
             "properties": {
               "organization_memberships": {
                 "type": "array",
@@ -1872,7 +2077,9 @@
         ]
       },
       "CurrentUserOrgMembership": {
-        "required": ["id"],
+        "required": [
+          "id"
+        ],
         "properties": {
           "id": {
             "description": "The organization id",
@@ -1882,7 +2089,13 @@
       },
       "UserMembership": {
         "description": "A user membership in an org",
-        "required": ["id", "created_at", "org_id", "subject_type", "subject"],
+        "required": [
+          "id",
+          "created_at",
+          "org_id",
+          "subject_type",
+          "subject"
+        ],
         "properties": {
           "id": {
             "description": "The membership id",
@@ -1916,7 +2129,9 @@
       },
       "UserMembershipPage": {
         "description": "A page of user memberships",
-        "required": ["items"],
+        "required": [
+          "items"
+        ],
         "properties": {
           "items": {
             "type": "array",
@@ -1984,7 +2199,9 @@
       },
       "OrgMembershipPage": {
         "description": "A page of org memberships",
-        "required": ["items"],
+        "required": [
+          "items"
+        ],
         "properties": {
           "items": {
             "type": "array",
@@ -2050,13 +2267,18 @@
             "items": {
               "type": "string"
             },
-            "example": ["google", "microsoft"]
+            "example": [
+              "google",
+              "microsoft"
+            ]
           }
         }
       },
       "MemberPage": {
         "description": "A page of members",
-        "required": ["items"],
+        "required": [
+          "items"
+        ],
         "properties": {
           "items": {
             "type": "array",
@@ -2072,7 +2294,11 @@
       },
       "InternalMembershipCreateBody": {
         "description": "The payload to manually add a user to an org with a particular membership",
-        "required": ["user_id", "subject_type", "subject"],
+        "required": [
+          "user_id",
+          "subject_type",
+          "subject"
+        ],
         "properties": {
           "user_id": {
             "description": "The org id of the membership",
@@ -2096,7 +2322,9 @@
       },
       "ReplaceUserMembershipsBody": {
         "description": "The payload to replace all memberships for a user in an organization",
-        "required": ["memberships"],
+        "required": [
+          "memberships"
+        ],
         "properties": {
           "memberships": {
             "description": "Array of memberships to replace all existing memberships for the user",
@@ -2110,7 +2338,10 @@
       },
       "UserMembershipRequest": {
         "description": "A single membership request for a user",
-        "required": ["subject_type", "subject"],
+        "required": [
+          "subject_type",
+          "subject"
+        ],
         "properties": {
           "subject_type": {
             "description": "The membership subject type.",
@@ -2128,8 +2359,11 @@
         }
       },
       "InternalAuthorizeBody": {
-        "description": "An authorization request by a backend service. This is somewhat modeled on what an underlying SpiceDB CheckBulkPermissions call would look like.",
-        "required": ["user_id", "checks"],
+        "description": "An authorization request by a backend service.",
+        "required": [
+          "user_id",
+          "checks"
+        ],
         "properties": {
           "user_id": {
             "description": "The user id we are checking against. Human or service token.",
@@ -2146,7 +2380,10 @@
         }
       },
       "ResourcePermissionCheck": {
-        "required": ["resource", "permission"],
+        "required": [
+          "resource",
+          "permission"
+        ],
         "properties": {
           "resource": {
             "description": "The resource to check permissions on.",
@@ -2164,7 +2401,9 @@
       },
       "ResourcePermissionCheckResult": {
         "type": "object",
-        "required": ["items"],
+        "required": [
+          "items"
+        ],
         "properties": {
           "items": {
             "type": "array",
@@ -2175,7 +2414,10 @@
         }
       },
       "ResourcePermissionCheckResultItem": {
-        "required": ["permission_check", "allowed"],
+        "required": [
+          "permission_check",
+          "allowed"
+        ],
         "properties": {
           "permission_check": {
             "$ref": "#/components/schemas/ResourcePermissionCheck"
@@ -2244,7 +2486,9 @@
             "$ref": "#/components/schemas/ServiceUser"
           },
           {
-            "required": ["token"],
+            "required": [
+              "token"
+            ],
             "properties": {
               "token": {
                 "description": "The authorization bearer token for the service user",
@@ -2256,7 +2500,10 @@
       },
       "ServiceUserCreateBody": {
         "description": "Details required to create the service user",
-        "required": ["display_name", "expiry_in_days"],
+        "required": [
+          "display_name",
+          "expiry_in_days"
+        ],
         "properties": {
           "display_name": {
             "description": "A display name of the service user",
@@ -2290,7 +2537,9 @@
       },
       "ServiceUserRegenerateBody": {
         "description": "Details required to regenerate the service user",
-        "required": ["expiry_in_days"],
+        "required": [
+          "expiry_in_days"
+        ],
         "properties": {
           "expiry_in_days": {
             "description": "The expiry time in days from the time of regeneration",
@@ -2303,7 +2552,9 @@
       },
       "ReplaceServiceUserRolesBody": {
         "description": "The payload to replace all roles for a service user in an organization",
-        "required": ["roles"],
+        "required": [
+          "roles"
+        ],
         "properties": {
           "roles": {
             "description": "Array of roles to replace all existing roles for the service user",
@@ -2317,7 +2568,9 @@
       },
       "ServiceUserPage": {
         "description": "A page of service user summaries",
-        "required": ["items"],
+        "required": [
+          "items"
+        ],
         "properties": {
           "items": {
             "type": "array",
@@ -2328,7 +2581,12 @@
         }
       },
       "UserSessionTokenSummary": {
-        "required": ["hash", "created_at", "expires_at", "provider"],
+        "required": [
+          "hash",
+          "created_at",
+          "expires_at",
+          "provider"
+        ],
         "properties": {
           "hash": {
             "description": "The token hash identifier",
@@ -2363,7 +2621,9 @@
         }
       },
       "UserSessionTokenPage": {
-        "required": ["items"],
+        "required": [
+          "items"
+        ],
         "properties": {
           "items": {
             "type": "array",
@@ -2431,7 +2691,9 @@
         }
       },
       "InvitationPage": {
-        "required": ["items"],
+        "required": [
+          "items"
+        ],
         "properties": {
           "items": {
             "type": "array",
@@ -2477,13 +2739,20 @@
       },
       "SubjectType": {
         "type": "string",
-        "enum": ["role", "virtual-group"]
+        "enum": [
+          "role",
+          "virtual-group"
+        ]
       },
       "DeviceLoginCreateBody": {
         "type": "object"
       },
       "BaseDeviceLoginRequest": {
-        "required": ["id", "created_at", "expires_at"],
+        "required": [
+          "id",
+          "created_at",
+          "expires_at"
+        ],
         "properties": {
           "id": {
             "description": "The id of the device login request",
@@ -2509,7 +2778,11 @@
           },
           {
             "description": "The response returned to the device that requested login",
-            "required": ["polling_token", "approval_url", "code"],
+            "required": [
+              "polling_token",
+              "approval_url",
+              "code"
+            ],
             "properties": {
               "polling_token": {
                 "description": "The token that can be used to poll the pending device login until verified.",
@@ -2534,7 +2807,10 @@
           },
           {
             "description": "The response returned to the device when the user accepts the device login",
-            "required": ["token", "token_expires_at"],
+            "required": [
+              "token",
+              "token_expires_at"
+            ],
             "properties": {
               "token": {
                 "description": "The authorization bearer token for the device",
@@ -2556,7 +2832,9 @@
           },
           {
             "description": "The response returned to the user in the UI.",
-            "required": ["user_agent"],
+            "required": [
+              "user_agent"
+            ],
             "properties": {
               "user_agent": {
                 "description": "The user agent string associated with the device that requested login",
@@ -2579,7 +2857,9 @@
         ]
       },
       "SsoLoginCreateBody": {
-        "required": ["org_id"],
+        "required": [
+          "org_id"
+        ],
         "properties": {
           "org_id": {
             "type": "string"
@@ -2587,7 +2867,9 @@
         }
       },
       "SsoLoginResponse": {
-        "required": ["redirect_url"],
+        "required": [
+          "redirect_url"
+        ],
         "properties": {
           "redirect_url": {
             "type": "string"
@@ -2596,7 +2878,9 @@
       },
       "RolePage": {
         "description": "A page of roles",
-        "required": ["items"],
+        "required": [
+          "items"
+        ],
         "properties": {
           "items": {
             "type": "array",
@@ -2617,7 +2901,8 @@
           "display_name",
           "created_at",
           "created_by",
-          "permissions"
+          "permissions",
+          "is_system"
         ],
         "properties": {
           "id": {
@@ -2647,12 +2932,43 @@
             "items": {
               "type": "string"
             }
+          },
+          "is_system": {
+            "description": "True for immutable built-in roles.",
+            "type": "boolean"
+          }
+        }
+      },
+      "RoleWriteBody": {
+        "description": "The configurable fields of an organization role.",
+        "required": [
+          "display_name",
+          "permissions"
+        ],
+        "properties": {
+          "display_name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100,
+            "pattern": "^[^\\p{Cc}\\p{Cs}\\p{Z}\\n]( |[^\\p{Cc}\\p{Cs}\\p{Z}\\n])*[^\\p{Cc}\\p{Cs}\\p{Z}\\n]$",
+            "x-pattern-error": "display_name contains invalid characters"
+          },
+          "permissions": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]{1,62}[a-z0-9]$"
+            }
           }
         }
       },
       "ServiceUserRole": {
         "description": "A role to assign to a user or service user.",
-        "required": ["id"],
+        "required": [
+          "id"
+        ],
         "properties": {
           "id": {
             "description": "The role id to assign",
@@ -2667,22 +2983,8 @@
           }
         }
       },
-      "SpiceDBSyncResult": {
-        "description": "The result of a SpiceDB sync operation",
-        "properties": {
-          "added": {
-            "description": "The number of relationships added during the sync operation",
-            "type": "integer"
-          },
-          "removed": {
-            "description": "The number of relationships removed during the sync operation",
-            "type": "integer"
-          }
-        },
-        "required": ["added"]
-      },
       "ScopeSyncResult": {
-        "description": "The result of a scope sync operation",
+        "description": "The result of an authorization resource sync operation",
         "properties": {
           "projects_synced": {
             "description": "The number of projects synced",
@@ -2692,20 +2994,15 @@
             "description": "The number of environments synced",
             "type": "integer"
           },
-          "scoped_roles_created": {
-            "description": "The number of scoped roles created in the database",
-            "type": "integer"
-          },
-          "relationships_added": {
-            "description": "The number of relationships added to SpiceDB",
+          "resources_upserted": {
+            "description": "The number of authorization resources inserted or refreshed",
             "type": "integer"
           }
         },
         "required": [
           "projects_synced",
           "environments_synced",
-          "scoped_roles_created",
-          "relationships_added"
+          "resources_upserted"
         ]
       },
       "SsoConfiguration": {
@@ -2715,11 +3012,15 @@
             "type": "string"
           }
         },
-        "required": ["provider_org_id"]
+        "required": [
+          "provider_org_id"
+        ]
       },
       "UserWithRolePage": {
         "description": "A page of users or service users with permissions in a scope",
-        "required": ["items"],
+        "required": [
+          "items"
+        ],
         "properties": {
           "items": {
             "type": "array",
@@ -2735,7 +3036,12 @@
       },
       "UserWithRole": {
         "description": "A user / service user with their role",
-        "required": ["id", "type", "subject_type", "subject_id"],
+        "required": [
+          "id",
+          "type",
+          "subject_type",
+          "subject_id"
+        ],
         "properties": {
           "id": {
             "description": "The user / service user id",
@@ -2745,7 +3051,10 @@
           "type": {
             "description": "The type of user - human user or service user",
             "type": "string",
-            "enum": ["user", "service-user"]
+            "enum": [
+              "user",
+              "service-user"
+            ]
           },
           "subject_type": {
             "description": "The membership subject type.",
