@@ -73,7 +73,7 @@ Tools:
 
 ## Upgrading from SpiceDB to Casbin
 
-Chart `0.4.1` automatically migrates a supported SpiceDB-based installation to
+Chart `0.4.3` automatically migrates a supported SpiceDB-based installation to
 Casbin RBAC during a normal Helm upgrade. The qualified source is IAM `v2.0.1`
 at database schema 29. Upgrade older installations to that version first.
 
@@ -87,7 +87,7 @@ lock, reconstructs the organization, project, and environment hierarchy, and
 verifies the result before becoming ready. Interrupted upgrades resume on the
 next restart; failed verification prevents IAM from serving requests. Follow
 the complete [SpiceDB-to-Casbin upgrade and rollback procedure](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/blob/main/docs/migrations/spicedb-to-casbin.md)
-before deploying chart `0.4.1`.
+before deploying chart `0.4.3`.
 
 ## Optional OIDC issuer
 
@@ -107,10 +107,10 @@ The issuer belongs to this installation. Stellwerk does not operate a shared OID
 
 Helm charts to install and operate Platform Orchestrator in Kubernetes.
 
-Chart `0.4.1` completes configurable Casbin RBAC with console-based role
+Chart `0.4.3` delivers configurable Casbin RBAC with console-based role
 management and automatically upgrades supported SpiceDB-based installations.
 It retains the HTTPS runner gateway and internal NATS JetStream architecture
-introduced in `0.3.0`.
+introduced in `0.3.0`, with an application-account-safe NATS bootstrap probe.
 
 ## Charts
 
@@ -174,7 +174,7 @@ The chart-generated NATS token is intended for local bootstrap. Before a
 production rollout, provision per-service and per-runner subject-scoped NATS
 credentials and establish rotation and revocation procedures.
 
-Chart `0.4.1` automatically upgrades IAM schema 29 from SpiceDB to Casbin during
+Chart `0.4.3` automatically upgrades IAM schema 29 from SpiceDB to Casbin during
 the first replacement Pod's startup. Read the
 [SpiceDB-to-Casbin upgrade notes](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/blob/main/docs/migrations/spicedb-to-casbin.md) for the
 required backup, short IAM outage, verification, and rollback procedure.
