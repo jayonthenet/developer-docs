@@ -15,6 +15,12 @@ This change log starts with the open source publication of the Platform Orchestr
 
 - **New:** Added configurable organization roles with explicit permissions,
   while keeping the built-in Admin, Deployer, and Viewer roles immutable.
+  Released console
+  [`v1.1.0`](https://github.com/stellwerk-labs/platform-orchestrator-frontend/releases/tag/v1.1.0)
+  with role listing, creation, editing, and deletion under **Settings → Roles**.
+- **API:** Published the complete `listRoles`, `createRole`, `getRole`,
+  `updateRole`, and `deleteRole` contract in the
+  [API specification]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}#/Role/listRoles).
 - **Changed:** Released IAM
   [`v2.1.0`](https://github.com/stellwerk-labs/platform-orchestrator-iam/releases/tag/v2.1.0)
   with Casbin authorization evaluated inside IAM and policy data stored in the
@@ -26,7 +32,11 @@ This change log starts with the open source publication of the Platform Orchestr
   [`v0.4.0`](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/releases/tag/v0.4.0),
   removing the SpiceDB workload, operator, endpoint, pre-shared key, and
   separate runtime database dependency.
-- **Upgrade:** Chart `0.4.0` automatically migrates qualified IAM `v2.0.1`
+- **Fixed:** Released chart
+  [`v0.4.1`](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/releases/tag/v0.4.1)
+  with console `v1.1.0`, completing the configurable-role release for normal
+  Helm upgrades.
+- **Upgrade:** Chart `0.4.1` automatically migrates qualified IAM `v2.0.1`
   installations from schema 29 to Casbin during an ordinary Helm upgrade. The
   migration is serialized, resumable, verified before readiness, and retains
   the former SpiceDB database for a guarded rollback window. Follow the

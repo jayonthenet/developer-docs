@@ -341,6 +341,11 @@
         ],
         "operationId": "logoutSession",
         "summary": "Log out the current session token",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "name": "X-Token-Hash",
@@ -374,6 +379,11 @@
         ],
         "operationId": "checkPermissions",
         "summary": "Bulkly check permissions for the current subject that is logged in. This works for both human users and service users.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -417,6 +427,11 @@
         ],
         "operationId": "listUserMemberships",
         "summary": "List all of the memberships for the given user",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/userIdPathParam"
@@ -458,6 +473,11 @@
         ],
         "operationId": "listUserSessionTokens",
         "summary": "List all of the active user session tokens",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/userIdPathParam"
@@ -490,6 +510,11 @@
         ],
         "operationId": "revokeUserSessionToken",
         "summary": "Revoke the session token for this user. Due to internal caching, this may take up to a minute for authorized sessions to be revoked.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/userIdPathParam"
@@ -523,6 +548,11 @@
         ],
         "operationId": "dismissPrompt",
         "summary": "Dismiss a prompt for the user",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/userIdPathParam"
@@ -559,6 +589,11 @@
         ],
         "operationId": "listMembers",
         "summary": "List the members of an org with their identity provider information",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -601,6 +636,11 @@
         ],
         "operationId": "listOrgMemberships",
         "summary": "List the memberships for an org",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -643,6 +683,11 @@
         ],
         "operationId": "deleteOrgMembership",
         "summary": "Delete an org membership for a user. Due to internal caching, this may take up to a minute for authorized sessions to be revoked.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -678,6 +723,11 @@
         ],
         "operationId": "replaceOrgUserMemberships",
         "summary": "Replace all memberships for a user in an organization",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -899,6 +949,11 @@
         ],
         "operationId": "getCurrentUser",
         "summary": "Get details of the current user that is logged in",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successfully retrieved the current user",
@@ -920,6 +975,11 @@
         ],
         "operationId": "listServiceUsers",
         "summary": "List the service users in this org",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -950,6 +1010,11 @@
         ],
         "operationId": "createServiceUser",
         "summary": "Create a new service user in the org",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -991,6 +1056,11 @@
         ],
         "operationId": "deleteServiceUser",
         "summary": "Delete a service user from the org. Due to internal caching, this may take up to a minute for authorized sessions to be revoked.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -1015,6 +1085,11 @@
         ],
         "operationId": "replaceServiceUserRoles",
         "summary": "Replace all roles for a service user in an organization",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -1062,6 +1137,11 @@
         ],
         "operationId": "regenerateServiceUser",
         "summary": "Regenerate the service user token and extend the expiry. Due to internal caching, this may take up to a minute for authorized sessions to be revoked.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -1103,6 +1183,11 @@
         ],
         "operationId": "createInvitation",
         "summary": "Create and send an email invitation to a user to join this organization.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -1139,6 +1224,11 @@
         ],
         "operationId": "listInvitations",
         "summary": "List the invitations that are pending in the organization.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -1171,6 +1261,11 @@
         ],
         "operationId": "getInvitation",
         "summary": "Previews an invitation for membership to an org without redeeming it. The user must be authorized or present the correct redemption token.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -1218,6 +1313,11 @@
         ],
         "operationId": "revokeInvitation",
         "summary": "Deletes a pending invitation and invalidates it.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -1249,6 +1349,11 @@
         ],
         "operationId": "redeemInvitation",
         "summary": "Redeems an invitation for membership to an org.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -1302,6 +1407,11 @@
         ],
         "operationId": "listProjectUsers",
         "summary": "List the users and service users that have access to this project.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -1347,6 +1457,11 @@
         ],
         "operationId": "listEnvironmentUsers",
         "summary": "List the users and service users that have access to this environment.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -1394,6 +1509,11 @@
         ],
         "operationId": "listRoles",
         "summary": "List the roles in this Organization.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -1424,6 +1544,11 @@
         ],
         "operationId": "createRole",
         "summary": "Create a configurable role in this organization.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -1466,6 +1591,11 @@
         ],
         "operationId": "getRole",
         "summary": "Obtain details of a Role in an Organization.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -1505,6 +1635,11 @@
         ],
         "operationId": "updateRole",
         "summary": "Replace the name and permissions of a configurable role.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -1557,6 +1692,11 @@
         ],
         "operationId": "deleteRole",
         "summary": "Delete an unassigned configurable role.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/orgIdPathParam"
@@ -1640,6 +1780,11 @@
         ],
         "operationId": "getDeviceLoginRequest",
         "summary": "View the attributes of a device login request",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "name": "code",
@@ -1675,6 +1820,11 @@
         ],
         "operationId": "acceptDeviceLoginRequest",
         "summary": "Accept the device login request and allocate it a session token.",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "name": "requestId",
@@ -1703,6 +1853,11 @@
         ],
         "operationId": "rejectDeviceLoginRequest",
         "summary": "Reject the device login request",
+        "security": [
+          {
+            "userIdHeader": []
+          }
+        ],
         "parameters": [
           {
             "name": "requestId",
@@ -1726,6 +1881,13 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "userIdHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "From"
+      }
+    },
     "parameters": {
       "orgIdPathParam": {
         "name": "orgId",
