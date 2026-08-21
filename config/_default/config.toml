@@ -109,7 +109,7 @@ source = "node_modules/@hyas/images/layouts"
 target = "layouts"
 
 [Params]
-octlVersion = "1.0.1"
+octlVersion = "1.1.0"
 platformOrchestratorRunnerImageVersion = "2.0.0"
 scoreVersion = "0.10.2"
 GitHubBaseUrl = "https://github.com"

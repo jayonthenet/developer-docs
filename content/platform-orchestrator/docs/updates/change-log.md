@@ -21,6 +21,10 @@ This change log starts with the open source publication of the Platform Orchestr
 - **API:** Published the complete `listRoles`, `createRole`, `getRole`,
   `updateRole`, and `deleteRole` contract in the
   [API specification]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}#/Role/listRoles).
+- **Improved:** Released
+  [`platform-orchestrator-cli v1.1.0`](https://github.com/stellwerk-labs/platform-orchestrator-cli/releases/tag/v1.1.0)
+  with IAM client bindings generated from the same Casbin RBAC and configurable
+  role API contract.
 - **Changed:** Released IAM
   [`v2.1.0`](https://github.com/stellwerk-labs/platform-orchestrator-iam/releases/tag/v2.1.0)
   with Casbin authorization evaluated inside IAM and policy data stored in the
