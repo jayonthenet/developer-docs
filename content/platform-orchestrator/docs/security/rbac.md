@@ -120,10 +120,12 @@ role must view and change that entity.
 
 ## Create a configurable role in the console
 
-Users with `role_write` can open **Settings → Roles** to list, create, edit, or
-delete configurable roles. The permission selector is grouped by Orchestrator
-entity and shows the description, identifier, and applicable scopes for every
-option. It accepts catalog options only.
+Users need `role_read` to view roles and the permission catalog, and
+`role_write` to create, edit, or delete configurable roles. The complete
+console workflow therefore requires both permissions. In **Settings → Roles**,
+the permission selector is grouped by Orchestrator entity and shows the
+description, identifier, and applicable scopes for every option. It accepts
+catalog options only.
 
 Configurable roles can be deleted only when they have no active assignments.
 Changing a role changes the effective permissions of all its assignments.
