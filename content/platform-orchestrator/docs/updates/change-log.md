@@ -11,6 +11,37 @@ aliases:
 
 This change log starts with the open source publication of the Platform Orchestrator ecosystem.
 
+## August 25, 2026
+
+- **New:** Released IAM
+  [`v2.2.0`](https://github.com/stellwerk-labs/platform-orchestrator-iam/releases/tag/v2.2.0)
+  with an authoritative catalog of 34 entity-specific read and write
+  permissions. Role create and update requests now reject unknown permission
+  identifiers.
+- **New:** Released control plane
+  [`v2.1.0`](https://github.com/stellwerk-labs/platform-orchestrator-cp/releases/tag/v2.1.0)
+  and data plane
+  [`v3.1.0`](https://github.com/stellwerk-labs/platform-orchestrator-dp/releases/tag/v3.1.0)
+  with granular authorization checks for each supported orchestrator entity.
+- **New:** Released console
+  [`v1.2.0`](https://github.com/stellwerk-labs/platform-orchestrator-frontend/releases/tag/v1.2.0)
+  with a role editor that loads, describes, and groups the permission catalog,
+  so operators can build roles without guessing identifiers.
+- **API:** Added the permission-catalog endpoint, complete request and response
+  examples, valid permission values, role payloads, and end-to-end role and
+  service-user workflows to the
+  [RBAC guide]({{< relref "/platform-orchestrator/docs/security/rbac" >}})
+  and [API specification]({{< relref "/platform-orchestrator/docs/reference/api-spec" >}}).
+- **Compatible:** Existing built-in and configurable roles keep their previous
+  effective access through explicit legacy permission implications. This also
+  permits IAM to roll out before the control plane and data plane.
+- **Improved:** Released self-hosted chart
+  [`v0.5.0`](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/releases/tag/v0.5.0)
+  with the granular components and the public permission-catalog route.
+- **Qualified:** Verified a module-only role returned `403` for project and
+  deployment writes on WX1, then completed the installer base, Redis,
+  PostgreSQL, independent verification, and teardown scenarios.
+
 ## August 21, 2026
 
 - **New:** Added configurable organization roles with explicit permissions,
