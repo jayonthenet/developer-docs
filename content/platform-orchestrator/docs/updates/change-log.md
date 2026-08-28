@@ -11,6 +11,32 @@ aliases:
 
 This change log starts with the open source publication of the Platform Orchestrator ecosystem.
 
+## August 28, 2026
+
+- **New:** Released IAM
+  [`v2.3.0`](https://github.com/stellwerk-labs/platform-orchestrator-iam/releases/tag/v2.3.0)
+  with organization-scoped SCIM 2.0 user and group provisioning, scoped
+  service-user bearer credentials, group-to-role mappings, and provisioning
+  audit events.
+- **Secure:** SCIM deprovisioning now revokes sessions and device logins, blocks
+  SSO and invitation paths from restoring access, preserves access in other
+  organizations, and keeps every directory operation tenant-scoped.
+- **Compatible:** Added SCIM discovery resources, pagination and filtering,
+  case-insensitive PATCH operations, full-resource PUT updates, and the wire
+  formats required by common Entra and Authentik provisioning flows.
+- **Improved:** Released self-hosted chart
+  [`v0.6.0`](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/releases/tag/v0.6.0)
+  with IAM `v2.3.0` and public routes for the SCIM protocol and group-mapping
+  management API.
+- **Docs:** Added the [SCIM provisioning guide]({{< relref "/platform-orchestrator/docs/security/scim-provisioning" >}}),
+  including worked configurations for
+  [Microsoft Entra ID]({{< relref "/platform-orchestrator/docs/security/scim-provisioning-entra" >}})
+  and [Authentik]({{< relref "/platform-orchestrator/docs/security/scim-provisioning-authentik" >}}).
+- **Qualified:** The final IAM release passed 430 unit tests, 348
+  clean-database integration tests, authorization-upgrade coverage, static
+  analysis, and vulnerability scanning. The audited image and feature chart
+  also completed a SCIM end-to-end exercise on WX1 before release.
+
 ## August 25, 2026
 
 - **New:** Released IAM
