@@ -54,6 +54,72 @@ octl config set-token  # Set an authentication token
 octl config show       # Show the effective configuration, taking env var overrides into account
 ```
 
+### Roles and permissions
+
+```bash
+octl get permissions # List the permission catalog
+octl get roles       # List built-in and configurable roles
+
+octl create role \
+  --set display_name="Module Maintainer" \
+  --set-json '{"permissions":["module_read","module_write"]}'
+
+octl get role 11111111-1111-1111-1111-111111111111
+octl update role 11111111-1111-1111-1111-111111111111 \
+  --set display_name="Module Maintainer" \
+  --set-json '{"permissions":["module_read","module_write"]}'
+octl delete role 11111111-1111-1111-1111-111111111111
+```
+
+### Service users
+
+```bash
+# The JSON response contains the token once. Protect redirected output.
+umask 077
+octl --out json create service-user \
+  --set-json '{
+    "display_name": "CI deployment",
+    "expiry_in_days": 90,
+    "roles": [{"id": "11111111-1111-1111-1111-111111111111"}]
+  }' > service-user.json
+
+octl get service-users
+octl get service-user 22222222-2222-2222-2222-222222222222
+octl update service-user 22222222-2222-2222-2222-222222222222 \
+  --set-json '{"roles":[{"id":"11111111-1111-1111-1111-111111111111"}]}'
+octl --out json regenerate service-user \
+  22222222-2222-2222-2222-222222222222 --expiry-in-days 90
+octl delete service-user 22222222-2222-2222-2222-222222222222
+```
+
+### SCIM group-to-role mappings
+
+```bash
+octl create scim-group-mapping "Engineering" \
+  --set role_id=11111111-1111-1111-1111-111111111111
+octl get scim-group-mappings
+octl get scim-group-mapping "Engineering"
+octl update scim-group-mapping "Engineering" \
+  --set role_id=22222222-2222-2222-2222-222222222222
+octl delete scim-group-mapping "Engineering"
+```
+
+### Metadata keys
+
+```bash
+octl create metadata-key cost-center \
+  --set description="Internal cost-center identifier" \
+  --set-json '{
+    "schema": {"type":"string","pattern":"^[A-Z0-9-]+$"}
+  }'
+
+octl get metadata-keys
+octl get metadata-key cost-center
+octl update metadata-key cost-center \
+  --set-json '{"description":null,"schema":{"pattern":null}}'
+octl delete metadata-key cost-center
+```
+
 ### Project structure
 
 ```bash

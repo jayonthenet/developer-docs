@@ -170,6 +170,30 @@ curl "${PO_API_URL}/orgs/${ORG_ID}/scim/group-mappings" \
 URL-encode a group name before placing it in the path when it contains spaces
 or reserved characters.
 
+The CLI handles path encoding and can manage the same mappings:
+
+```bash
+octl create scim-group-mapping "Engineering" \
+  --set role_id=11111111-1111-1111-1111-111111111111
+
+octl get scim-group-mappings
+octl get scim-group-mapping "Engineering"
+octl delete scim-group-mapping "Engineering"
+```
+
+Provider `v1.1.0` and later can manage mappings declaratively:
+
+```hcl
+resource "platform-orchestrator_scim_group_mapping" "engineering" {
+  group_display_name = "Engineering"
+  role_id            = platform-orchestrator_role.engineering.id
+}
+```
+
+Existing mappings can be imported using the group display name. Use the
+[`platform-orchestrator_scim_group_mappings`](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/data-sources/scim_group_mappings)
+data source when another configuration owns the mappings.
+
 ### Mapping behavior
 
 - Group display names match case-insensitively.

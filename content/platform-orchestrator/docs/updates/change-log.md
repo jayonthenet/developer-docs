@@ -11,6 +11,40 @@ aliases:
 
 This change log starts with the open source publication of the Platform Orchestrator ecosystem.
 
+## August 29, 2026
+
+- **New:** Released
+  [`platform-orchestrator-cli v1.2.0`](https://github.com/stellwerk-labs/platform-orchestrator-cli/releases/tag/v1.2.0)
+  with role and permission discovery, SCIM group-mapping administration,
+  service-user creation and credential rotation, and metadata-key lifecycle
+  commands.
+- **New:** Released
+  [`terraform-provider-platform-orchestrator v1.1.0`](https://github.com/stellwerk-labs/terraform-provider-platform-orchestrator/releases/tag/v1.1.0)
+  with resources for configurable roles, SCIM group mappings, and metadata
+  keys, plus data sources for roles, permissions, mappings, and metadata-key
+  inventories.
+- **API:** Released IAM
+  [`v2.3.1`](https://github.com/stellwerk-labs/platform-orchestrator-iam/releases/tag/v2.3.1)
+  with stable service-user cursor pagination and corrected member pagination,
+  preventing skipped rows during automation inventory reads.
+- **API:** Released data plane
+  [`v3.1.1`](https://github.com/stellwerk-labs/platform-orchestrator-dp/releases/tag/v3.1.1)
+  with explicit omission, null, and value semantics for metadata-key updates.
+  Terraform can now clear optional constraints without replacing the key.
+- **Self-hosted:** Released Platform Orchestrator Helm chart
+  [`v0.6.1`](https://github.com/stellwerk-labs/platform-orchestrator-helm-chart/releases/tag/v0.6.1)
+  with IAM `v2.3.1` and data plane `v3.1.1`.
+- **Secure:** Updated vulnerable runtime dependencies in the data plane and
+  Terraform provider. Reachability analysis found no remaining called
+  vulnerable symbols in IAM, data plane, CLI, or provider.
+- **Docs:** Added complete CLI examples and Terraform/OpenTofu configuration
+  for the new automation surface. Service users remain intentionally excluded
+  from Terraform so one-time bearer credentials are not persisted in state.
+- **Qualified:** All four repositories passed generation, build, unit,
+  integration or acceptance, lint, and hosted CI gates. The final fork images
+  also passed complete CLI/API/SCIM and Terraform lifecycle exercises on WX1,
+  including cleanup and direct residue checks.
+
 ## August 28, 2026
 
 - **New:** Released IAM

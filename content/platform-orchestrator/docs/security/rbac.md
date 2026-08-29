@@ -132,6 +132,62 @@ catalog options only.
 Configurable roles can be deleted only when they have no active assignments.
 Changing a role changes the effective permissions of all its assignments.
 
+## Manage configurable roles with the CLI
+
+Discover the current permission catalog before creating a role:
+
+```bash
+octl get permissions
+```
+
+Create, inspect, replace, and delete a configurable role:
+
+```bash
+octl create role \
+  --set display_name="Module Maintainer" \
+  --set-json '{"permissions":["module_read","module_write"]}'
+
+octl get roles
+octl get role 11111111-1111-1111-1111-111111111111
+
+octl update role 11111111-1111-1111-1111-111111111111 \
+  --set display_name="Module and Provider Maintainer" \
+  --set-json '{
+    "permissions": [
+      "module_read",
+      "module_write",
+      "module_provider_read",
+      "module_provider_write"
+    ]
+  }'
+
+octl delete role 11111111-1111-1111-1111-111111111111
+```
+
+An update replaces both the display name and the complete permission set.
+
+## Manage configurable roles with Terraform or OpenTofu
+
+Provider `v1.1.0` and later can manage configurable roles and read the
+permission catalog:
+
+```hcl
+data "platform-orchestrator_permissions" "available" {}
+
+resource "platform-orchestrator_role" "module_maintainer" {
+  display_name = "Module Maintainer"
+  permissions = [
+    "module_read",
+    "module_write",
+  ]
+}
+```
+
+The `permissions` argument is authoritative. Removing an identifier from the
+configuration removes it from the role. Existing roles can be imported by UUID.
+See the [Terraform Registry role documentation](https://registry.terraform.io/providers/stellwerk-labs/platform-orchestrator/latest/docs/resources/role)
+for the complete schema.
+
 ## Create a configurable role with the API
 
 The examples use `PO_API_URL`, `PLATFORM_ORCHESTRATOR_TOKEN`, and `ORG_ID`
