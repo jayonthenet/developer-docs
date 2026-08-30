@@ -3,7 +3,7 @@
   "description": "Doks theme",
   "version": "0.5.0",
   "engines": {
-    "node": ">=16.16.0"
+    "node": ">=22"
   },
   "browserslist": [
     "defaults"
@@ -42,13 +42,13 @@
     "precheck": "npm version",
     "check": "exec-bin node_modules/.bin/hugo/hugo version",
     "copy:katex-fonts": "shx cp ./node_modules/katex/dist/fonts/* ./static/fonts/",
-    "postinstall": "hugo-installer --version otherDependencies.hugo --extended --destination node_modules/.bin/hugo",
+    "postinstall": "node scripts/install-hugo.mjs",
     "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "devDependencies": {
-    "@babel/cli": "^7.18",
-    "@babel/core": "^7.18",
-    "@babel/preset-env": "^7.18",
+    "@babel/cli": "^7.29.7",
+    "@babel/core": "^7.29.7",
+    "@babel/preset-env": "^7.29.7",
     "@fullhuman/postcss-purgecss": "^8.0",
     "@hyas/images": "^3.2.0",
     "auto-changelog": "^2.4",
@@ -61,15 +61,14 @@
     "flexsearch": "^0.8.147",
     "globals": "^15.15.0",
     "highlight.js": "^11.5",
-    "hugo-installer": ">=4.0.1",
     "instant.page": "^5.1",
     "katex": "^0.16",
     "lazysizes": "^5.3",
-    "markdownlint-cli2": "^0.22.0",
-    "mermaid": "^11.4.1",
+    "markdownlint-cli2": "^0.23.2",
+    "mermaid": "^11.17.2",
     "netlify-plugin-submit-sitemap": "^0.4.0",
     "node-fetch": "^3.2",
-    "postcss": "^8.4",
+    "postcss": "^8.5.26",
     "postcss-cli": "^11.0",
     "purgecss-whitelister": "^2.4",
     "shx": "^0.4.0",
@@ -86,6 +85,9 @@
     "toml": "^3.0.0"
   },
   "overrides": {
-    "semver": "^7.6.3"
+    "semver": "^7.6.3",
+    "gray-matter": {
+      "js-yaml": "3.15.1"
+    }
   }
 }
